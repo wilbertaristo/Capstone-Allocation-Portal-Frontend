@@ -1,34 +1,44 @@
-import React, {useState} from "react";
-import { Form, Input, Typography, Button, Divider} from 'antd';
+import React, { useState } from "react";
+import { debounce } from 'lodash';
+import { useHistory } from 'react-router-dom';
+import {Form, Input, Typography, Button, Divider, Alert} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { LinkContainer } from 'react-router-bootstrap';
+import { LinkContainer, Redirect } from 'react-router-bootstrap';
 import sutdLogo from '../images/sutdLogo.png';
 import bgImage from '../images/backgroundImage.jpg';
 
-const { Title, Text } = Typography;
+import signinUser from "../utils/authUtils";
+
+const { Title } = Typography;
 
 function LoginPage(){
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
-    const [clicked, setClicked] = useState()
+    let history = useHistory();
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+    const [clicked, setClicked] = useState();
+    const [invalidLogin, setInvalidLogin] = useState();
 
     const handleOnChange = (e) => {
-        const { name, value } = e.target;
-        if (name === "email"){
+        setInvalidLogin(false);
+        const {name, value} = e.target;
+        if (name === "email") {
             setEmail(value);
-        } else if (name === "password"){
+        } else if (name === "password") {
             setPassword(value);
         }
-    }
-
-
+    };
 
     const handleLogin = (values) => {
+        setInvalidLogin(false);
         setClicked(true);
-        console.log(email);
-        console.log(password);
+        console.log(email, password);
         console.log("Received values of form: ", values);
-
+        if (email !== 'valid@email.com' || password !== "testing123"){
+            setTimeout(() => setInvalidLogin(true), 4000);
+            setClicked(false);
+        } else {
+            setTimeout(() => signinUser(email, password, history), 4000);
+        }
     };
 
     return(
@@ -58,7 +68,22 @@ function LoginPage(){
                             <div className="d-flex justify-content-center mt-3 mb-2 ml-5 mr-5">
                                 <Title level={3} style={{color: "dimgray", letterSpacing: "2px"}}>LOGIN</Title>
                             </div>
+
                             <Divider className="bg-secondary" style={{marginTop: "1px", marginBottom: "20px"}}/>
+
+                            {
+                                invalidLogin ?
+                                    <Alert
+                                        className="mb-3"
+                                        message = "Login Failed"
+                                        description = "Incorrect email or password!"
+                                        type = "error"
+                                    />
+                                    :
+                                    <div></div>
+
+                            }
+
                             <Form.Item
                                 name = "email"
                                 rules ={
@@ -78,6 +103,7 @@ function LoginPage(){
                                 />
                             </Form.Item>
                         </div>
+
                         <div className="mt-3">
                             <Form.Item
                                 name = "password"
@@ -98,13 +124,18 @@ function LoginPage(){
                                 />
                             </Form.Item>
                         </div>
-                        
+
                         <div className="mt-1 mb-4 d-flex justify-content-end">
-                            <LinkContainer to="/reset-password" className="pointer">
-                                <div><h6 style={{color: "gray"}}>Forget password?</h6></div>
-                            </LinkContainer>
+                            {
+                                !clicked ?
+                                <LinkContainer to="/reset-password" className="pointer">
+                                    <div><h6 style={{color: "gray"}}>Forgot password?</h6></div>
+                                </LinkContainer> :
+                                    <div><h6 className="pointer" style={{color: "gray"}}>Forgot password?</h6></div>
+                            }
+
                         </div>
-                        
+
                         <Form.Item>
                             <div className="d-flex justify-content-center">
                                 {                           
@@ -140,14 +171,8 @@ function LoginPage(){
                             </div>
                         </Form.Item>                    
                     </Form>
-
-
-                    
-                    
-
                 </div>
             </div>
-
         </div>
     );
 }

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
 import { Form, Input, Typography, Button, Divider, Alert } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-    import sutdLogo from '../images/sutdLogo.png';
+import sutdLogo from '../images/sutdLogo.png';
 import bgImage from '../images/backgroundImage.jpg';
 
 const { Title } = Typography;
@@ -12,7 +12,6 @@ function ResetPassword(){
     const [email, setEmail] = useState();
     const [clicked, setClicked] = useState();
     const [invalidEmail, setInvalidEmail] = useState();
-    const [validEmail, setValidEmail] = useState();
 
     const handleOnChange = (e) => {
         const { name, value } = e.target;
@@ -27,14 +26,12 @@ function ResetPassword(){
             setInvalidEmail(true);
             setClicked(false);
         } else {
-            setValidEmail(true);
-            setTimeout(() => history.push('/login'), 4000);
+            history.push('login');
         }
     }
 
     const handleReset = (values) => {
         setClicked(true);
-        setInvalidEmail(false);
         console.log(email);
         console.log("Received values of form: ", values);
         setTimeout(() => handleValidation(email), 4000);
@@ -70,33 +67,6 @@ function ResetPassword(){
                                 <Title level={3} style={{color: "dimgray", letterSpacing: "2px"}}>RESET PASSWORD</Title>
                             </div>
                             <Divider className="bg-secondary" style={{marginTop: "1px", marginBottom: "20px"}}/>
-
-                            {
-                                invalidEmail ?
-                                    <Alert
-                                        className="mt-3 mb-3"
-                                        message = "Email Verification Failed"
-                                        description = "No such email has been registered!"
-                                        type = "error"
-                                    />
-                                    :
-                                    <div></div>
-
-                            }
-
-                            {
-                                validEmail ?
-                                    <Alert
-                                        className="mt-3 mb-3"
-                                        message = "Reset Password Email Sent!"
-                                        description = "Redirecting you back to our login page shortly..."
-                                        type = "success"
-                                    />
-                                    :
-                                    <div></div>
-
-                            }
-
                             <Form.Item
                                 name = "email"
                                 rules ={
@@ -116,6 +86,20 @@ function ResetPassword(){
                                 />
                             </Form.Item>
                         </div>
+
+                        {
+                            invalidEmail ?
+                                <div className="mt-3 mb-3">
+                                    <Alert
+                                        message = "Email Verification Failed"
+                                        description = "No such email has been registered!"
+                                        type = "error"
+                                    />
+                                </div> :
+                                <div></div>
+
+                        }
+
 
                         <Form.Item>
                             <div className="d-flex justify-content-center mt-3">

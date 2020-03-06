@@ -9,9 +9,11 @@ import '../style/style.css';
 function App(){
   return(
     <Router>
-      <Route path="/login" component={LoginPage}/>
-      <Route path="/home" component={HomePage}/>
-      <Route path="/reset-password" component={ResetPassword}/>
+        <Switch>
+          <Route path="/login" component={LoginPage}/>
+          <Route path="/home" component={HomePage}/>
+          <Route path="/reset-password" component={ResetPassword}/>
+        </Switch>
     </Router>
   );
 }

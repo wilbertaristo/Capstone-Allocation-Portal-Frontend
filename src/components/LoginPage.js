@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import { debounce } from 'lodash';
+import React, {useEffect, useState} from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
 import {Form, Input, Typography, Button, Divider, Alert} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { LinkContainer, Redirect } from 'react-router-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import sutdLogo from '../images/sutdLogo.png';
 import bgImage from '../images/backgroundImage.jpg';
 
-import signinUser from "../utils/authUtils";
+import signinUser from "../actions/authActions";
+import { CLEAR_AUTH_ERROR } from "../actions/types";
 
 const { Title } = Typography;
 
@@ -17,10 +18,27 @@ function LoginPage(){
     const [password, setPassword] = useState();
     const [clicked, setClicked] = useState();
     const [invalidLogin, setInvalidLogin] = useState();
+    const [runEffect, setRunEffect] = useState();
+
+    let loginError = useSelector(state => state.auth.loginError);
+    let messageError = useSelector(state => state.auth.message);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if(runEffect){
+            if(loginError){
+                setInvalidLogin(true);
+                setClicked(false);
+                setRunEffect(false);
+            }
+        }
+    })
+
 
     const handleOnChange = (e) => {
         setInvalidLogin(false);
         const {name, value} = e.target;
+        console.log(value);
         if (name === "email") {
             setEmail(value);
         } else if (name === "password") {
@@ -31,15 +49,18 @@ function LoginPage(){
     const handleLogin = (values) => {
         setInvalidLogin(false);
         setClicked(true);
-        console.log(email, password);
-        console.log("Received values of form: ", values);
-        if (email !== 'valid@email.com' || password !== "testing123"){
-            setTimeout(() => setInvalidLogin(true), 4000);
-            setClicked(false);
-        } else {
-            setTimeout(() => signinUser(email, password, history), 4000);
-        }
+        setRunEffect(true);
+        dispatch({type: CLEAR_AUTH_ERROR});
+        signinUser(email, password, history, dispatch);
     };
+
+    const handleKeyUp = e => {
+        if (e.keyCode === 13 || e.which === 13) {
+            if (!clicked){
+                handleLogin();
+            }
+        }
+    }
 
     return(
         /*Wrap everything inside a div with background image*/
@@ -61,8 +82,7 @@ function LoginPage(){
                     <Form
                         name='normal_login'
                         className='login-form'
-                        initialValues={{remember: true}} 
-                        onFinish={handleLogin}
+                        initialValues={{remember: true}}
                     >
                         <div>
                             <div className="d-flex justify-content-center mt-3 mb-2 ml-5 mr-5">
@@ -76,7 +96,7 @@ function LoginPage(){
                                     <Alert
                                         className="mb-3"
                                         message = "Login Failed"
-                                        description = "Incorrect email or password!"
+                                        description = {messageError}
                                         type = "error"
                                     />
                                     :
@@ -96,7 +116,7 @@ function LoginPage(){
                                 <Input
                                     prefix={<UserOutlined className="site-form-item-icon" />}
                                     onChange={(e) => handleOnChange(e)}
-                                    onPressEnter={(() => handleLogin())}
+                                    onKeyUp={(e) => handleKeyUp(e)}
                                     placeholder="Email Address"
                                     name='email'
                                     size='large'
@@ -116,7 +136,7 @@ function LoginPage(){
                                 <Input
                                     prefix={<LockOutlined className="site-form-item-icon"/>}
                                     onChange={(e) => handleOnChange(e)}
-                                    onPressEnter={(() => handleLogin())}
+                                    onKeyUp={(e) => handleKeyUp(e)}
                                     placeholder="Password"
                                     name='password'
                                     type='password'
@@ -145,6 +165,7 @@ function LoginPage(){
                                             className="login-form-button"
                                             shape="round"
                                             size="large"
+                                            onClick={() => handleLogin()}
                                             style={email && password ? {
                                                 width: "50%", 
                                                 height: "50px",

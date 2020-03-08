@@ -1,1 +1,1 @@
-export let ROOT_URL = 'localhost:3000';
+export let ROOT_URL = 'https://api.sutd-capstone.xyz';

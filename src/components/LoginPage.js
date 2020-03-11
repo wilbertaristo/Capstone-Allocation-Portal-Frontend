@@ -7,7 +7,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import sutdLogo from '../images/sutdLogo.png';
 import bgImage from '../images/backgroundImage.jpg';
 
-import signinUser from "../actions/authActions";
+import { signinUser } from "../actions/authActions";
 import { CLEAR_AUTH_ERROR } from "../actions/types";
 
 const { Title } = Typography;
@@ -63,6 +63,7 @@ function LoginPage(){
     }
 
     return(
+
         /*Wrap everything inside a div with background image*/
         <div className="d-flex flex-column align-items-center vh-100" style={{backgroundImage: `url(${bgImage})`, backgroundSize: "cover", overflow: 'auto'}}>
             
@@ -145,7 +146,7 @@ function LoginPage(){
                             </Form.Item>
                         </div>
 
-                        <div className="mt-1 mb-4 d-flex justify-content-end">
+                        <div className="mt-1 mb-3 d-flex justify-content-end">
                             {
                                 !clicked ?
                                 <LinkContainer to="/reset-password" className="pointer">
@@ -153,7 +154,6 @@ function LoginPage(){
                                 </LinkContainer> :
                                     <div><h6 className="pointer" style={{color: "gray"}}>Forgot password?</h6></div>
                             }
-
                         </div>
 
                         <Form.Item>
@@ -178,6 +178,7 @@ function LoginPage(){
                                         </Button>
                                         :
                                         <Button
+                                            loading
                                             htmlType="submit"
                                             className="login-form-button"
                                             shape="round"

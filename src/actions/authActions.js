@@ -14,7 +14,7 @@ if (defaultToken) {
     axios.defaults.headers['Authorization'] = 'Bearer ' + defaultToken;
 }
 
-export const signinUser = (email, password, history, dispatch) => {
+export function signinUser(email, password, history, dispatch) {
     console.log('signing in...');
     axios.get(`${ROOT_URL}/auth/login`,
         {
@@ -40,4 +40,9 @@ export const signinUser = (email, password, history, dispatch) => {
         })
 }
 
-export default signinUser;
+export function signoutUser(history, dispatch) {
+    console.log('signing out...');
+    localStorage.removeItem('token');
+    dispatch({ type: UNAUTH_USER });
+    history.push('/login');
+}

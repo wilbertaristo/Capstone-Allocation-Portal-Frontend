@@ -20,3 +20,21 @@
 .pointer {
     cursor: pointer;
 }
+
+.menu-logo {
+    width: 250px;
+    height: 50px;
+    max-width: 80%;
+}
+
+.menu-item {
+    width: 180px;
+    height: 80px;
+    max-width: 80%;
+}
+
+.site-layout-content {
+    background: #fff;
+    padding: 57px;
+    min-height: 280px;
+}

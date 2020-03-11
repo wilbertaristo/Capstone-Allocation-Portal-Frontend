@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
-import { Form, Input, Typography, Button, Divider, Alert } from 'antd';
+import { Form, Input, Typography, Button, Divider, Alert, Modal } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
     import sutdLogo from '../images/sutdLogo.png';
 import bgImage from '../images/backgroundImage.jpg';
@@ -39,6 +39,17 @@ function ResetPassword(){
         console.log("Received values of form: ", values);
         setTimeout(() => handleValidation(email), 4000);
     };
+
+    const handleModal = () => {
+        const modal = Modal.success({
+            title: "Reset Password Email Sent!",
+            content: "Redirecting you to our login page shortly...",
+            centered: true,
+            closable: false,
+            icon: null
+        });
+        setTimeout(() => {modal.destroy();}, 4000);
+    }
 
     return(
 
@@ -86,12 +97,7 @@ function ResetPassword(){
 
                             {
                                 validEmail ?
-                                    <Alert
-                                        className="mt-3 mb-3"
-                                        message = "Reset Password Email Sent!"
-                                        description = "Redirecting you back to our login page shortly..."
-                                        type = "success"
-                                    />
+                                    handleModal()
                                     :
                                     <div></div>
 
@@ -138,6 +144,7 @@ function ResetPassword(){
                                         </Button>
                                         :
                                         <Button
+                                            loading
                                             htmlType="submit"
                                             className="login-form-button"
                                             shape="round"

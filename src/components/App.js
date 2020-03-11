@@ -2,6 +2,9 @@ import React from 'react';
 import LoginPage from './LoginPage';
 import HomePage from './HomePage';
 import ResetPassword from './ResetPassword';
+import UploadRequirements from './UploadRequirements';
+import AllocationMap from './AllocationMap';
+import UserSettings from './UserSettings';
 import {BrowserRouter as Router, Route, Switch} from'react-router-dom';
 import 'antd/dist/antd.css';
 import '../style/style.css';
@@ -13,6 +16,9 @@ function App(){
           <Route path="/login" component={LoginPage}/>
           <Route path="/home" component={HomePage}/>
           <Route path="/reset-password" component={ResetPassword}/>
+          <Route path="/upload-requirements" component={UploadRequirements}/>
+          <Route path="/allocation-map" component={AllocationMap}/>
+          <Route path="/user-settings" component={UserSettings}/>
         </Switch>
     </Router>
   );

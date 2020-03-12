@@ -38,7 +38,6 @@ function LoginPage(){
     const handleOnChange = (e) => {
         setInvalidLogin(false);
         const {name, value} = e.target;
-        console.log(value);
         if (name === "email") {
             setEmail(value);
         } else if (name === "password") {

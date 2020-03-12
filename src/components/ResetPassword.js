@@ -35,8 +35,6 @@ function ResetPassword(){
     const handleReset = (values) => {
         setClicked(true);
         setInvalidEmail(false);
-        console.log(email);
-        console.log("Received values of form: ", values);
         setTimeout(() => handleValidation(email), 4000);
     };
 

@@ -20,8 +20,9 @@ function LoginPage(){
     const [invalidLogin, setInvalidLogin] = useState();
     const [runEffect, setRunEffect] = useState();
 
-    let loginError = useSelector(state => state.auth.loginError);
-    let messageError = useSelector(state => state.auth.message);
+    const loginError = useSelector(state => state.auth.loginError);
+    const storeAuthenticated = useSelector(state => state.auth.authenticated);
+    const messageError = useSelector(state => state.auth.message);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -31,6 +32,9 @@ function LoginPage(){
                 setClicked(false);
                 setRunEffect(false);
             }
+        }
+        if (storeAuthenticated){
+            history.push('/home');
         }
     })
 

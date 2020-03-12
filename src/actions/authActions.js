@@ -3,6 +3,7 @@ import { ROOT_URL } from "../utils";
 import {
     UNAUTH_USER,
     AUTH_ERROR,
+    AUTH_USER,
     NETWORK_ERROR,
     CHANGE_PASSWORD,
     RESET_PASSWORD,
@@ -29,7 +30,9 @@ export function signinUser(email, password, history, dispatch) {
             localStorage.setItem('token', token);
 
             axios.defaults.headers['Authorization'] = `Bearer ${token}`;
-            console.log(token);
+            dispatch({
+                type: AUTH_USER
+            })
             history.push('/home')
         })
         .catch(loginError => {

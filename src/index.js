@@ -6,14 +6,23 @@ import './index.css';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 
-import { createStore } from "redux";
+import { AUTH_USER } from './actions/types';
+
+import { createStore, applyMiddleware } from "redux";
+import reduxThunk from 'redux-thunk';
 import rootReducer from "./reducers";
 import { Provider } from "react-redux";
 
-const store = createStore(
+const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
+const store = createStoreWithMiddleware(
     rootReducer,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
+
+const token = localStorage.getItem('token');
+if (token){
+    store.dispatch({type: AUTH_USER});
+}
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 

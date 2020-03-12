@@ -16,7 +16,6 @@ if (defaultToken) {
 }
 
 export function signinUser(email, password, history, dispatch) {
-    console.log('signing in...');
     axios.get(`${ROOT_URL}/auth/login`,
         {
             auth: {
@@ -25,7 +24,6 @@ export function signinUser(email, password, history, dispatch) {
             }
         })
         .then(loginResponse => {
-            console.log(loginResponse);
             const { token } = loginResponse.data;
             localStorage.setItem('token', token);
 
@@ -35,8 +33,7 @@ export function signinUser(email, password, history, dispatch) {
             })
             history.push('/home')
         })
-        .catch(loginError => {
-            console.log(loginError);
+        .catch(() => {
             dispatch ({
                 type: AUTH_ERROR
             })
@@ -44,7 +41,6 @@ export function signinUser(email, password, history, dispatch) {
 }
 
 export function signoutUser(history, dispatch) {
-    console.log('signing out...');
     localStorage.removeItem('token');
     dispatch({ type: UNAUTH_USER });
     history.push('/login');

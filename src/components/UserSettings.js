@@ -10,7 +10,7 @@ function HomePage(){
             <MenuHeader/>
             <Layout>
                 <Content>
-                    <div className="site-layout-content">Home Page</div>
+                    <div className="site-layout-content">User Settings Page</div>
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>Capstone Allocation ©2020 Created by MadDev</Footer>
             </Layout>

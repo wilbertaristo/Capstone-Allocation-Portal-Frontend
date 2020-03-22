@@ -1,5 +1,7 @@
 import {
     AUTH_ERROR,
+    AUTH_USER,
+    UNAUTH_USER,
     NETWORK_ERROR,
     CHANGE_PASSWORD,
     RESET_PASSWORD,
@@ -15,6 +17,18 @@ export default function(state={}, action){
                 ...state,
                 loginError: true,
                 message: "Incorrect email or password!"
+            }
+
+        case AUTH_USER:
+            return{
+                ...state,
+                loginError: null,
+                authenticated: true
+            }
+
+        case UNAUTH_USER:
+            return{
+                authenticated: false
             }
 
         case CLEAR_AUTH_ERROR:

@@ -7,7 +7,9 @@ import {
     NETWORK_ERROR,
     CHANGE_PASSWORD,
     RESET_PASSWORD,
-    PASSWORD_SENT
+    PASSWORD_SENT,
+    SIGNUP_USER,
+    SIGNUP_ERROR
 } from "./types";
 
 const defaultToken = localStorage.getItem('token');
@@ -16,7 +18,7 @@ if (defaultToken) {
 }
 
 export function signinUser(email, password, history, dispatch) {
-    axios.get(`${ROOT_URL}/auth/login`,
+    axios.get(`${ROOT_URL}/users/current`,
         {
             auth: {
                 username: email,
@@ -36,6 +38,28 @@ export function signinUser(email, password, history, dispatch) {
         .catch(() => {
             dispatch ({
                 type: AUTH_ERROR
+            })
+        })
+}
+
+export function signupUser(email, password, fullName, dispatch) {
+    axios.post(`${ROOT_URL}/users`, null,
+        {
+            params: {
+                "email": email,
+                "password": password,
+                "full_name": fullName        
+            }
+        })
+        .then(loginResponse => {
+            dispatch({
+                type: SIGNUP_USER
+            })
+        })
+        .catch((loginError) => {
+            console.log(loginError.message)
+            dispatch ({
+                type: SIGNUP_ERROR
             })
         })
 }

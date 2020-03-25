@@ -194,7 +194,19 @@ function LoginPage(){
                                         </Button>
                                 }
                             </div>
-                        </Form.Item>                    
+                        </Form.Item>
+
+                        <div className="mt-1 mb-4 d-flex justify-content-center">
+                            {
+                                !clicked ?
+                                <LinkContainer to="/signup" className="pointer">
+                                    <div><h6 style={{color: "gray"}}>New user? Sign up</h6></div>
+                                </LinkContainer> :
+                                    <div><h6 className="pointer" style={{color: "gray"}}>Signup</h6></div>
+                            }
+
+                        </div>
+
                     </Form>
                 </div>
             </div>

@@ -7,7 +7,9 @@ import {
     RESET_PASSWORD,
     PASSWORD_SENT,
     AUTH_SUCCESS,
-    CLEAR_AUTH_ERROR
+    CLEAR_AUTH_ERROR,
+    SIGNUP_USER,
+    SIGNUP_ERROR
 } from "../actions/types";
 
 export default function(state={}, action){
@@ -35,6 +37,16 @@ export default function(state={}, action){
             return{
                 ...state,
                 loginError: false
+            }
+
+        case SIGNUP_USER:
+            return{
+                signupSuccess: true
+            }
+
+        case SIGNUP_ERROR:
+            return{
+                signupError: true
             }
 
         default:

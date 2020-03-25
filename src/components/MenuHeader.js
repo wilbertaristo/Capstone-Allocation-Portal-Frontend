@@ -42,10 +42,10 @@ function MenuHeader(){
 
                         <Menu theme="dark" mode="inline">
                             <Menu.Item key="req">
-                                <LinkContainer to="/upload-requirements" className="pointer">
+                                <LinkContainer to="/manage-requirements/student" className="pointer">
                                     <div className="d-flex flex-row align-items-center">
                                         <UploadOutlined className="mr-2"/>
-                                        Upload Requirements
+                                        Manage Requirements
                                     </div>
                                 </LinkContainer>
                             </Menu.Item>
@@ -93,10 +93,10 @@ function MenuHeader(){
                             className="d-flex justify-content-end"
                         >
                             <Menu.Item key="req">
-                                <LinkContainer to="/upload-requirements" className="pointer">
+                                <LinkContainer to="/manage-requirements/student" className="pointer">
                                     <div className="d-flex flex-row align-items-center">
                                         <UploadOutlined className="mr-2"/>
-                                        Upload Requirements
+                                        Manage Requirements
                                     </div>
                                 </LinkContainer>
                             </Menu.Item>

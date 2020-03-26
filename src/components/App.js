@@ -23,7 +23,6 @@ function App(){
           <Route path="/signup" component={SignupPage}/>
           <ProtectedRoute path="/manage-requirements/student" component={StudentManageRequirements}/>
           <ProtectedRoute exact path="/allocation-map/admin" component={AdminAllocationMap}/>
-          <ProtectedRoute path="/allocation-map/admin/map_demo.html" render={() => {window.location.href="map_demo.html"}} />
           <ProtectedRoute path="/user-settings" component={UserSettings}/>
         </Switch>
     </Router>

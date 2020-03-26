@@ -21,7 +21,6 @@ function HomePage(){
 
     const [form] = Form.useForm();
 
-    let history = useHistory();
     const [groupName, setGroupName] = useState();
     const [typePrototype, setTypePrototype] = useState();
     const [typeDescription, setTypeDescription] = useState();
@@ -59,10 +58,9 @@ function HomePage(){
                 setInvalidUpload(true);
                 setClicked(false);
                 setRunEffect(false);
-            } else if(uploadSuccess){
+            } else if (uploadSuccess){
                 setValidUpload(true);
                 setRunEffect(false);
-            
             }
         }
     })
@@ -159,143 +157,140 @@ function HomePage(){
             <MenuHeader/>
             <Layout>
                 <Content>
-                        <div className="d-flex flex-column align-items-center">
-                            <div className="container-fluid card mt-2 mb-5 ml-2 mr-10 p-5" style={{zIndex: '1'}}>
+                        <div className="d-flex site-layout-content flex-column container-fluid align-items-center justify-content-center">
                                 <Form
                                     {...layout}
                                     name='normal_requirements'
-                                    className='requirements-form'
+                                    className="d-flex flex-column container-fluid"
                                     initialValues={{remember: true}}
                                 >
-                                    <div>
-                                        <div className="d-flex justify-content-center mt-3 mb-2 ml-5 mr-5">
-                                            <Title level={3} style={{color: "dimgray", letterSpacing: "2px"}}>SPACE ALLOCATION REQUIREMENTS</Title>
-                                        </div>
 
-                                        <Divider className="bg-secondary" style={{marginTop: "1px", marginBottom: "20px"}}/>
-
-                                        <div className="mt-3">
-                                            <Form.Item
-                                                label = "Group name"
-                                                name = "groupName"
-                                                rules ={
-                                                    [
-                                                    {required: true, message: "Please input your group name"}
-                                                    ]
-                                                }
-                                            >
-                                                <Input
-                                                    name='groupName'
-                                                    onChange={(e) => handleOnChange(e)}
-                                                    onKeyUp={(e) => handleKeyUp(e)}
-                                                    size='large'
-                                                />
-                                            </Form.Item>
-
-                                            <Form.Item
-                                                label = "Type of prototype"
-                                                name = "typePrototype"
-                                                rules ={
-                                                    [
-                                                    {required: true, message: "Please input your type of prototype"}
-                                                    ]
-                                                }
-                                            >
-                                                <Input
-                                                    name='typePrototype'
-                                                    onChange={(e) => handleOnChange(e)}
-                                                    onKeyUp={(e) => handleKeyUp(e)}
-                                                    size='large'
-                                                />
-                                            </Form.Item>
-
-                                            <Form.Item
-                                                label = "Prototype description"
-                                                name = "typeDescription"
-                                                rules ={
-                                                    [
-                                                    {required: true, message: "Please input your prototype description"}
-                                                    ]
-                                                }
-                                            >
-                                                <Input
-                                                    name='typeDescription'
-                                                    onChange={(e) => handleOnChange(e)}
-                                                    onKeyUp={(e) => handleKeyUp(e)}
-                                                    size='large'
-                                                />
-                                            </Form.Item>
-
-                                            <Title level={4}>Showcase space needed (in metres):</Title>                                                                              
-
-                                            <Form form={form} name="horizontal_login" layout="inline">
-
-                                            <Form.Item
-                                                label = "Length"
-                                                name = "spaceX"
-                                                rules ={
-                                                    [
-                                                    {required: true, message: "Please input your length of showcase space needed"}
-                                                    ]
-                                                }
-                                            >
-                                                <Input
-                                                    name='spaceX'
-                                                    onChange={(e) => handleOnChange(e)}
-                                                    onKeyUp={(e) => handleKeyUp(e)}
-                                                    size='large'
-                                                />
-                                            </Form.Item>
-
-                                            <Form.Item
-                                                label="Width"
-                                                name="spaceY"
-                                                rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Please input your width of showcase space needed!',
-                                                },
-                                                ]}
-                                            >
-                                                <Input                                               
-                                                    name="spaceY" 
-                                                    onChange={(e) => handleOnChange(e)}
-                                                    onKeyUp={(e) => handleKeyUp(e)}  
-                                                    size='large'                       
-                                                />
-                                            </Form.Item>
-
-                                            <Form.Item
-                                                label = "Height"
-                                                name = "spaceZ"
-                                                rules ={
-                                                    [
-                                                    {required: true, message: "Please input your height of showcase space needed"}
-                                                    ]
-                                                }
-                                            >
-                                                <Input
-                                                    name='spaceZ'
-                                                    onChange={(e) => handleOnChange(e)}
-                                                    onKeyUp={(e) => handleKeyUp(e)}
-                                                    size='large'
-                                                />
-                                            </Form.Item>
-                                            
-                                            </Form>                                   
-                                        </div>                                       
+                                    <div className="d-flex justify-content-center mt-3 mb-2 ml-5 mr-5">
+                                        <Title level={3} style={{color: "dimgray", letterSpacing: "2px"}}>SPACE ALLOCATION REQUIREMENTS</Title>
                                     </div>
 
+                                    <Divider className="bg-secondary" style={{marginTop: "1px", marginBottom: "20px"}}/>
+
+                                    <div className="d-flex flex-column justify-content-center mt-3">
+                                        <Form.Item
+                                            name = "groupName"
+                                            className="d-flex justify-content-center"
+                                            rules ={
+                                                [
+                                                {required: true, message: "Please input your group name"}
+                                                ]
+                                            }
+                                        >
+                                            <Input
+                                                name='groupName'
+                                                placeholder="Group Name"
+                                                onChange={(e) => handleOnChange(e)}
+                                                onKeyUp={(e) => handleKeyUp(e)}
+                                                size='large'
+                                            />
+                                        </Form.Item>
+
+                                        <Form.Item
+                                            name = "typePrototype"
+                                            className="d-flex justify-content-center"
+                                            rules ={
+                                                [
+                                                {required: true, message: "Please input your type of prototype"}
+                                                ]
+                                            }
+                                        >
+                                            <Input
+                                                name='typePrototype'
+                                                placeholder="Type of Prototype"
+                                                onChange={(e) => handleOnChange(e)}
+                                                onKeyUp={(e) => handleKeyUp(e)}
+                                                size='large'
+                                            />
+                                        </Form.Item>
+
+                                        <Form.Item
+                                            className="d-flex justify-content-center"
+                                            name = "typeDescription"
+                                            rules ={
+                                                [
+                                                {required: true, message: "Please input your prototype description"}
+                                                ]
+                                            }
+                                        >
+                                            <Input
+                                                name='typeDescription'
+                                                placeholder="Prototype Description"
+                                                onChange={(e) => handleOnChange(e)}
+                                                onKeyUp={(e) => handleKeyUp(e)}
+                                                size='large'
+                                            />
+                                        </Form.Item>
+
+                                        <Title level={4} className="d-flex justify-content-center mb-3">Showcase space needed (in metres):</Title>
+
+                                        <Form.Item
+                                            name = "spaceX"
+                                            className="d-flex justify-content-center"
+                                            rules ={
+                                                [
+                                                {required: true, message: "Please input your length of showcase space needed"}
+                                                ]
+                                            }
+                                        >
+                                            <Input
+                                                name='spaceX'
+                                                placeholder = "Length"
+                                                onChange={(e) => handleOnChange(e)}
+                                                onKeyUp={(e) => handleKeyUp(e)}
+                                                size='large'
+                                            />
+                                        </Form.Item>
+
+                                        <Form.Item
+                                            name="spaceY"
+                                            className="d-flex justify-content-center"
+                                            rules={[
+                                            {
+                                                required: true,
+                                                message: 'Please input your width of showcase space needed!',
+                                            },
+                                            ]}
+                                        >
+                                            <Input
+                                                name="spaceY"
+                                                placeholder="Width"
+                                                onChange={(e) => handleOnChange(e)}
+                                                onKeyUp={(e) => handleKeyUp(e)}
+                                                size='large'
+                                            />
+                                        </Form.Item>
+
+                                        <Form.Item
+                                            name = "spaceZ"
+                                            className="d-flex justify-content-center"
+                                            rules ={
+                                                [
+                                                {required: true, message: "Please input your height of showcase space needed"}
+                                                ]
+                                            }
+                                        >
+                                            <Input
+                                                name='spaceZ'
+                                                placeholder = "Height"
+                                                onChange={(e) => handleOnChange(e)}
+                                                onKeyUp={(e) => handleKeyUp(e)}
+                                                size='large'
+                                            />
+                                        </Form.Item>
+                                    </div>
                                     
 
                                     <div className="mt-3">
-                                        <Title level={4}>Prototype details (in metres/kg):</Title> 
-
-                                        <Form form={form} name="horizontal_login" layout="inline">
+                                        <Title level={4} className="d-flex justify-content-center mb-3">Prototype details (in metres/kg):</Title>
 
                                         <Form.Item
-                                            label = "Length"
                                             name = "prototypeX"
+                                            className="d-flex justify-content-center"
                                             rules ={
                                                 [
                                                 {required: true, message: "Please input your length of prototype!"}
@@ -304,6 +299,7 @@ function HomePage(){
                                         >
                                             <Input
                                                 name='prototypeX'
+                                                placeholder = "Prototype Length"
                                                 onChange={(e) => handleOnChange(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
@@ -311,8 +307,8 @@ function HomePage(){
                                         </Form.Item>
 
                                         <Form.Item
-                                            label="Width"
                                             name="prototypeY"
+                                            className="d-flex justify-content-center"
                                             rules={[
                                             {
                                                 required: true,
@@ -321,7 +317,8 @@ function HomePage(){
                                             ]}
                                         >
                                             <Input                                               
-                                                name="prototypeY"   
+                                                name="prototypeY"
+                                                placeholder="Prototype Width"
                                                 onChange={(e) => handleOnChange(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'                       
@@ -329,8 +326,8 @@ function HomePage(){
                                         </Form.Item>
 
                                         <Form.Item
-                                            label = "Height"
                                             name = "prototypeZ"
+                                            className="d-flex justify-content-center"
                                             rules ={
                                                 [
                                                 {required: true, message: "Please input your height of prototype"}
@@ -339,6 +336,7 @@ function HomePage(){
                                         >
                                             <Input
                                                 name='prototypeZ'
+                                                placeholder= "Prototype Height"
                                                 onChange={(e) => handleOnChange(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
@@ -346,8 +344,8 @@ function HomePage(){
                                         </Form.Item>
 
                                         <Form.Item
-                                            label = "Weight"
                                             name = "prototypeWeight"
+                                            className="d-flex justify-content-center"
                                             rules ={
                                                 [
                                                 {required: true, message: "Please input your weight of prototype"}
@@ -356,21 +354,20 @@ function HomePage(){
                                         >
                                             <Input
                                                 name='prototypeWeight'
+                                                placeholder = "Prototype Weight"
                                                 onChange={(e) => handleOnChange(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
                                             />
                                         </Form.Item>
-
-                                        </Form>
                                     </div>
 
                                     <div className="mt-3">
-                                        <Title level={4}>Logistics needed (If none required, put 0):</Title> 
+                                        <Title level={4} className="d-flex justify-content-center mb-3">Logistics needed (If none required, put 0):</Title>
 
                                         <Form.Item
-                                            label = "Number of powerpoints"
                                             name = "powerPointsCount"
+                                            className="d-flex justify-content-center"
                                             rules ={
                                                 [
                                                 {required: true, message: "Please input number of powerpoints needed!"}
@@ -379,17 +376,16 @@ function HomePage(){
                                         >
                                             <Input
                                                 name='powerPointsCount'
+                                                placeholder = "Number of Powerpoints"
                                                 onChange={(e) => handleOnChange(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
                                             />
                                         </Form.Item>
 
-                                        <Form form={form} name="horizontal_login" layout="inline">
-
                                         <Form.Item
-                                            label = "Number of big pedestals"
                                             name = "pedestalBigCount"
+                                            className="d-flex justify-content-center"
                                             rules ={
                                                 [
                                                 {required: true, message: "Please input number of big pedestals needed!"}
@@ -398,6 +394,7 @@ function HomePage(){
                                         >
                                             <Input
                                                 name='pedestalBigCount'
+                                                placeholder = "Number of Big Pedestals"
                                                 onChange={(e) => handleOnChange(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
@@ -405,8 +402,8 @@ function HomePage(){
                                         </Form.Item>
 
                                         <Form.Item
-                                            label="Number of small pedestals"
                                             name="pedestalSmallCount"
+                                            className="d-flex justify-content-center"
                                             rules={[
                                             {
                                                 required: true,
@@ -416,6 +413,7 @@ function HomePage(){
                                         >
                                             <Input                                               
                                                 name="pedestalSmallCount"
+                                                placeholder="Number of Small Pedestals"
                                                 onChange={(e) => handleOnChange(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}   
                                                 size='large'                       
@@ -423,24 +421,23 @@ function HomePage(){
                                         </Form.Item>
 
                                         <Form.Item
-                                            label = "Pedestal description"
                                             name = "pedestalDescription"
+                                            className="d-flex justify-content-center"
                                         >
                                             <Input
                                                 name='pedestalDescription'
+                                                placeholder = "Pedestal description"
                                                 onChange={(e) => handleOnChange(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
                                             />
                                         </Form.Item>
-
-                                        </Form>
                                     </div>
 
                                     <div className="mt-3">
                                         <Form.Item
-                                            label="Number of monitors"
                                             name="monitorCount"
+                                            className="d-flex justify-content-center"
                                             rules={[
                                             {
                                                 required: true,
@@ -449,7 +446,8 @@ function HomePage(){
                                             ]}
                                         >
                                             <Input                                               
-                                                name="monitorCount"   
+                                                name="monitorCount"
+                                                placeholder="Number of Monitors"
                                                 onChange={(e) => handleOnChange(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'                       
@@ -457,8 +455,8 @@ function HomePage(){
                                         </Form.Item>
 
                                         <Form.Item
-                                            label="Number of TVs"
                                             name="tvCount"
+                                            className="d-flex justify-content-center"
                                             rules={[
                                             {
                                                 required: true,
@@ -468,6 +466,7 @@ function HomePage(){
                                         >
                                             <Input                                               
                                                 name="tvCount"
+                                                placeholder="Number of TVs"
                                                 onChange={(e) => handleOnChange(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}   
                                                 size='large'                       
@@ -475,8 +474,8 @@ function HomePage(){
                                         </Form.Item>
 
                                         <Form.Item
-                                            label="Number of tables"
                                             name="tableCount"
+                                            className="d-flex justify-content-center"
                                             rules={[
                                             {
                                                 required: true,
@@ -485,7 +484,8 @@ function HomePage(){
                                             ]}
                                         >
                                             <Input                                               
-                                                name="tableCount"  
+                                                name="tableCount"
+                                                placeholder="Number of Tables"
                                                 onChange={(e) => handleOnChange(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)} 
                                                 size='large'                       
@@ -493,8 +493,8 @@ function HomePage(){
                                         </Form.Item>
 
                                         <Form.Item
-                                            label="Number of chairs"
                                             name="chairCount"
+                                            className="d-flex justify-content-center"
                                             rules={[
                                             {
                                                 required: true,
@@ -503,18 +503,17 @@ function HomePage(){
                                             ]}
                                         >
                                             <Input                                               
-                                                name="chairCount" 
+                                                name="chairCount"
+                                                placeholder="Number of Chairs"
                                                 onChange={(e) => handleOnChange(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}  
                                                 size='large'                       
                                             />
                                         </Form.Item>
 
-                                        <Form form={form} name="horizontal_login" layout="inline">
-
                                         <Form.Item
-                                            label = "Number of HDMI to VGA adapter"
                                             name = "hdmiToVgaAdapaterCount"
+                                            className="d-flex justify-content-center"
                                             rules ={
                                                 [
                                                 {required: true, message: "Please input number of HDMI to VGA adapter needed!"}
@@ -523,6 +522,7 @@ function HomePage(){
                                         >
                                             <Input
                                                 name='hdmiToVgaAdapterCount'
+                                                placeholder = "Number of HDMI to VGA adapter"
                                                 onChange={(e) => handleOnChange(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
@@ -530,8 +530,8 @@ function HomePage(){
                                         </Form.Item>
 
                                         <Form.Item
-                                            label="Number of HDMI cable"
                                             name="hdmiCableCount"
+                                            className="d-flex justify-content-center"
                                             rules={[
                                             {
                                                 required: true,
@@ -540,27 +540,23 @@ function HomePage(){
                                             ]}
                                         >
                                             <Input                                               
-                                                name="hdmiCableCount"   
+                                                name="hdmiCableCount"
+                                                placeholder="Number of HDMI cable"
                                                 onChange={(e) => handleOnChange(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'                       
                                             />
                                         </Form.Item>
-
-                                        </Form>
-
-                                        
-
-
                                     </div>
 
                                     <div className="mt-3">
                                         <Form.Item
-                                            label = "Additional remarks"
                                             name = "remark"
+                                            className="d-flex justify-content-center"
                                         >
                                             <Input
                                                 name='remark'
+                                                placeholder = "Additional Remarks"
                                                 onChange={(e) => handleOnChange(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
@@ -568,7 +564,9 @@ function HomePage(){
                                         </Form.Item>
                                     </div>
 
-                                    <Form.Item>
+                                    <Form.Item
+                                        className="d-flex justify-content-center"
+                                    >
                                         <div className="d-flex justify-content-center">
                                             {                           
                                                 !clicked ? 
@@ -602,12 +600,10 @@ function HomePage(){
                                                     </Button>
                                             }
                                         </div>
-                                    </Form.Item>         
+                                    </Form.Item>
                                 </Form>
                             </div>
-                        </div>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>Capstone Allocation ©2020 Created by MadDev</Footer>
             </Layout>
         </Layout>
     );

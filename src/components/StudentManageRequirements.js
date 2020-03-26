@@ -2,15 +2,11 @@ import React, {useEffect, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
 import {Form, Input, Typography, Button, Divider, Alert, Modal, Layout} from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { LinkContainer } from 'react-router-bootstrap';
 import MenuHeader from "./MenuHeader"
 import { uploadRequirementsStudent } from "../actions/requirementsActions";
 
 const { Content, Footer } = Layout;
 const { Title, Text } = Typography;
-
-
 
 function HomePage(){
 
@@ -22,7 +18,6 @@ function HomePage(){
           span: 10,
         },
       };
-
 
     const [form] = Form.useForm();
 
@@ -126,7 +121,29 @@ function HomePage(){
         setInvalidUpload(false);
         setClicked(true);
         setRunEffect(true);
-        uploadRequirementsStudent(groupName, type, spaceX, spaceY, spaceZ, prototypeX, prototypeY, prototypeZ, prototypeWeight, powerPointsCount, pedestalBigCount, pedestalSmallCount, pedestalDescription, monitorCount, tvCount, tableCount, chairCount, hdmiToVgaAdapterCount, hdmiCableCount, remark,  dispatch);
+        uploadRequirementsStudent(
+            groupName,
+            type,
+            spaceX,
+            spaceY,
+            spaceZ,
+            prototypeX,
+            prototypeY,
+            prototypeZ,
+            prototypeWeight,
+            powerPointsCount,
+            pedestalBigCount,
+            pedestalSmallCount,
+            pedestalDescription,
+            monitorCount,
+            tvCount,
+            tableCount,
+            chairCount,
+            hdmiToVgaAdapterCount,
+            hdmiCableCount,
+            remark,
+            dispatch
+        );
     };
 
     const handleKeyUp = e => {

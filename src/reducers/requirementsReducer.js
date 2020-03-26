@@ -16,7 +16,6 @@ export default function(state={}, action){
                 ...state,
                 uploadError: true
             }
-
         
         default:
             return state;

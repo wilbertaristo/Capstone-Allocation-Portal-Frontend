@@ -5,9 +5,9 @@ import HomePage from './HomePage';
 import ResetPassword from './ResetPassword';
 import SignupPage from "./SignupPage";
 import StudentManageRequirements from './StudentManageRequirements';
-import AllocationMap from './AllocationMap';
+import AdminAllocationMap from './AdminAllocationMap';
 import UserSettings from './UserSettings';
-import {BrowserRouter as Router, Route, Switch } from'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, Redirect } from'react-router-dom';
 
 import 'antd/dist/antd.css';
 import '../style/style.css';
@@ -16,12 +16,14 @@ function App(){
   return(
     <Router>
         <Switch>
+          <Route exact path="/"><Redirect to="/login"/></Route>
           <Route path="/login" component={LoginPage}/>
           <ProtectedRoute path="/home" component={HomePage}/>
           <Route path="/reset-password" component={ResetPassword}/>
           <Route path="/signup" component={SignupPage}/>
           <ProtectedRoute path="/manage-requirements/student" component={StudentManageRequirements}/>
-          <ProtectedRoute path="/allocation-map" component={AllocationMap}/>
+          <ProtectedRoute exact path="/allocation-map/admin" component={AdminAllocationMap}/>
+          <ProtectedRoute path="/allocation-map/admin/map_demo.html" render={() => {window.location.href="map_demo.html"}} />
           <ProtectedRoute path="/user-settings" component={UserSettings}/>
         </Switch>
     </Router>

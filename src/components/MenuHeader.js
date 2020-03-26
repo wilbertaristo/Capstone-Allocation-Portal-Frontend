@@ -50,7 +50,7 @@ function MenuHeader(){
                                 </LinkContainer>
                             </Menu.Item>
                             <Menu.Item key="map">
-                                <LinkContainer to="/allocation-map" className="pointer">
+                                <LinkContainer to="/allocation-map/admin" className="pointer">
                                     <div className="d-flex flex-row align-items-center">
                                         <CompassOutlined className="mr-2"/>
                                         Allocation Map
@@ -101,7 +101,7 @@ function MenuHeader(){
                                 </LinkContainer>
                             </Menu.Item>
                             <Menu.Item key="map">
-                                <LinkContainer to="/allocation-map" className="pointer">
+                                <LinkContainer to="/allocation-map/admin" className="pointer">
                                     <div className="d-flex flex-row align-items-center">
                                         <CompassOutlined className="mr-2"/>
                                         Allocation Map

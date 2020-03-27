@@ -50,11 +50,13 @@ function LoginPage(){
     };
 
     const handleLogin = (values) => {
-        setInvalidLogin(false);
-        setClicked(true);
-        setRunEffect(true);
-        dispatch({type: CLEAR_AUTH_ERROR});
-        signinUser(email, password, history, dispatch);
+        if (email && password){
+            setInvalidLogin(false);
+            setClicked(true);
+            setRunEffect(true);
+            dispatch({type: CLEAR_AUTH_ERROR});
+            signinUser(email, password, history, dispatch);
+        }
     };
 
     const handleKeyUp = e => {
@@ -136,6 +138,7 @@ function LoginPage(){
                                     {required: true, message: "Please input your password"}
                                     ]
                                 }
+                                className= "mb-3"
                             >
                                 <Input
                                     prefix={<LockOutlined className="site-form-item-icon"/>}
@@ -149,7 +152,7 @@ function LoginPage(){
                             </Form.Item>
                         </div>
 
-                        <div className="mt-1 mb-3 d-flex justify-content-end">
+                        <div className="mb-2 d-flex justify-content-end">
                             {
                                 !clicked ?
                                 <LinkContainer to="/reset-password" className="pointer">
@@ -196,12 +199,11 @@ function LoginPage(){
                             </div>
                         </Form.Item>
 
-                        <div className="mt-1 mb-4 d-flex justify-content-center">
+                        <div className="m-0 d-flex justify-content-center">
                             {
                                 !clicked ?
-                                <LinkContainer to="/signup" className="pointer">
-                                    <div><h6 style={{color: "gray"}}>New user? Sign up</h6></div>
-                                </LinkContainer> :
+                                    <div><h6 style={{cursor: "context-menu"}}>New user? <a href="/signup">Sign up</a></h6></div>
+                                    :
                                     <div><h6 className="pointer" style={{color: "gray"}}>Signup</h6></div>
                             }
 

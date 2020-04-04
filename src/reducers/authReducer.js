@@ -7,7 +7,6 @@ import {
     RESET_PASSWORD,
     PASSWORD_SENT,
     AUTH_SUCCESS,
-    AUTH_ADMIN,
     CLEAR_AUTH_ERROR,
     SIGNUP_USER,
     SIGNUP_ERROR
@@ -26,16 +25,7 @@ export default function(state={}, action){
             return{
                 ...state,
                 loginError: null,
-                authenticated: true,
-                admin: false
-            }
-
-        case AUTH_ADMIN:
-            return{
-                ...state,
-                loginError: null,
-                authenticated: true,
-                admin: true
+                authenticated: true
             }
 
         case UNAUTH_USER:

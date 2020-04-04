@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Layout, Menu } from 'antd';
 import {
     UserOutlined,
@@ -18,6 +18,43 @@ const { SubMenu } = Menu;
 function MenuHeader(){
     const history = useHistory();
     const dispatch = useDispatch();
+    const admin = localStorage.getItem("admin");
+
+    const renderAllocationMapMenu = () => {
+        if (admin === "true"){
+            return <LinkContainer to="/allocation-map/admin" className="pointer">
+                <div className="d-flex flex-row align-items-center">
+                    <CompassOutlined className="mr-2"/>
+                    Allocation Map
+                </div>
+            </LinkContainer>
+        } else {
+            return <LinkContainer to="/allocation-map/student" className="pointer">
+                <div className="d-flex flex-row align-items-center">
+                    <CompassOutlined className="mr-2"/>
+                    Allocation Map
+                </div>
+            </LinkContainer>
+        }
+    }
+
+    const renderManageRequirementsMenu = () => {
+        if (admin === "true"){
+            return <LinkContainer to="/manage-requirements/admin" className="pointer">
+                <div className="d-flex flex-row align-items-center">
+                    <UploadOutlined className="mr-2"/>
+                    Manage Requirements
+                </div>
+            </LinkContainer>
+        } else {
+            return <LinkContainer to="/manage-requirements/student" className="pointer">
+                <div className="d-flex flex-row align-items-center">
+                    <UploadOutlined className="mr-2"/>
+                    Manage Requirements
+                </div>
+            </LinkContainer>
+        }
+    }
 
     const handleLogout = () => {
         signoutUser(history, dispatch);
@@ -42,20 +79,10 @@ function MenuHeader(){
 
                         <Menu theme="dark" mode="inline">
                             <Menu.Item key="req">
-                                <LinkContainer to="/manage-requirements/student" className="pointer">
-                                    <div className="d-flex flex-row align-items-center">
-                                        <UploadOutlined className="mr-2"/>
-                                        Manage Requirements
-                                    </div>
-                                </LinkContainer>
+                                {renderManageRequirementsMenu()}
                             </Menu.Item>
                             <Menu.Item key="map">
-                                <LinkContainer to="/allocation-map/admin" className="pointer">
-                                    <div className="d-flex flex-row align-items-center">
-                                        <CompassOutlined className="mr-2"/>
-                                        Allocation Map
-                                    </div>
-                                </LinkContainer>
+                                {renderAllocationMapMenu()}
                             </Menu.Item>
                             <SubMenu
                                 key="account"
@@ -93,20 +120,10 @@ function MenuHeader(){
                             className="d-flex justify-content-end"
                         >
                             <Menu.Item key="req">
-                                <LinkContainer to="/manage-requirements/student" className="pointer">
-                                    <div className="d-flex flex-row align-items-center">
-                                        <UploadOutlined className="mr-2"/>
-                                        Manage Requirements
-                                    </div>
-                                </LinkContainer>
+                                {renderManageRequirementsMenu()}
                             </Menu.Item>
                             <Menu.Item key="map">
-                                <LinkContainer to="/allocation-map/admin" className="pointer">
-                                    <div className="d-flex flex-row align-items-center">
-                                        <CompassOutlined className="mr-2"/>
-                                        Allocation Map
-                                    </div>
-                                </LinkContainer>
+                                {renderAllocationMapMenu()}
                             </Menu.Item>
                             <SubMenu
                                 key="account"

@@ -114,8 +114,9 @@ function LoginPage(){
                                 name = "email"
                                 rules ={
                                     [
-                                    {required: true, message: "Please input your email address"},
-                                    {type: 'email', message: "Please enter a valid email address"}
+                                        {required: true, message: "Please input your email address"},
+                                        {type: 'email', message: "Please enter a valid email address"},
+                                        {max: 255, message: "Input exceeded maximum allowable length"}
                                     ]
                                 }
                             >
@@ -135,7 +136,8 @@ function LoginPage(){
                                 name = "password"
                                 rules ={
                                     [
-                                    {required: true, message: "Please input your password"}
+                                        {required: true, message: "Please input your password"},
+                                        {max: 255, message: "Input exceeded maximum allowable length"}
                                     ]
                                 }
                                 className= "mb-3"
@@ -204,9 +206,8 @@ function LoginPage(){
                                 !clicked ?
                                     <div><h6 style={{cursor: "context-menu"}}>New user? <a href="/signup">Sign up</a></h6></div>
                                     :
-                                    <div><h6 className="pointer" style={{color: "gray"}}>Signup</h6></div>
+                                    <div><h6 style={{cursor: "context-menu"}}>New user? <a>Sign up</a></h6></div>
                             }
-
                         </div>
 
                     </Form>

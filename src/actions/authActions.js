@@ -8,6 +8,7 @@ import {
     CHANGE_PASSWORD,
     RESET_PASSWORD,
     PASSWORD_SENT,
+    AUTH_ADMIN,
     SIGNUP_USER,
     SIGNUP_ERROR
 } from "./types";
@@ -26,13 +27,20 @@ export function signinUser(email, password, history, dispatch) {
             }
         })
         .then(loginResponse => {
-            const { token } = loginResponse.data;
+            const { token, is_admin } = loginResponse.data;
             localStorage.setItem('token', token);
+            localStorage.setItem('admin', is_admin);
 
             axios.defaults.headers['Authorization'] = `Bearer ${token}`;
-            dispatch({
-                type: AUTH_USER
-            })
+            if (is_admin){
+                dispatch({
+                    type: AUTH_ADMIN
+                })
+            } else {
+                dispatch({
+                    type: AUTH_USER
+                })
+            }
             history.push('/home')
         })
         .catch(() => {

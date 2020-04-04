@@ -1,27 +1,60 @@
 import React  from "react";
-import { Layout } from 'antd';
+import { Layout, Button, Typography } from 'antd';
 import MenuHeader from "./MenuHeader"
-import Iframe from 'react-iframe'
+import { ROOT_URL } from "../utils";
+import AuthIFrame from "react-auth-iframe";
 
-const { Content, Footer } = Layout;
+
+const { Content  } = Layout;
+const { Title } = Typography
 
 
 function HomePage(){
+    const token = localStorage.getItem("token");
+
+    const handleAllocation = () => {
+        return null
+    }
+
     return(
         <Layout className="vh-100">
             <MenuHeader/>
             <Layout>
                 <Content>
-                    <Iframe
-                        url="http://localhost:8080/map_demo.html"
-                        width="1920px"
-                        height="1080px"
-                        id="myId"
-                        className="myClassname"
+                    <AuthIFrame
+                        src={ROOT_URL + "/maps/page"}
+                        token={token}
+                        width="100%"
+                        height="93.5%"
                         display="initial"
-                        position="relative"/>
+                        position="relative"
+                    />
+                    <div className="d-flex flex-row justify-content-between">
+                        <div className='invisible-box'/>
+                        <Button
+                            htmlType="submit"
+                            className="login-form-button mt-1"
+                            shape="round"
+                            size="large"
+                            onClick={() => handleAllocation()}
+                            type = "primary"
+                        >
+                            SEND EMAIL
+                        </Button>
+                        <Button
+                            htmlType="submit"
+                            className="login-form-button mt-1"
+                            shape="round"
+                            size="large"
+                            onClick={() => handleAllocation()}
+                            type = "primary"
+                        >
+                            RUN ALLOCATION
+                        </Button>
+                        <div className='invisible-box'/>
+                    </div>
+                    {/*<h6 className="d-flex justify-content-end mr-3">Capstone Allocation ©2020 Created by MadDev</h6>*/}
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>Capstone Allocation ©2020 Created by MadDev</Footer>
             </Layout>
         </Layout>
     );

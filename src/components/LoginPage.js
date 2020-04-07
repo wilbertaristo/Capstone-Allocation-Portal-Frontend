@@ -204,16 +204,9 @@ function LoginPage(){
                         <div className="m-0 d-flex justify-content-center">
                             {
                                 !clicked ?
-<<<<<<< HEAD
-                                <LinkContainer to="/signup" className="signup-form">
-                                    <div><h6 style={{color: "gray"}}>New user? Sign up</h6></div>
-                                </LinkContainer> :
-                                    <div><h6 className="signup-form" style={{color: "gray"}}>Signup</h6></div>
-=======
                                     <div><h6 style={{cursor: "context-menu"}}>New user? <a href="/signup">Sign up</a></h6></div>
                                     :
                                     <div><h6 style={{cursor: "context-menu"}}>New user? <a>Sign up</a></h6></div>
->>>>>>> b418431bbb67bbd7207ebbcdc99deb4f74f7369d
                             }
                         </div>
 

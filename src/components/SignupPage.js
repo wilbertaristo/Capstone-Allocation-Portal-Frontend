@@ -46,7 +46,6 @@ function SignupPage(){
     const handleOnChange = (e) => {
         setInvalidSignup(false);
         const {name, value} = e.target;
-        console.log(value);
         if (name === "email") {
             setEmail(value);
         } else if (name === "fullName"){
@@ -59,11 +58,13 @@ function SignupPage(){
     };
 
     const handleSignup = (values) => {
-        setInvalidSignup(false);
-        setClicked(true);
-        setRunEffect(true);
-        dispatch({type: CLEAR_AUTH_ERROR});
-        signupUser( email, password, fullName, dispatch);
+        if (fullName && email && password && confirmPassword){
+            setInvalidSignup(false);
+            setClicked(true);
+            setRunEffect(true);
+            dispatch({type: CLEAR_AUTH_ERROR});
+            signupUser( email, password, fullName, dispatch);
+        }
     };
 
     const handleKeyUp = e => {

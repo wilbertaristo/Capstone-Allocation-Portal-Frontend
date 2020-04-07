@@ -1,11 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
-<<<<<<< HEAD
-import {Form, Input, Typography, Button, Divider, Alert, Modal, Layout, InputNumber} from 'antd';
-=======
 import {Form, Input, Typography, Button, Divider, Alert, Modal, Layout} from 'antd';
->>>>>>> b418431bbb67bbd7207ebbcdc99deb4f74f7369d
 import MenuHeader from "./MenuHeader"
 import { uploadRequirementsStudent } from "../actions/requirementsActions";
 
@@ -173,7 +169,6 @@ function HomePage(){
 
                                     <div className="d-flex justify-content-center mt-3 mb-2 ml-5 mr-5">
                                         <Title level={3} style={{color: "dimgray", letterSpacing: "2px"}}>SPACE ALLOCATION REQUIREMENTS</Title>
-<<<<<<< HEAD
                                     </div>
 
                                     <Divider className="bg-secondary" style={{marginTop: "1px", marginBottom: "20px"}}/>
@@ -300,134 +295,13 @@ function HomePage(){
                                             />
                                         </Form.Item>
                                     </div>
-=======
-                                    </div>
-
-                                    <Divider className="bg-secondary" style={{marginTop: "1px", marginBottom: "20px"}}/>
-
-                                    <div className="d-flex flex-column justify-content-center mt-3">
-                                        <Form.Item
-                                            name = "groupName"
-                                            className="d-flex justify-content-center"
-                                            rules ={
-                                                [
-                                                {required: true, message: "Please input your group name"}
-                                                ]
-                                            }
-                                        >
-                                            <Input
-                                                name='groupName'
-                                                placeholder="Group Name"
-                                                onChange={(e) => handleOnChange(e)}
-                                                onKeyUp={(e) => handleKeyUp(e)}
-                                                size='large'
-                                            />
-                                        </Form.Item>
-
-                                        <Form.Item
-                                            name = "typePrototype"
-                                            className="d-flex justify-content-center"
-                                            rules ={
-                                                [
-                                                {required: true, message: "Please input your type of prototype"}
-                                                ]
-                                            }
-                                        >
-                                            <Input
-                                                name='typePrototype'
-                                                placeholder="Type of Prototype"
-                                                onChange={(e) => handleOnChange(e)}
-                                                onKeyUp={(e) => handleKeyUp(e)}
-                                                size='large'
-                                            />
-                                        </Form.Item>
-
-                                        <Form.Item
-                                            className="d-flex justify-content-center"
-                                            name = "typeDescription"
-                                            rules ={
-                                                [
-                                                {required: true, message: "Please input your prototype description"}
-                                                ]
-                                            }
-                                        >
-                                            <Input
-                                                name='typeDescription'
-                                                placeholder="Prototype Description"
-                                                onChange={(e) => handleOnChange(e)}
-                                                onKeyUp={(e) => handleKeyUp(e)}
-                                                size='large'
-                                            />
-                                        </Form.Item>
-
-                                        <Title level={4} className="d-flex justify-content-center mb-3">Showcase space needed (in metres):</Title>
-
-                                        <Form.Item
-                                            name = "spaceX"
-                                            className="d-flex justify-content-center"
-                                            rules ={
-                                                [
-                                                {required: true, message: "Please input your length of showcase space needed"}
-                                                ]
-                                            }
-                                        >
-                                            <Input
-                                                name='spaceX'
-                                                placeholder = "Length"
-                                                onChange={(e) => handleOnChange(e)}
-                                                onKeyUp={(e) => handleKeyUp(e)}
-                                                size='large'
-                                            />
-                                        </Form.Item>
-
-                                        <Form.Item
-                                            name="spaceY"
-                                            className="d-flex justify-content-center"
-                                            rules={[
-                                            {
-                                                required: true,
-                                                message: 'Please input your width of showcase space needed!',
-                                            },
-                                            ]}
-                                        >
-                                            <Input
-                                                name="spaceY"
-                                                placeholder="Width"
-                                                onChange={(e) => handleOnChange(e)}
-                                                onKeyUp={(e) => handleKeyUp(e)}
-                                                size='large'
-                                            />
-                                        </Form.Item>
-
-                                        <Form.Item
-                                            name = "spaceZ"
-                                            className="d-flex justify-content-center"
-                                            rules ={
-                                                [
-                                                {required: true, message: "Please input your height of showcase space needed"}
-                                                ]
-                                            }
-                                        >
-                                            <Input
-                                                name='spaceZ'
-                                                placeholder = "Height"
-                                                onChange={(e) => handleOnChange(e)}
-                                                onKeyUp={(e) => handleKeyUp(e)}
-                                                size='large'
-                                            />
-                                        </Form.Item>
-                                    </div>
->>>>>>> b418431bbb67bbd7207ebbcdc99deb4f74f7369d
                                     
 
                                     <div className="mt-3">
                                         <Title level={4} className="d-flex justify-content-center mb-3">Prototype details (in metres/kg):</Title>
 
                                         <Form.Item
-<<<<<<< HEAD
                                             label = "Length:"
-=======
->>>>>>> b418431bbb67bbd7207ebbcdc99deb4f74f7369d
                                             name = "prototypeX"
                                             className="d-flex justify-content-center"
                                             rules ={
@@ -447,10 +321,7 @@ function HomePage(){
                                         </Form.Item>
 
                                         <Form.Item
-<<<<<<< HEAD
                                             label = "Width:"
-=======
->>>>>>> b418431bbb67bbd7207ebbcdc99deb4f74f7369d
                                             name="prototypeY"
                                             className="d-flex justify-content-center"
                                             rules={[
@@ -471,10 +342,7 @@ function HomePage(){
                                         </Form.Item>
 
                                         <Form.Item
-<<<<<<< HEAD
                                             label = "Height:"
-=======
->>>>>>> b418431bbb67bbd7207ebbcdc99deb4f74f7369d
                                             name = "prototypeZ"
                                             className="d-flex justify-content-center"
                                             rules ={
@@ -494,10 +362,7 @@ function HomePage(){
                                         </Form.Item>
 
                                         <Form.Item
-<<<<<<< HEAD
                                             label = "Weight:"
-=======
->>>>>>> b418431bbb67bbd7207ebbcdc99deb4f74f7369d
                                             name = "prototypeWeight"
                                             className="d-flex justify-content-center"
                                             rules ={
@@ -521,10 +386,7 @@ function HomePage(){
                                         <Title level={4} className="d-flex justify-content-center mb-3">Logistics needed (If none required, put 0):</Title>
 
                                         <Form.Item
-<<<<<<< HEAD
                                             label = "Number of PowerPoints:"
-=======
->>>>>>> b418431bbb67bbd7207ebbcdc99deb4f74f7369d
                                             name = "powerPointsCount"
                                             className="d-flex justify-content-center"
                                             rules ={
@@ -544,10 +406,7 @@ function HomePage(){
                                         </Form.Item>
 
                                         <Form.Item
-<<<<<<< HEAD
                                             label = "Number of Big Pedestals:"
-=======
->>>>>>> b418431bbb67bbd7207ebbcdc99deb4f74f7369d
                                             name = "pedestalBigCount"
                                             className="d-flex justify-content-center"
                                             rules ={
@@ -567,10 +426,7 @@ function HomePage(){
                                         </Form.Item>
 
                                         <Form.Item
-<<<<<<< HEAD
                                             label = "Number of Small Pedestals:"
-=======
->>>>>>> b418431bbb67bbd7207ebbcdc99deb4f74f7369d
                                             name="pedestalSmallCount"
                                             className="d-flex justify-content-center"
                                             rules={[
@@ -591,10 +447,7 @@ function HomePage(){
                                         </Form.Item>
 
                                         <Form.Item
-<<<<<<< HEAD
                                             label = "Pedestal Description:"
-=======
->>>>>>> b418431bbb67bbd7207ebbcdc99deb4f74f7369d
                                             name = "pedestalDescription"
                                             className="d-flex justify-content-center"
                                         >
@@ -606,16 +459,9 @@ function HomePage(){
                                                 size='large'
                                             />
                                         </Form.Item>
-<<<<<<< HEAD
 
                                         <Form.Item
                                             label = "Number of Monitors:"
-=======
-                                    </div>
-
-                                    <div className="mt-3">
-                                        <Form.Item
->>>>>>> b418431bbb67bbd7207ebbcdc99deb4f74f7369d
                                             name="monitorCount"
                                             className="d-flex justify-content-center"
                                             rules={[
@@ -636,10 +482,7 @@ function HomePage(){
                                         </Form.Item>
 
                                         <Form.Item
-<<<<<<< HEAD
                                             label = "Number of TVs:"
-=======
->>>>>>> b418431bbb67bbd7207ebbcdc99deb4f74f7369d
                                             name="tvCount"
                                             className="d-flex justify-content-center"
                                             rules={[
@@ -660,10 +503,7 @@ function HomePage(){
                                         </Form.Item>
 
                                         <Form.Item
-<<<<<<< HEAD
                                             label = "Number of Tables:"
-=======
->>>>>>> b418431bbb67bbd7207ebbcdc99deb4f74f7369d
                                             name="tableCount"
                                             className="d-flex justify-content-center"
                                             rules={[
@@ -684,10 +524,7 @@ function HomePage(){
                                         </Form.Item>
 
                                         <Form.Item
-<<<<<<< HEAD
                                             label = "Number of Chairs:"
-=======
->>>>>>> b418431bbb67bbd7207ebbcdc99deb4f74f7369d
                                             name="chairCount"
                                             className="d-flex justify-content-center"
                                             rules={[
@@ -708,10 +545,7 @@ function HomePage(){
                                         </Form.Item>
 
                                         <Form.Item
-<<<<<<< HEAD
                                             label = "Number of HDMI to VGA Adapters:"
-=======
->>>>>>> b418431bbb67bbd7207ebbcdc99deb4f74f7369d
                                             name = "hdmiToVgaAdapaterCount"
                                             className="d-flex justify-content-center"
                                             rules ={
@@ -731,10 +565,7 @@ function HomePage(){
                                         </Form.Item>
 
                                         <Form.Item
-<<<<<<< HEAD
                                             label = "Number of HDMI Cables:"
-=======
->>>>>>> b418431bbb67bbd7207ebbcdc99deb4f74f7369d
                                             name="hdmiCableCount"
                                             className="d-flex justify-content-center"
                                             rules={[
@@ -758,10 +589,7 @@ function HomePage(){
 
                                     <div className="mt-3">
                                         <Form.Item
-<<<<<<< HEAD
-                                        l   abel = "Additional remarks:"
-=======
->>>>>>> b418431bbb67bbd7207ebbcdc99deb4f74f7369d
+                                            label = "Additional remarks:"
                                             name = "remark"
                                             className="d-flex justify-content-center"
                                         >

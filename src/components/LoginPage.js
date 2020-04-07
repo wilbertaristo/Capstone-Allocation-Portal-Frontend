@@ -152,10 +152,10 @@ function LoginPage(){
                         <div className="mt-1 mb-3 d-flex justify-content-end">
                             {
                                 !clicked ?
-                                <LinkContainer to="/reset-password" className="pointer">
+                                <LinkContainer to="/reset-password" className="forgot-password">
                                     <div><h6 style={{color: "gray"}}>Forgot password?</h6></div>
                                 </LinkContainer> :
-                                    <div><h6 className="pointer" style={{color: "gray"}}>Forgot password?</h6></div>
+                                    <div><h6 className="forgot-password" style={{color: "gray"}}>Forgot password?</h6></div>
                             }
                         </div>
 
@@ -199,10 +199,10 @@ function LoginPage(){
                         <div className="mt-1 mb-4 d-flex justify-content-center">
                             {
                                 !clicked ?
-                                <LinkContainer to="/signup" className="pointer">
+                                <LinkContainer to="/signup" className="signup-form">
                                     <div><h6 style={{color: "gray"}}>New user? Sign up</h6></div>
                                 </LinkContainer> :
-                                    <div><h6 className="pointer" style={{color: "gray"}}>Signup</h6></div>
+                                    <div><h6 className="signup-form" style={{color: "gray"}}>Signup</h6></div>
                             }
 
                         </div>

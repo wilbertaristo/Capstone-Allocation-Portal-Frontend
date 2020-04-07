@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
-import {Form, Input, Typography, Button, Divider, Alert, Modal, Layout} from 'antd';
+import {Form, Input, Typography, Button, Divider, Alert, Modal, Layout, InputNumber} from 'antd';
 import MenuHeader from "./MenuHeader"
 import { uploadRequirementsStudent } from "../actions/requirementsActions";
 
@@ -219,7 +219,7 @@ function HomePage(){
                                             name = "typeDescription"
                                             rules ={
                                                 [
-                                                {required: true, message: "Please input your prototype description"}
+                                                {required: true, message: "Please input your prototype description"}                                          
                                                 ]
                                             }
                                         >
@@ -240,7 +240,8 @@ function HomePage(){
                                             className="d-flex justify-content-center"
                                             rules ={
                                                 [
-                                                {required: true, message: "Please input your length of showcase space needed"}
+                                                {required: true, message: "Please input your length of showcase space needed"},
+                                                {type: 'number', message: "Please input a valid number!"}
                                                 ]
                                             }
                                         >
@@ -262,6 +263,7 @@ function HomePage(){
                                                 required: true,
                                                 message: 'Please input your width of showcase space needed!',
                                             },
+                                            {type: 'number', message: "Please input a valid number!"}
                                             ]}
                                         >
                                             <Input
@@ -279,7 +281,8 @@ function HomePage(){
                                             className="d-flex justify-content-center"
                                             rules ={
                                                 [
-                                                {required: true, message: "Please input your height of showcase space needed"}
+                                                {required: true, message: "Please input your height of showcase space needed"},
+                                                {type: 'number', message: "Please input a valid number!"}
                                                 ]
                                             }
                                         >
@@ -303,7 +306,8 @@ function HomePage(){
                                             className="d-flex justify-content-center"
                                             rules ={
                                                 [
-                                                {required: true, message: "Please input your length of prototype!"}
+                                                {required: true, message: "Please input your length of prototype!"},
+                                                {type: 'number', message: "Please input a valid number!"}
                                                 ]
                                             }
                                         >
@@ -325,6 +329,7 @@ function HomePage(){
                                                 required: true,
                                                 message: 'Please input your width of prototype!',
                                             },
+                                            {type: 'number', message: "Please input a valid number!"}
                                             ]}
                                         >
                                             <Input                                               
@@ -342,7 +347,8 @@ function HomePage(){
                                             className="d-flex justify-content-center"
                                             rules ={
                                                 [
-                                                {required: true, message: "Please input your height of prototype"}
+                                                {required: true, message: "Please input your height of prototype"},
+                                                {type: 'number', message: "Please input a valid number!"}
                                                 ]
                                             }
                                         >
@@ -361,7 +367,8 @@ function HomePage(){
                                             className="d-flex justify-content-center"
                                             rules ={
                                                 [
-                                                {required: true, message: "Please input your weight of prototype"}
+                                                {required: true, message: "Please input your weight of prototype"},
+                                                {type: 'number', message: "Please input a valid number!"}
                                                 ]
                                             }
                                         >
@@ -384,7 +391,8 @@ function HomePage(){
                                             className="d-flex justify-content-center"
                                             rules ={
                                                 [
-                                                {required: true, message: "Please input number of powerpoints needed!"}
+                                                {required: true, message: "Please input number of powerpoints needed!"},
+                                                {type: 'number', message: "Please input a valid number!"}
                                                 ]
                                             }
                                         >
@@ -403,7 +411,8 @@ function HomePage(){
                                             className="d-flex justify-content-center"
                                             rules ={
                                                 [
-                                                {required: true, message: "Please input number of big pedestals needed!"}
+                                                {required: true, message: "Please input number of big pedestals needed!"},
+                                                {type: 'number', message: "Please input a valid number!"}
                                                 ]
                                             }
                                         >
@@ -425,6 +434,7 @@ function HomePage(){
                                                 required: true,
                                                 message: 'Please input number of small pedestals needed!',
                                             },
+                                            {type: 'number', message: "Please input a valid number!"}
                                             ]}
                                         >
                                             <Input                                               
@@ -459,6 +469,7 @@ function HomePage(){
                                                 required: true,
                                                 message: 'Please input number of monitors needed!',
                                             },
+                                            {type: 'number', message: "Please input a valid number!"}
                                             ]}
                                         >
                                             <Input                                               
@@ -479,6 +490,7 @@ function HomePage(){
                                                 required: true,
                                                 message: 'Please input number of TVs needed!',
                                             },
+                                            {type: 'number', message: "Please input a valid number!"}
                                             ]}
                                         >
                                             <Input                                               
@@ -499,6 +511,7 @@ function HomePage(){
                                                 required: true,
                                                 message: 'Please input number of tables needed!',
                                             },
+                                            {type: 'number', message: "Please input a valid number!"}
                                             ]}
                                         >
                                             <Input                                               
@@ -519,6 +532,7 @@ function HomePage(){
                                                 required: true,
                                                 message: 'Please input number of chairs needed!',
                                             },
+                                            {type: 'number', message: "Please input a valid number!"}
                                             ]}
                                         >
                                             <Input                                               
@@ -536,7 +550,8 @@ function HomePage(){
                                             className="d-flex justify-content-center"
                                             rules ={
                                                 [
-                                                {required: true, message: "Please input number of HDMI to VGA adapter needed!"}
+                                                {required: true, message: "Please input number of HDMI to VGA adapter needed!"},
+                                                {type: 'number', message: "Please input a valid number!"}
                                                 ]
                                             }
                                         >
@@ -558,6 +573,7 @@ function HomePage(){
                                                 required: true,
                                                 message: 'Please input number of HDMI cables needed!',
                                             },
+                                            {type: 'number', message: "Please input a valid number!"}
                                             ]}
                                         >
                                             <Input                                               

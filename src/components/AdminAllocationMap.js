@@ -1,8 +1,9 @@
-import React  from "react";
+import React, { useState } from "react";
 import { Layout, Button, Typography } from 'antd';
 import MenuHeader from "./MenuHeader"
 import { ROOT_URL } from "../utils";
 import AuthIFrame from "react-auth-iframe";
+import { runAllocation } from '../actions/requirementsActions'
 
 
 const { Content  } = Layout;
@@ -11,9 +12,11 @@ const { Title } = Typography
 
 function HomePage(){
     const token = localStorage.getItem("token");
+    const [index, setIndex] = useState(0);
 
     const handleAllocation = () => {
-        return null
+        runAllocation();
+        setIndex(index +1);
     }
 
     return(
@@ -23,6 +26,7 @@ function HomePage(){
                 <Content>
                     <AuthIFrame
                         src={ROOT_URL + "/maps/page"}
+                        key={index}
                         token={token}
                         width="100%"
                         height="93.5%"

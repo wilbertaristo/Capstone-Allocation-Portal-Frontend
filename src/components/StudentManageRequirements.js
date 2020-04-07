@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
-import {Form, Input, Typography, Button, Divider, Alert, Modal, Layout} from 'antd';
+import {Form, Input, Typography, Button, Divider, Alert, Modal, Layout, InputNumber} from 'antd';
 import MenuHeader from "./MenuHeader"
 import { uploadRequirementsStudent } from "../actions/requirementsActions";
 
 const { Content, Footer } = Layout;
 const { Title, Text } = Typography;
 
-function HomePage(){
+function StudentManageRequirements(){
 
     const layout = {
         labelCol: {
@@ -22,6 +22,7 @@ function HomePage(){
     const [form] = Form.useForm();
     const [formLayout] = useState('vertical');
 
+    let history = useHistory();
     const [groupName, setGroupName] = useState();
     const [typePrototype, setTypePrototype] = useState();
     const [typeDescription, setTypeDescription] = useState();
@@ -62,6 +63,7 @@ function HomePage(){
             } else if (uploadSuccess){
                 setValidUpload(true);
                 setRunEffect(false);
+                setTimeout(() => history.push('/home'), 4000);
             }
         }
     })
@@ -117,32 +119,36 @@ function HomePage(){
     };
 
     const handleUpload = (values) => {
-        setInvalidUpload(false);
-        setClicked(true);
-        setRunEffect(true);
-        uploadRequirementsStudent(
-            groupName,
-            type,
-            spaceX,
-            spaceY,
-            spaceZ,
-            prototypeX,
-            prototypeY,
-            prototypeZ,
-            prototypeWeight,
-            powerPointsCount,
-            pedestalBigCount,
-            pedestalSmallCount,
-            pedestalDescription,
-            monitorCount,
-            tvCount,
-            tableCount,
-            chairCount,
-            hdmiToVgaAdapterCount,
-            hdmiCableCount,
-            remark,
-            dispatch
-        );
+        if (groupName && typePrototype && typeDescription && spaceX && spaceY && spaceZ && prototypeX && prototypeY && prototypeZ &&
+            prototypeWeight && powerPointsCount && pedestalBigCount && pedestalSmallCount && monitorCount &&
+            tvCount && tableCount && chairCount && hdmiToVgaAdapterCount && hdmiCableCount){
+            setInvalidUpload(false);
+            setClicked(true);
+            setRunEffect(true);
+            uploadRequirementsStudent(
+                groupName,
+                type,
+                spaceX,
+                spaceY,
+                spaceZ,
+                prototypeX,
+                prototypeY,
+                prototypeZ,
+                prototypeWeight,
+                powerPointsCount,
+                pedestalBigCount,
+                pedestalSmallCount,
+                pedestalDescription,
+                monitorCount,
+                tvCount,
+                tableCount,
+                chairCount,
+                hdmiToVgaAdapterCount,
+                hdmiCableCount,
+                remark,
+                dispatch
+            );
+        }
     };
 
     const handleKeyUp = e => {
@@ -151,6 +157,17 @@ function HomePage(){
                 handleUpload();
             }
         }
+    }
+
+    const handleModal = () => {
+        const modal = Modal.success({
+            title: "Upload success!",
+            content: "Redirecting you to our home page shortly...",
+            centered: true,
+            closable: false,
+            icon: null
+        });
+        setTimeout(() => {modal.destroy();}, 4000);
     }
 
     return(
@@ -173,6 +190,28 @@ function HomePage(){
 
                                     <Divider className="bg-secondary" style={{marginTop: "1px", marginBottom: "20px"}}/>
 
+                                    {
+                                        invalidUpload ?
+                                            <Alert
+                                                className="mb-3"
+                                                message = "Upload Failed"
+                                                description = "Each group can only upload once!"
+                                                type = "error"
+                                            />
+                                            :
+                                            <div></div>
+
+                                    }
+
+                                    {
+                                        validUpload?
+                                            handleModal()
+                                            :
+                                            <div></div>
+
+                                    }   
+
+                                    
                                     <div className="d-flex flex-column justify-content-center mt-3">
 
                                     <Form.Item
@@ -234,6 +273,8 @@ function HomePage(){
 
                                         <Title level={4} className="d-flex justify-content-center mb-3">Showcase space needed (in metres):</Title>
 
+                                
+
                                         <Form.Item
                                             label = "Length:"
                                             name = "spaceX"
@@ -241,14 +282,14 @@ function HomePage(){
                                             rules ={
                                                 [
                                                 {required: true, message: "Please input your length of showcase space needed"},
-                                                {type: 'number', message: "Please input a valid number!"}
                                                 ]
                                             }
                                         >
-                                            <Input
+                                            <InputNumber
+                                                className = "w-100"
                                                 name='spaceX'
                                                 placeholder = "Length"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setSpaceX(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
                                             />
@@ -266,10 +307,11 @@ function HomePage(){
                                             {type: 'number', message: "Please input a valid number!"}
                                             ]}
                                         >
-                                            <Input
+                                            <InputNumber
+                                                className = "w-100"
                                                 name="spaceY"
                                                 placeholder="Width"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setSpaceY(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
                                             />
@@ -282,18 +324,19 @@ function HomePage(){
                                             rules ={
                                                 [
                                                 {required: true, message: "Please input your height of showcase space needed"},
-                                                {type: 'number', message: "Please input a valid number!"}
                                                 ]
                                             }
                                         >
-                                            <Input
+                                            <InputNumber
                                                 name='spaceZ'
+                                                className = "w-100"
                                                 placeholder = "Height"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setSpaceZ(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
                                             />
                                         </Form.Item>
+                                   
                                     </div>
                                     
 
@@ -307,14 +350,14 @@ function HomePage(){
                                             rules ={
                                                 [
                                                 {required: true, message: "Please input your length of prototype!"},
-                                                {type: 'number', message: "Please input a valid number!"}
                                                 ]
                                             }
                                         >
-                                            <Input
+                                            <InputNumber
                                                 name='prototypeX'
+                                                className = "w-100"
                                                 placeholder = "Prototype Length"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setPrototypeX(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
                                             />
@@ -329,13 +372,13 @@ function HomePage(){
                                                 required: true,
                                                 message: 'Please input your width of prototype!',
                                             },
-                                            {type: 'number', message: "Please input a valid number!"}
                                             ]}
                                         >
-                                            <Input                                               
+                                            <InputNumber                                               
                                                 name="prototypeY"
+                                                className = "w-100"
                                                 placeholder="Prototype Width"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setPrototypeY(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'                       
                                             />
@@ -348,14 +391,14 @@ function HomePage(){
                                             rules ={
                                                 [
                                                 {required: true, message: "Please input your height of prototype"},
-                                                {type: 'number', message: "Please input a valid number!"}
                                                 ]
                                             }
                                         >
-                                            <Input
+                                            <InputNumber
                                                 name='prototypeZ'
+                                                className = "w-100"
                                                 placeholder= "Prototype Height"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setPrototypeZ(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
                                             />
@@ -368,14 +411,14 @@ function HomePage(){
                                             rules ={
                                                 [
                                                 {required: true, message: "Please input your weight of prototype"},
-                                                {type: 'number', message: "Please input a valid number!"}
                                                 ]
                                             }
                                         >
-                                            <Input
+                                            <InputNumber
                                                 name='prototypeWeight'
+                                                className = "w-100"
                                                 placeholder = "Prototype Weight"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setPrototypeWeight(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
                                             />
@@ -392,14 +435,14 @@ function HomePage(){
                                             rules ={
                                                 [
                                                 {required: true, message: "Please input number of powerpoints needed!"},
-                                                {type: 'number', message: "Please input a valid number!"}
                                                 ]
                                             }
                                         >
-                                            <Input
+                                            <InputNumber
                                                 name='powerPointsCount'
+                                                className = "w-100"
                                                 placeholder = "Number of Powerpoints"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setPowerPointsCount(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
                                             />
@@ -412,14 +455,14 @@ function HomePage(){
                                             rules ={
                                                 [
                                                 {required: true, message: "Please input number of big pedestals needed!"},
-                                                {type: 'number', message: "Please input a valid number!"}
                                                 ]
                                             }
                                         >
-                                            <Input
+                                            <InputNumber
                                                 name='pedestalBigCount'
+                                                className = "w-100"
                                                 placeholder = "Number of Big Pedestals"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setPedestalBigCount(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
                                             />
@@ -434,13 +477,13 @@ function HomePage(){
                                                 required: true,
                                                 message: 'Please input number of small pedestals needed!',
                                             },
-                                            {type: 'number', message: "Please input a valid number!"}
                                             ]}
                                         >
-                                            <Input                                               
+                                            <InputNumber                                               
                                                 name="pedestalSmallCount"
+                                                className = "w-100"
                                                 placeholder="Number of Small Pedestals"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setPedestalSmallCount(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}   
                                                 size='large'                       
                                             />
@@ -469,13 +512,13 @@ function HomePage(){
                                                 required: true,
                                                 message: 'Please input number of monitors needed!',
                                             },
-                                            {type: 'number', message: "Please input a valid number!"}
                                             ]}
                                         >
-                                            <Input                                               
+                                            <InputNumber                                               
                                                 name="monitorCount"
+                                                className = "w-100"
                                                 placeholder="Number of Monitors"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setMonitorCount(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'                       
                                             />
@@ -490,13 +533,13 @@ function HomePage(){
                                                 required: true,
                                                 message: 'Please input number of TVs needed!',
                                             },
-                                            {type: 'number', message: "Please input a valid number!"}
                                             ]}
                                         >
-                                            <Input                                               
+                                            <InputNumber                                               
                                                 name="tvCount"
+                                                className = "w-100"
                                                 placeholder="Number of TVs"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setTvCount(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}   
                                                 size='large'                       
                                             />
@@ -511,13 +554,13 @@ function HomePage(){
                                                 required: true,
                                                 message: 'Please input number of tables needed!',
                                             },
-                                            {type: 'number', message: "Please input a valid number!"}
                                             ]}
                                         >
-                                            <Input                                               
+                                            <InputNumber                                               
                                                 name="tableCount"
+                                                className = "w-100"
                                                 placeholder="Number of Tables"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setTableCount(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)} 
                                                 size='large'                       
                                             />
@@ -532,13 +575,13 @@ function HomePage(){
                                                 required: true,
                                                 message: 'Please input number of chairs needed!',
                                             },
-                                            {type: 'number', message: "Please input a valid number!"}
                                             ]}
                                         >
-                                            <Input                                               
+                                            <InputNumber                                               
                                                 name="chairCount"
+                                                className = "w-100"
                                                 placeholder="Number of Chairs"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setChairCount(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}  
                                                 size='large'                       
                                             />
@@ -551,14 +594,14 @@ function HomePage(){
                                             rules ={
                                                 [
                                                 {required: true, message: "Please input number of HDMI to VGA adapter needed!"},
-                                                {type: 'number', message: "Please input a valid number!"}
                                                 ]
                                             }
                                         >
-                                            <Input
+                                            <InputNumber
                                                 name='hdmiToVgaAdapterCount'
+                                                className = "w-100"
                                                 placeholder = "Number of HDMI to VGA adapter"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setHdmiToVgaAdapterCount(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
                                             />
@@ -573,13 +616,13 @@ function HomePage(){
                                                 required: true,
                                                 message: 'Please input number of HDMI cables needed!',
                                             },
-                                            {type: 'number', message: "Please input a valid number!"}
                                             ]}
                                         >
-                                            <Input                                               
+                                            <InputNumber                                                                                      
                                                 name="hdmiCableCount"
+                                                className = "w-100"
                                                 placeholder="Number of HDMI cable"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setHdmiCableCount(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'                       
                                             />
@@ -648,7 +691,7 @@ function HomePage(){
     );
 }
 
-export default HomePage;
+export default StudentManageRequirements;
 
 
 // type under content dont touch header and footer

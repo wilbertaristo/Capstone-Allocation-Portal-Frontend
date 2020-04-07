@@ -1,6 +1,8 @@
 import {
     UPLOAD_REQUIREMENTS,
-    UPLOAD_ERROR
+    UPLOAD_ERROR,
+    ADMIN_GET_REQUIREMENTS,
+    ADMIN_GET_REQUIREMENTS_ERROR
 } from "../actions/types";
 
 export default function(state={}, action){
@@ -15,6 +17,18 @@ export default function(state={}, action){
             return{
                 ...state,
                 uploadError: true
+            }
+
+        case ADMIN_GET_REQUIREMENTS:
+            return{
+                ...state,
+                dataSource: action.payload
+            }
+
+        case ADMIN_GET_REQUIREMENTS_ERROR:
+            return{
+                ...state,
+                dataSource: null
             }
         
         default:

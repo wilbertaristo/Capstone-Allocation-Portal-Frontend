@@ -1,8 +1,10 @@
 import React  from "react";
 import { Layout } from 'antd';
 import MenuHeader from "./MenuHeader"
+import Iframe from 'react-iframe'
 
 const { Content, Footer } = Layout;
+
 
 function HomePage(){
     return(
@@ -10,7 +12,7 @@ function HomePage(){
             <MenuHeader/>
             <Layout>
                 <Content>
-                    <div className="site-layout-content">Allocation Map Page</div>
+                    <div>Student Allocation Map</div>
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>Capstone Allocation ©2020 Created by MadDev</Footer>
             </Layout>

@@ -50,11 +50,13 @@ function LoginPage(){
     };
 
     const handleLogin = (values) => {
-        setInvalidLogin(false);
-        setClicked(true);
-        setRunEffect(true);
-        dispatch({type: CLEAR_AUTH_ERROR});
-        signinUser(email, password, history, dispatch);
+        if (email && password){
+            setInvalidLogin(false);
+            setClicked(true);
+            setRunEffect(true);
+            dispatch({type: CLEAR_AUTH_ERROR});
+            signinUser(email, password, history, dispatch);
+        }
     };
 
     const handleKeyUp = e => {
@@ -112,8 +114,9 @@ function LoginPage(){
                                 name = "email"
                                 rules ={
                                     [
-                                    {required: true, message: "Please input your email address"},
-                                    {type: 'email', message: "Please enter a valid email address"}
+                                        {required: true, message: "Please input your email address"},
+                                        {type: 'email', message: "Please enter a valid email address"},
+                                        {max: 255, message: "Input exceeded maximum allowable length"}
                                     ]
                                 }
                             >
@@ -133,9 +136,11 @@ function LoginPage(){
                                 name = "password"
                                 rules ={
                                     [
-                                    {required: true, message: "Please input your password"}
+                                        {required: true, message: "Please input your password"},
+                                        {max: 255, message: "Input exceeded maximum allowable length"}
                                     ]
                                 }
+                                className= "mb-3"
                             >
                                 <Input
                                     prefix={<LockOutlined className="site-form-item-icon"/>}
@@ -149,7 +154,7 @@ function LoginPage(){
                             </Form.Item>
                         </div>
 
-                        <div className="mt-1 mb-3 d-flex justify-content-end">
+                        <div className="mb-2 d-flex justify-content-end">
                             {
                                 !clicked ?
                                 <LinkContainer to="/reset-password" className="forgot-password">
@@ -196,15 +201,20 @@ function LoginPage(){
                             </div>
                         </Form.Item>
 
-                        <div className="mt-1 mb-4 d-flex justify-content-center">
+                        <div className="m-0 d-flex justify-content-center">
                             {
                                 !clicked ?
+<<<<<<< HEAD
                                 <LinkContainer to="/signup" className="signup-form">
                                     <div><h6 style={{color: "gray"}}>New user? Sign up</h6></div>
                                 </LinkContainer> :
                                     <div><h6 className="signup-form" style={{color: "gray"}}>Signup</h6></div>
+=======
+                                    <div><h6 style={{cursor: "context-menu"}}>New user? <a href="/signup">Sign up</a></h6></div>
+                                    :
+                                    <div><h6 style={{cursor: "context-menu"}}>New user? <a>Sign up</a></h6></div>
+>>>>>>> b418431bbb67bbd7207ebbcdc99deb4f74f7369d
                             }
-
                         </div>
 
                     </Form>

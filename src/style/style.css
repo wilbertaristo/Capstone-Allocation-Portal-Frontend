@@ -38,3 +38,7 @@
     padding: 57px;
     min-height: 280px;
 }
+
+.invisible-box {
+    width: 25%;
+}

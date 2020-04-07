@@ -26,13 +26,14 @@ export function signinUser(email, password, history, dispatch) {
             }
         })
         .then(loginResponse => {
-            const { token } = loginResponse.data;
+            const { token, is_admin } = loginResponse.data;
             localStorage.setItem('token', token);
+            localStorage.setItem('admin', is_admin);
 
             axios.defaults.headers['Authorization'] = `Bearer ${token}`;
             dispatch({
                 type: AUTH_USER
-            })
+            });
             history.push('/home')
         })
         .catch(() => {

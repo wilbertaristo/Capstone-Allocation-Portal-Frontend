@@ -11,7 +11,29 @@ if (defaultToken) {
 }
 
 
-export function uploadRequirementsStudent(groupName, type, spaceX, spaceY, spaceZ, prototypeX, prototypeY, prototypeZ, prototypeWeight, powerPointsCount, pedestalBigCount, pedestalSmallCount, pedestalDescription, monitorCount, tvCount, tableCount, chairCount, hdmiToVgaAdapterCount, hdmiCableCount, remark,  dispatch) {
+export function uploadRequirementsStudent(
+        groupName,
+        type,
+        spaceX,
+        spaceY,
+        spaceZ,
+        prototypeX,
+        prototypeY,
+        prototypeZ,
+        prototypeWeight,
+        powerPointsCount,
+        pedestalBigCount,
+        pedestalSmallCount,
+        pedestalDescription,
+        monitorCount,
+        tvCount,
+        tableCount,
+        chairCount,
+        hdmiToVgaAdapterCount,
+        hdmiCableCount,
+        remark,
+        dispatch
+    ) {
     axios.post(`${ROOT_URL}/projects`, null,
         {
             params: {

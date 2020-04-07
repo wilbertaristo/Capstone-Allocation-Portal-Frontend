@@ -8,7 +8,7 @@ import { uploadRequirementsStudent } from "../actions/requirementsActions";
 const { Content, Footer } = Layout;
 const { Title, Text } = Typography;
 
-function HomePage(){
+function StudentManageRequirements(){
 
     const layout = {
         labelCol: {
@@ -609,6 +609,6 @@ function HomePage(){
     );
 }
 
-export default HomePage;
+export default StudentManageRequirements;
 
 // type under content dont touch header and footer

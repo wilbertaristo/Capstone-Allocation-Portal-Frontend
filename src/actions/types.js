@@ -11,3 +11,5 @@ export const SIGNUP_USER = 'signup_user';
 export const SIGNUP_ERROR = 'signup_error';
 export const UPLOAD_REQUIREMENTS = 'upload_requirements';
 export const UPLOAD_ERROR = 'upload_error';
+export const ADMIN_GET_REQUIREMENTS = "admin_get_requirements";
+export const ADMIN_GET_REQUIREMENTS_ERROR = "admin_get_requirements_error";

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
-import {Form, Input, Typography, Button, Divider, Alert, Modal, Layout} from 'antd';
+import {Form, Input, Typography, Button, Divider, Alert, Modal, Layout, InputNumber} from 'antd';
 import MenuHeader from "./MenuHeader"
 import { uploadRequirementsStudent } from "../actions/requirementsActions";
 
@@ -12,15 +12,17 @@ function StudentManageRequirements(){
 
     const layout = {
         labelCol: {
-          span: 4,
+          span: 100,
         },
         wrapperCol: {
-          span: 10,
+          span: 400,
         },
       };
 
     const [form] = Form.useForm();
+    const [formLayout] = useState('vertical');
 
+    let history = useHistory();
     const [groupName, setGroupName] = useState();
     const [typePrototype, setTypePrototype] = useState();
     const [typeDescription, setTypeDescription] = useState();
@@ -61,6 +63,7 @@ function StudentManageRequirements(){
             } else if (uploadSuccess){
                 setValidUpload(true);
                 setRunEffect(false);
+                setTimeout(() => history.push('/home'), 4000);
             }
         }
     })
@@ -116,32 +119,36 @@ function StudentManageRequirements(){
     };
 
     const handleUpload = (values) => {
-        setInvalidUpload(false);
-        setClicked(true);
-        setRunEffect(true);
-        uploadRequirementsStudent(
-            groupName,
-            type,
-            spaceX,
-            spaceY,
-            spaceZ,
-            prototypeX,
-            prototypeY,
-            prototypeZ,
-            prototypeWeight,
-            powerPointsCount,
-            pedestalBigCount,
-            pedestalSmallCount,
-            pedestalDescription,
-            monitorCount,
-            tvCount,
-            tableCount,
-            chairCount,
-            hdmiToVgaAdapterCount,
-            hdmiCableCount,
-            remark,
-            dispatch
-        );
+        if (groupName && typePrototype && typeDescription && spaceX && spaceY && spaceZ && prototypeX && prototypeY && prototypeZ &&
+            prototypeWeight && powerPointsCount && pedestalBigCount && pedestalSmallCount && monitorCount &&
+            tvCount && tableCount && chairCount && hdmiToVgaAdapterCount && hdmiCableCount){
+            setInvalidUpload(false);
+            setClicked(true);
+            setRunEffect(true);
+            uploadRequirementsStudent(
+                groupName,
+                type,
+                spaceX,
+                spaceY,
+                spaceZ,
+                prototypeX,
+                prototypeY,
+                prototypeZ,
+                prototypeWeight,
+                powerPointsCount,
+                pedestalBigCount,
+                pedestalSmallCount,
+                pedestalDescription,
+                monitorCount,
+                tvCount,
+                tableCount,
+                chairCount,
+                hdmiToVgaAdapterCount,
+                hdmiCableCount,
+                remark,
+                dispatch
+            );
+        }
     };
 
     const handleKeyUp = e => {
@@ -152,6 +159,17 @@ function StudentManageRequirements(){
         }
     }
 
+    const handleModal = () => {
+        const modal = Modal.success({
+            title: "Upload success!",
+            content: "Redirecting you to our home page shortly...",
+            centered: true,
+            closable: false,
+            icon: null
+        });
+        setTimeout(() => {modal.destroy();}, 4000);
+    }
+
     return(
         <Layout className="vh-100">
             <MenuHeader/>
@@ -160,6 +178,7 @@ function StudentManageRequirements(){
                         <div className="d-flex site-layout-content flex-column container-fluid align-items-center justify-content-center">
                                 <Form
                                     {...layout}
+                                    layout = {formLayout}
                                     name='normal_requirements'
                                     className="d-flex flex-column container-fluid"
                                     initialValues={{remember: true}}
@@ -171,26 +190,51 @@ function StudentManageRequirements(){
 
                                     <Divider className="bg-secondary" style={{marginTop: "1px", marginBottom: "20px"}}/>
 
-                                    <div className="d-flex flex-column justify-content-center mt-3">
-                                        <Form.Item
-                                            name = "groupName"
-                                            className="d-flex justify-content-center"
-                                            rules ={
-                                                [
-                                                {required: true, message: "Please input your group name"}
-                                                ]
-                                            }
-                                        >
-                                            <Input
-                                                name='groupName'
-                                                placeholder="Group Name"
-                                                onChange={(e) => handleOnChange(e)}
-                                                onKeyUp={(e) => handleKeyUp(e)}
-                                                size='large'
+                                    {
+                                        invalidUpload ?
+                                            <Alert
+                                                className="mb-3"
+                                                message = "Upload Failed"
+                                                description = "Each group can only upload once!"
+                                                type = "error"
                                             />
-                                        </Form.Item>
+                                            :
+                                            <div></div>
+
+                                    }
+
+                                    {
+                                        validUpload?
+                                            handleModal()
+                                            :
+                                            <div></div>
+
+                                    }   
+
+                                    
+                                    <div className="d-flex flex-column justify-content-center mt-3">
+
+                                    <Form.Item
+                                                label = "Group Name:"
+                                                name = "groupName"
+                                                className="d-flex justify-content-center"
+                                                rules ={
+                                                    [
+                                                    {required: true, message: "Please input your group name"}
+                                                    ]
+                                                }
+                                            >
+                                                <Input
+                                                    name='groupName'
+                                                    placeholder="Group Name"
+                                                    onChange={(e) => handleOnChange(e)}
+                                                    onKeyUp={(e) => handleKeyUp(e)}
+                                                    size='large'
+                                                />
+                                            </Form.Item>
 
                                         <Form.Item
+                                            label = "Type of Prototype:"
                                             name = "typePrototype"
                                             className="d-flex justify-content-center"
                                             rules ={
@@ -209,11 +253,12 @@ function StudentManageRequirements(){
                                         </Form.Item>
 
                                         <Form.Item
+                                            label = "Prototype Description"
                                             className="d-flex justify-content-center"
                                             name = "typeDescription"
                                             rules ={
                                                 [
-                                                {required: true, message: "Please input your prototype description"}
+                                                {required: true, message: "Please input your prototype description"}                                          
                                                 ]
                                             }
                                         >
@@ -228,25 +273,30 @@ function StudentManageRequirements(){
 
                                         <Title level={4} className="d-flex justify-content-center mb-3">Showcase space needed (in metres):</Title>
 
+                                
+
                                         <Form.Item
+                                            label = "Length:"
                                             name = "spaceX"
                                             className="d-flex justify-content-center"
                                             rules ={
                                                 [
-                                                {required: true, message: "Please input your length of showcase space needed"}
+                                                {required: true, message: "Please input your length of showcase space needed"},
                                                 ]
                                             }
                                         >
-                                            <Input
+                                            <InputNumber
+                                                className = "w-100"
                                                 name='spaceX'
                                                 placeholder = "Length"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setSpaceX(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
                                             />
                                         </Form.Item>
 
                                         <Form.Item
+                                            label = "Width:"
                                             name="spaceY"
                                             className="d-flex justify-content-center"
                                             rules={[
@@ -254,34 +304,39 @@ function StudentManageRequirements(){
                                                 required: true,
                                                 message: 'Please input your width of showcase space needed!',
                                             },
+                                            {type: 'number', message: "Please input a valid number!"}
                                             ]}
                                         >
-                                            <Input
+                                            <InputNumber
+                                                className = "w-100"
                                                 name="spaceY"
                                                 placeholder="Width"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setSpaceY(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
                                             />
                                         </Form.Item>
 
                                         <Form.Item
+                                            label = "Height:"
                                             name = "spaceZ"
                                             className="d-flex justify-content-center"
                                             rules ={
                                                 [
-                                                {required: true, message: "Please input your height of showcase space needed"}
+                                                {required: true, message: "Please input your height of showcase space needed"},
                                                 ]
                                             }
                                         >
-                                            <Input
+                                            <InputNumber
                                                 name='spaceZ'
+                                                className = "w-100"
                                                 placeholder = "Height"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setSpaceZ(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
                                             />
                                         </Form.Item>
+                                   
                                     </div>
                                     
 
@@ -289,24 +344,27 @@ function StudentManageRequirements(){
                                         <Title level={4} className="d-flex justify-content-center mb-3">Prototype details (in metres/kg):</Title>
 
                                         <Form.Item
+                                            label = "Length:"
                                             name = "prototypeX"
                                             className="d-flex justify-content-center"
                                             rules ={
                                                 [
-                                                {required: true, message: "Please input your length of prototype!"}
+                                                {required: true, message: "Please input your length of prototype!"},
                                                 ]
                                             }
                                         >
-                                            <Input
+                                            <InputNumber
                                                 name='prototypeX'
+                                                className = "w-100"
                                                 placeholder = "Prototype Length"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setPrototypeX(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
                                             />
                                         </Form.Item>
 
                                         <Form.Item
+                                            label = "Width:"
                                             name="prototypeY"
                                             className="d-flex justify-content-center"
                                             rules={[
@@ -316,46 +374,51 @@ function StudentManageRequirements(){
                                             },
                                             ]}
                                         >
-                                            <Input                                               
+                                            <InputNumber                                               
                                                 name="prototypeY"
+                                                className = "w-100"
                                                 placeholder="Prototype Width"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setPrototypeY(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'                       
                                             />
                                         </Form.Item>
 
                                         <Form.Item
+                                            label = "Height:"
                                             name = "prototypeZ"
                                             className="d-flex justify-content-center"
                                             rules ={
                                                 [
-                                                {required: true, message: "Please input your height of prototype"}
+                                                {required: true, message: "Please input your height of prototype"},
                                                 ]
                                             }
                                         >
-                                            <Input
+                                            <InputNumber
                                                 name='prototypeZ'
+                                                className = "w-100"
                                                 placeholder= "Prototype Height"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setPrototypeZ(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
                                             />
                                         </Form.Item>
 
                                         <Form.Item
+                                            label = "Weight:"
                                             name = "prototypeWeight"
                                             className="d-flex justify-content-center"
                                             rules ={
                                                 [
-                                                {required: true, message: "Please input your weight of prototype"}
+                                                {required: true, message: "Please input your weight of prototype"},
                                                 ]
                                             }
                                         >
-                                            <Input
+                                            <InputNumber
                                                 name='prototypeWeight'
+                                                className = "w-100"
                                                 placeholder = "Prototype Weight"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setPrototypeWeight(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
                                             />
@@ -366,42 +429,47 @@ function StudentManageRequirements(){
                                         <Title level={4} className="d-flex justify-content-center mb-3">Logistics needed (If none required, put 0):</Title>
 
                                         <Form.Item
+                                            label = "Number of PowerPoints:"
                                             name = "powerPointsCount"
                                             className="d-flex justify-content-center"
                                             rules ={
                                                 [
-                                                {required: true, message: "Please input number of powerpoints needed!"}
+                                                {required: true, message: "Please input number of powerpoints needed!"},
                                                 ]
                                             }
                                         >
-                                            <Input
+                                            <InputNumber
                                                 name='powerPointsCount'
+                                                className = "w-100"
                                                 placeholder = "Number of Powerpoints"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setPowerPointsCount(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
                                             />
                                         </Form.Item>
 
                                         <Form.Item
+                                            label = "Number of Big Pedestals:"
                                             name = "pedestalBigCount"
                                             className="d-flex justify-content-center"
                                             rules ={
                                                 [
-                                                {required: true, message: "Please input number of big pedestals needed!"}
+                                                {required: true, message: "Please input number of big pedestals needed!"},
                                                 ]
                                             }
                                         >
-                                            <Input
+                                            <InputNumber
                                                 name='pedestalBigCount'
+                                                className = "w-100"
                                                 placeholder = "Number of Big Pedestals"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setPedestalBigCount(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
                                             />
                                         </Form.Item>
 
                                         <Form.Item
+                                            label = "Number of Small Pedestals:"
                                             name="pedestalSmallCount"
                                             className="d-flex justify-content-center"
                                             rules={[
@@ -411,16 +479,18 @@ function StudentManageRequirements(){
                                             },
                                             ]}
                                         >
-                                            <Input                                               
+                                            <InputNumber                                               
                                                 name="pedestalSmallCount"
+                                                className = "w-100"
                                                 placeholder="Number of Small Pedestals"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setPedestalSmallCount(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}   
                                                 size='large'                       
                                             />
                                         </Form.Item>
 
                                         <Form.Item
+                                            label = "Pedestal Description:"
                                             name = "pedestalDescription"
                                             className="d-flex justify-content-center"
                                         >
@@ -432,10 +502,9 @@ function StudentManageRequirements(){
                                                 size='large'
                                             />
                                         </Form.Item>
-                                    </div>
 
-                                    <div className="mt-3">
                                         <Form.Item
+                                            label = "Number of Monitors:"
                                             name="monitorCount"
                                             className="d-flex justify-content-center"
                                             rules={[
@@ -445,16 +514,18 @@ function StudentManageRequirements(){
                                             },
                                             ]}
                                         >
-                                            <Input                                               
+                                            <InputNumber                                               
                                                 name="monitorCount"
+                                                className = "w-100"
                                                 placeholder="Number of Monitors"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setMonitorCount(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'                       
                                             />
                                         </Form.Item>
 
                                         <Form.Item
+                                            label = "Number of TVs:"
                                             name="tvCount"
                                             className="d-flex justify-content-center"
                                             rules={[
@@ -464,16 +535,18 @@ function StudentManageRequirements(){
                                             },
                                             ]}
                                         >
-                                            <Input                                               
+                                            <InputNumber                                               
                                                 name="tvCount"
+                                                className = "w-100"
                                                 placeholder="Number of TVs"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setTvCount(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}   
                                                 size='large'                       
                                             />
                                         </Form.Item>
 
                                         <Form.Item
+                                            label = "Number of Tables:"
                                             name="tableCount"
                                             className="d-flex justify-content-center"
                                             rules={[
@@ -483,16 +556,18 @@ function StudentManageRequirements(){
                                             },
                                             ]}
                                         >
-                                            <Input                                               
+                                            <InputNumber                                               
                                                 name="tableCount"
+                                                className = "w-100"
                                                 placeholder="Number of Tables"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setTableCount(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)} 
                                                 size='large'                       
                                             />
                                         </Form.Item>
 
                                         <Form.Item
+                                            label = "Number of Chairs:"
                                             name="chairCount"
                                             className="d-flex justify-content-center"
                                             rules={[
@@ -502,34 +577,38 @@ function StudentManageRequirements(){
                                             },
                                             ]}
                                         >
-                                            <Input                                               
+                                            <InputNumber                                               
                                                 name="chairCount"
+                                                className = "w-100"
                                                 placeholder="Number of Chairs"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setChairCount(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}  
                                                 size='large'                       
                                             />
                                         </Form.Item>
 
                                         <Form.Item
+                                            label = "Number of HDMI to VGA Adapters:"
                                             name = "hdmiToVgaAdapaterCount"
                                             className="d-flex justify-content-center"
                                             rules ={
                                                 [
-                                                {required: true, message: "Please input number of HDMI to VGA adapter needed!"}
+                                                {required: true, message: "Please input number of HDMI to VGA adapter needed!"},
                                                 ]
                                             }
                                         >
-                                            <Input
+                                            <InputNumber
                                                 name='hdmiToVgaAdapterCount'
+                                                className = "w-100"
                                                 placeholder = "Number of HDMI to VGA adapter"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setHdmiToVgaAdapterCount(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'
                                             />
                                         </Form.Item>
 
                                         <Form.Item
+                                            label = "Number of HDMI Cables:"
                                             name="hdmiCableCount"
                                             className="d-flex justify-content-center"
                                             rules={[
@@ -539,18 +618,21 @@ function StudentManageRequirements(){
                                             },
                                             ]}
                                         >
-                                            <Input                                               
+                                            <InputNumber                                                                                      
                                                 name="hdmiCableCount"
+                                                className = "w-100"
                                                 placeholder="Number of HDMI cable"
-                                                onChange={(e) => handleOnChange(e)}
+                                                onChange={(e) => setHdmiCableCount(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
                                                 size='large'                       
                                             />
                                         </Form.Item>
                                     </div>
 
+
                                     <div className="mt-3">
                                         <Form.Item
+                                            label = "Additional remarks:"
                                             name = "remark"
                                             className="d-flex justify-content-center"
                                         >
@@ -610,5 +692,4 @@ function StudentManageRequirements(){
 }
 
 export default StudentManageRequirements;
-
 // type under content dont touch header and footer

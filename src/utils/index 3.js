@@ -1,0 +1,1 @@
+export let ROOT_URL = 'https://api.sutd-capstone.xyz';

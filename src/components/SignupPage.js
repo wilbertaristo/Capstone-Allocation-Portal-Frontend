@@ -1,74 +1,91 @@
 import React, {useEffect, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
-import {Form, Input, Typography, Button, Divider, Alert} from 'antd';
+import {Form, Input, Typography, Button, Divider, Alert, Modal} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { LinkContainer } from 'react-router-bootstrap';
 import sutdLogo from '../images/sutdLogo.png';
 import bgImage from '../images/backgroundImage.jpg';
 
-import { signinUser } from "../actions/authActions";
+import { signupUser } from "../actions/authActions";
 import { CLEAR_AUTH_ERROR } from "../actions/types";
 
 const { Title } = Typography;
 
-function LoginPage(){
+function SignupPage(){
     let history = useHistory();
     const [email, setEmail] = useState();
+    const [fullName, setFullName] = useState();
     const [password, setPassword] = useState();
+    const [confirmPassword, setConfirmPassword] = useState();
     const [clicked, setClicked] = useState();
-    const [invalidLogin, setInvalidLogin] = useState();
-    const [runEffect, setRunEffect] = useState();
+    const [invalidSignup, setInvalidSignup] = useState();
+    const [validSignup, setValidSignup] = useState();
+    const [runEffect, setRunEffect ] = useState();
+    
 
-    const loginError = useSelector(state => state.auth.loginError);
-    const storeAuthenticated = useSelector(state => state.auth.authenticated);
-    const messageError = useSelector(state => state.auth.message);
+    let signupError = useSelector(state => state.auth.signupError);
+    let signupSuccess = useSelector(state => state.auth.signupSuccess);
     const dispatch = useDispatch();
 
     useEffect(() => {
         if(runEffect){
-            if(loginError){
-                setInvalidLogin(true);
+            if(signupError){
+                setInvalidSignup(true);
                 setClicked(false);
                 setRunEffect(false);
+            } else if(signupSuccess){
+                setValidSignup(true);
+                setRunEffect(false);
+                setTimeout(() => history.push('/login'), 4000);
             }
-        }
-        if (storeAuthenticated){
-            history.push('/home');
         }
     })
 
 
     const handleOnChange = (e) => {
-        setInvalidLogin(false);
+        setInvalidSignup(false);
         const {name, value} = e.target;
+        console.log(value);
         if (name === "email") {
             setEmail(value);
+        } else if (name === "fullName"){
+            setFullName(value);
         } else if (name === "password") {
             setPassword(value);
+        } else if (name === "confirmPassword") {
+            setConfirmPassword(value);
         }
     };
 
-    const handleLogin = (values) => {
-        if (email && password){
-            setInvalidLogin(false);
-            setClicked(true);
-            setRunEffect(true);
-            dispatch({type: CLEAR_AUTH_ERROR});
-            signinUser(email, password, history, dispatch);
-        }
+    const handleSignup = (values) => {
+        setInvalidSignup(false);
+        setClicked(true);
+        setRunEffect(true);
+        dispatch({type: CLEAR_AUTH_ERROR});
+        signupUser( email, password, fullName, dispatch);
     };
 
     const handleKeyUp = e => {
         if (e.keyCode === 13 || e.which === 13) {
             if (!clicked){
-                handleLogin();
+                handleSignup();
             }
         }
     }
 
-    return(
+    const handleModal = () => {
+        const modal = Modal.success({
+            title: "Signup success!",
+            content: "Redirecting you to our login page shortly...",
+            centered: true,
+            closable: false,
+            icon: null
+        });
+        setTimeout(() => {modal.destroy();}, 4000);
+    }
 
+    return(
         /*Wrap everything inside a div with background image*/
         <div className="d-flex flex-column align-items-center vh-100" style={{backgroundImage: `url(${bgImage})`, backgroundSize: "cover", overflow: 'auto'}}>
             
@@ -86,23 +103,23 @@ function LoginPage(){
             <div className="d-flex flex-column align-items-center">
                 <div className="content-container card mt-5 mb-5 p-5" style={{zIndex: '1'}}>
                     <Form
-                        name='normal_login'
-                        className='login-form'
+                        name='normal_signup'
+                        className='signup-form'
                         initialValues={{remember: true}}
                     >
                         <div>
                             <div className="d-flex justify-content-center mt-3 mb-2 ml-5 mr-5">
-                                <Title level={3} style={{color: "dimgray", letterSpacing: "2px"}}>LOGIN</Title>
+                                <Title level={3} style={{color: "dimgray", letterSpacing: "2px"}}>SIGNUP</Title>
                             </div>
 
                             <Divider className="bg-secondary" style={{marginTop: "1px", marginBottom: "20px"}}/>
 
                             {
-                                invalidLogin ?
+                                invalidSignup ?
                                     <Alert
                                         className="mb-3"
-                                        message = "Login Failed"
-                                        description = {messageError}
+                                        message = "Signup Failed"
+                                        description = "User already exists"
                                         type = "error"
                                     />
                                     :
@@ -110,13 +127,41 @@ function LoginPage(){
 
                             }
 
+                            {
+                                validSignup ?
+                                    handleModal()
+                                    :
+                                    <div></div>
+
+                            }   
+
+
+                            <div className="mt-3">
+                                <Form.Item
+                                    name = "fullName"
+                                    rules ={
+                                        [
+                                        {required: true, message: "Please input your full name"}
+                                        ]
+                                    }
+                                >
+                                    <Input
+                                        prefix={<LockOutlined className="site-form-item-icon"/>}
+                                        onChange={(e) => handleOnChange(e)}
+                                        onKeyUp={(e) => handleKeyUp(e)}
+                                        placeholder="Full Name"
+                                        name='fullName'
+                                        size='large'
+                                    />
+                                </Form.Item>
+                            </div>
+
                             <Form.Item
                                 name = "email"
                                 rules ={
                                     [
-                                        {required: true, message: "Please input your email address"},
-                                        {type: 'email', message: "Please enter a valid email address"},
-                                        {max: 255, message: "Input exceeded maximum allowable length"}
+                                    {required: true, message: "Please input your email address"},
+                                    {type: 'email', message: "Please enter a valid email address"}
                                     ]
                                 }
                             >
@@ -131,16 +176,16 @@ function LoginPage(){
                             </Form.Item>
                         </div>
 
+                        
+
                         <div className="mt-3">
                             <Form.Item
                                 name = "password"
                                 rules ={
                                     [
-                                        {required: true, message: "Please input your password"},
-                                        {max: 255, message: "Input exceeded maximum allowable length"}
+                                    {required: true, message: "Please input your password"}
                                     ]
                                 }
-                                className= "mb-3"
                             >
                                 <Input
                                     prefix={<LockOutlined className="site-form-item-icon"/>}
@@ -154,15 +199,27 @@ function LoginPage(){
                             </Form.Item>
                         </div>
 
-                        <div className="mb-2 d-flex justify-content-end">
-                            {
-                                !clicked ?
-                                <LinkContainer to="/reset-password" className="pointer">
-                                    <div><h6 style={{color: "gray"}}>Forgot password?</h6></div>
-                                </LinkContainer> :
-                                    <div><h6 className="pointer" style={{color: "gray"}}>Forgot password?</h6></div>
-                            }
+                        <div className="mt-3">
+                            <Form.Item
+                                name = "confirmPassword"
+                                rules ={
+                                    [
+                                    {required: true, message: "Please input your password"}
+                                    ]
+                                }
+                            >
+                                <Input
+                                    prefix={<LockOutlined className="site-form-item-icon"/>}
+                                    onChange={(e) => handleOnChange(e)}
+                                    onKeyUp={(e) => handleKeyUp(e)}
+                                    placeholder="Confirm Password"
+                                    name='confirmPassword'
+                                    type='password'
+                                    size='large'
+                                />
+                            </Form.Item>
                         </div>
+
 
                         <Form.Item>
                             <div className="d-flex justify-content-center">
@@ -170,11 +227,11 @@ function LoginPage(){
                                     !clicked ? 
                                         <Button
                                             htmlType="submit"
-                                            className="login-form-button"
+                                            className="signup-form-button"
                                             shape="round"
                                             size="large"
-                                            onClick={() => handleLogin()}
-                                            style={email && password ? {
+                                            onClick={() => handleSignup()}
+                                            style={email && password && confirmPassword ? {
                                                 width: "50%", 
                                                 height: "50px",
                                                 borderColor: "#2552c2",
@@ -182,32 +239,33 @@ function LoginPage(){
                                             } : {width: "50%", height: "50px", borderColor: "#2552c2", color: "#2552c2"}}
                                             type={email && password ? 'primary' : 'ghost'}
                                         >
-                                            LOGIN
+                                            SIGNUP
                                         </Button>
                                         :
                                         <Button
-                                            loading
                                             htmlType="submit"
-                                            className="login-form-button"
+                                            className="signup-form-button"
                                             shape="round"
                                             size="large"
                                             type='primary'
                                             style={{width: "50%", backgroundColor: '#4673e3', borderColor: '#4673e3', height: '50px', color: "white"}}
                                             disabled
                                         >
-                                        LOGGING IN
+                                        SIGNING UP
                                         </Button>
                                 }
                             </div>
-                        </Form.Item>
+                        </Form.Item> 
 
-                        <div className="m-0 d-flex justify-content-center">
+                        <div className="mt-1 mb-4 d-flex justify-content-center">
                             {
                                 !clicked ?
-                                    <div><h6 style={{cursor: "context-menu"}}>New user? <a href="/signup">Sign up</a></h6></div>
-                                    :
-                                    <div><h6 style={{cursor: "context-menu"}}>New user? <a>Sign up</a></h6></div>
+                                <LinkContainer to="/login" className="pointer">
+                                    <div><h6 style={{color: "gray"}}>Have an existing account? Sign in</h6></div>
+                                </LinkContainer> :
+                                    <div><h6 className="pointer" style={{color: "gray"}}>Login</h6></div>
                             }
+
                         </div>
 
                     </Form>
@@ -217,4 +275,4 @@ function LoginPage(){
     );
 }
 
-export default LoginPage;
+export default SignupPage;

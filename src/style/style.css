@@ -38,3 +38,18 @@
     padding: 57px;
     min-height: 280px;
 }
+
+.invisible-box {
+    width: 25%;
+}
+
+.invisible-box-requirements {
+    width: 10%;
+}
+
+.inline-filter{
+    width: 100%;
+    margin-bottom: 0.2%;
+    display: flex;
+    align-content: space-evenly;
+}

@@ -692,6 +692,4 @@ function StudentManageRequirements(){
 }
 
 export default StudentManageRequirements;
-
-
 // type under content dont touch header and footer

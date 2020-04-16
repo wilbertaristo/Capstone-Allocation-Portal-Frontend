@@ -1,8 +1,12 @@
 import {
     UPLOAD_REQUIREMENTS,
     UPLOAD_ERROR,
-    ADMIN_GET_REQUIREMENTS,
-    ADMIN_GET_REQUIREMENTS_ERROR
+    CSV_UPLOAD_REQUIREMENTS,
+    CSV_UPLOAD_ERROR,
+    USER_GET_REQUIREMENTS,
+    USER_GET_REQUIREMENTS_ERROR,
+    TABLE_LOADING,
+    DESTROY_DATA_SOURCE
 } from "../actions/types";
 
 export default function(state={}, action){
@@ -19,13 +23,38 @@ export default function(state={}, action){
                 uploadError: true
             }
 
-        case ADMIN_GET_REQUIREMENTS:
+        case CSV_UPLOAD_REQUIREMENTS:
             return{
                 ...state,
-                dataSource: action.payload
+                csvUploadSuccess: true
             }
 
-        case ADMIN_GET_REQUIREMENTS_ERROR:
+        case CSV_UPLOAD_ERROR:
+            return{
+                ...state,
+                csvUploadError: true
+            }
+
+        case USER_GET_REQUIREMENTS:
+            return{
+                ...state,
+                dataSource: action.payload,
+                loading: false
+            }
+
+        case USER_GET_REQUIREMENTS_ERROR:
+            return{
+                ...state,
+                dataSource: null
+            }
+
+        case TABLE_LOADING:
+            return{
+                ...state,
+                loading: true
+            }
+
+        case DESTROY_DATA_SOURCE:
             return{
                 ...state,
                 dataSource: null

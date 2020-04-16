@@ -1,14 +1,16 @@
 import React, {useEffect, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
-import {Form, Input, Typography, Button, Divider, Alert, Modal, Layout, InputNumber} from 'antd';
+import {Form, Input, Typography, Button, Divider, Alert, Modal, Layout, InputNumber, Spin } from 'antd';
 import MenuHeader from "./MenuHeader"
-import { uploadRequirementsStudent } from "../actions/requirementsActions";
+import {getAllRequirementsUser, uploadRequirementsStudent, getSpecificProjectAdmin, updateRequirementsStudent } from "../actions/requirementsActions";
 
-const { Content, Footer } = Layout;
-const { Title, Text } = Typography;
+const { Content } = Layout;
+const { Title } = Typography;
 
 function StudentManageRequirements(){
+    const dispatch = useDispatch();
+    const admin = localStorage.getItem("admin");
 
     const layout = {
         labelCol: {
@@ -23,10 +25,10 @@ function StudentManageRequirements(){
     const [formLayout] = useState('vertical');
 
     let history = useHistory();
+
+    const [projectIdUpdate, setProjectIdUpdate] = useState();
     const [groupName, setGroupName] = useState();
     const [typePrototype, setTypePrototype] = useState();
-    const [typeDescription, setTypeDescription] = useState();
-    const [type, setType] = useState();
     const [spaceX, setSpaceX] = useState();
     const [spaceY, setSpaceY] = useState();
     const [spaceZ, setSpaceZ] = useState();
@@ -50,9 +52,31 @@ function StudentManageRequirements(){
     const [validUpload, setValidUpload] = useState();
     const [runEffect, setRunEffect ] = useState();
 
+    const [fetchedRequirements, setFetchedRequirements] = useState(false);
+    const [filledForms, setFilledForms] = useState(false);
+    const [buttonUpdate, setButtonUpdate] = useState(false);
+
+    const [stopSpin, setStopSpin] = useState(false);
+
+    // Get ID (if coming from admin)
+    let search = window.location.search;
+    let params = new URLSearchParams(search);
+    let projectId = params.get('id');
+
+    if (projectId && !fetchedRequirements && admin){
+        getSpecificProjectAdmin(projectId, dispatch);
+        setFetchedRequirements(true);
+        setProjectIdUpdate(projectId);
+    }
+
+    if (!fetchedRequirements && admin === "false"){
+        getAllRequirementsUser(dispatch);
+        setFetchedRequirements(true);
+    }
+
+    const dataSource = useSelector(state => state.upload.dataSource);
     let uploadError = useSelector(state => state.upload.uploadError);
     let uploadSuccess = useSelector(state => state.upload.uploadSuccess);
-    const dispatch = useDispatch();
 
     useEffect(() => {
         if(runEffect){
@@ -63,21 +87,82 @@ function StudentManageRequirements(){
             } else if (uploadSuccess){
                 setValidUpload(true);
                 setRunEffect(false);
-                setTimeout(() => history.push('/home'), 4000);
+                setTimeout(() => history.push('/home'), 2800);
             }
+        }
+
+        if (dataSource && !filledForms){
+            let source = null;
+            if (admin === "true"){
+                source = dataSource;
+                setButtonUpdate(true);
+            } else if (admin === "false"){
+                if (dataSource.length === 0){
+                    setStopSpin(true);
+                    return;
+                } else if (dataSource.length === 1){
+                    source = dataSource[0];
+                    setButtonUpdate(true);
+                }
+            }
+
+            setProjectIdUpdate(source.id);
+            setGroupName(source.name);
+            setTypePrototype(source.type);
+            setSpaceX(source.space_x.toString());
+            setSpaceY(source.space_y.toString());
+            setSpaceZ(source.space_z.toString());
+            setPrototypeX(source.prototype_x.toString());
+            setPrototypeY(source.prototype_y.toString());
+            setPrototypeZ(source.prototype_z.toString());
+            setPrototypeWeight(source.prototype_weight.toString());
+            setPowerPointsCount(source.power_points_count.toString());
+            setPedestalBigCount(source.pedestal_big_count.toString());
+            setPedestalSmallCount(source.pedestal_small_count.toString());
+            setPedestalDescription(source.pedestal_description);
+            setMonitorCount(source.monitor_count.toString());
+            setTvCount(source.tv_count.toString());
+            setTableCount(source.table_count.toString());
+            setChairCount(source.chair_count.toString());
+            setHdmiToVgaAdapterCount(source.hdmi_to_vga_adapter_count.toString());
+            setHdmiCableCount(source.hdmi_cable_count.toString());
+            setRemark(source.remark);
+
+            form.setFieldsValue({
+                groupName: source.name,
+                typePrototype: source.type,
+                spaceX: source.space_x.toString(),
+                spaceY: source.space_y.toString(),
+                spaceZ: source.space_z.toString(),
+                prototypeX: source.prototype_x.toString(),
+                prototypeY: source.prototype_y.toString(),
+                prototypeZ: source.prototype_z.toString(),
+                prototypeWeight: source.prototype_weight.toString(),
+                powerPointsCount: source.power_points_count.toString(),
+                pedestalBigCount: source.pedestal_big_count.toString(),
+                pedestalSmallCount: source.pedestal_small_count.toString(),
+                pedestalDescription: source.pedestal_description,
+                monitorCount: source.monitor_count.toString(),
+                tvCount: source.tv_count.toString(),
+                tableCount: source.table_count.toString(),
+                chairCount: source.chair_count.toString(),
+                hdmiToVgaAdapterCount: source.hdmi_to_vga_adapter_count.toString(),
+                hdmiCableCount: source.hdmi_cable_count.toString(),
+                remark: source.remark
+            });
+
+            setFilledForms(true);
+            setStopSpin(true);
         }
     })
 
     const handleOnChange = (e) => {
         setInvalidUpload(false);
         const {name, value} = e.target;
-        console.log(value);
         if (name === "groupName") {
             setGroupName(value);
         } else if (name === "typePrototype"){
             setTypePrototype(value);
-        } else if (name === "typeDescription") {
-            setTypeDescription(value);
         } else if (name === "spaceX") {
             setSpaceX(value);
         } else if (name === "spaceY") {
@@ -115,11 +200,10 @@ function StudentManageRequirements(){
         } else if (name === "remark") {
             setRemark(value);
         }
-        setType(typePrototype+typeDescription);
     };
 
-    const handleUpload = (values) => {
-        if (groupName && typePrototype && typeDescription && spaceX && spaceY && spaceZ && prototypeX && prototypeY && prototypeZ &&
+    const handleUpload = () => {
+        if (groupName && typePrototype && spaceX && spaceY && spaceZ && prototypeX && prototypeY && prototypeZ &&
             prototypeWeight && powerPointsCount && pedestalBigCount && pedestalSmallCount && monitorCount &&
             tvCount && tableCount && chairCount && hdmiToVgaAdapterCount && hdmiCableCount){
             setInvalidUpload(false);
@@ -127,7 +211,7 @@ function StudentManageRequirements(){
             setRunEffect(true);
             uploadRequirementsStudent(
                 groupName,
-                type,
+                typePrototype,
                 spaceX,
                 spaceY,
                 spaceZ,
@@ -151,13 +235,47 @@ function StudentManageRequirements(){
         }
     };
 
+    const handleUpdate = () => {
+        if (groupName && typePrototype && spaceX && spaceY && spaceZ && prototypeX && prototypeY && prototypeZ &&
+            prototypeWeight && powerPointsCount && pedestalBigCount && pedestalSmallCount && monitorCount &&
+            tvCount && tableCount && chairCount && hdmiToVgaAdapterCount && hdmiCableCount){
+            setInvalidUpload(false);
+            setClicked(true);
+            setRunEffect(true);
+            updateRequirementsStudent(
+                projectIdUpdate,
+                groupName,
+                typePrototype,
+                spaceX,
+                spaceY,
+                spaceZ,
+                prototypeX,
+                prototypeY,
+                prototypeZ,
+                prototypeWeight,
+                powerPointsCount,
+                pedestalBigCount,
+                pedestalSmallCount,
+                pedestalDescription,
+                monitorCount,
+                tvCount,
+                tableCount,
+                chairCount,
+                hdmiToVgaAdapterCount,
+                hdmiCableCount,
+                remark,
+                dispatch
+            );
+        }
+    }
+
     const handleKeyUp = e => {
         if (e.keyCode === 13 || e.which === 13) {
             if (!clicked){
                 handleUpload();
             }
         }
-    }
+    };
 
     const handleModal = () => {
         const modal = Modal.success({
@@ -165,12 +283,19 @@ function StudentManageRequirements(){
             content: "Redirecting you to our home page shortly...",
             centered: true,
             closable: false,
+            footer: null,
+            okButtonProps: {disabled: true},
             icon: null
         });
-        setTimeout(() => {modal.destroy();}, 4000);
-    }
+        setTimeout(() => {modal.destroy();}, 2800);
+    };
 
     return(
+        !stopSpin ?
+            <div className="d-flex justify-content-center mt-5">
+                <Spin size="large"/>
+            </div>
+            :
         <Layout className="vh-100">
             <MenuHeader/>
             <Layout>
@@ -179,12 +304,12 @@ function StudentManageRequirements(){
                                 <Form
                                     {...layout}
                                     layout = {formLayout}
+                                    form={form}
                                     name='normal_requirements'
                                     className="d-flex flex-column container-fluid"
                                     initialValues={{remember: true}}
                                 >
-
-                                    <div className="d-flex justify-content-center mt-3 mb-2 ml-5 mr-5">
+                                    <div className="d-flex justify-content-center ml-2 mt-3 mb-2">
                                         <Title level={3} style={{color: "dimgray", letterSpacing: "2px"}}>SPACE ALLOCATION REQUIREMENTS</Title>
                                     </div>
 
@@ -208,10 +333,8 @@ function StudentManageRequirements(){
                                             handleModal()
                                             :
                                             <div></div>
+                                    }
 
-                                    }   
-
-                                    
                                     <div className="d-flex flex-column justify-content-center mt-3">
 
                                     <Form.Item
@@ -234,7 +357,7 @@ function StudentManageRequirements(){
                                             </Form.Item>
 
                                         <Form.Item
-                                            label = "Type of Prototype:"
+                                            label = "Type of Prototype / Description:"
                                             name = "typePrototype"
                                             className="d-flex justify-content-center"
                                             rules ={
@@ -252,28 +375,7 @@ function StudentManageRequirements(){
                                             />
                                         </Form.Item>
 
-                                        <Form.Item
-                                            label = "Prototype Description"
-                                            className="d-flex justify-content-center"
-                                            name = "typeDescription"
-                                            rules ={
-                                                [
-                                                {required: true, message: "Please input your prototype description"}                                          
-                                                ]
-                                            }
-                                        >
-                                            <Input
-                                                name='typeDescription'
-                                                placeholder="Prototype Description"
-                                                onChange={(e) => handleOnChange(e)}
-                                                onKeyUp={(e) => handleKeyUp(e)}
-                                                size='large'
-                                            />
-                                        </Form.Item>
-
-                                        <Title level={4} className="d-flex justify-content-center mb-3">Showcase space needed (in metres):</Title>
-
-                                
+                                        <Title level={4} className="d-flex justify-content-center mb-3">Showcase space needed (in metres):</Title>                             
 
                                         <Form.Item
                                             label = "Length:"
@@ -336,9 +438,9 @@ function StudentManageRequirements(){
                                                 size='large'
                                             />
                                         </Form.Item>
-                                   
+
                                     </div>
-                                    
+
 
                                     <div className="mt-3">
                                         <Title level={4} className="d-flex justify-content-center mb-3">Prototype details (in metres/kg):</Title>
@@ -374,13 +476,13 @@ function StudentManageRequirements(){
                                             },
                                             ]}
                                         >
-                                            <InputNumber                                               
+                                            <InputNumber
                                                 name="prototypeY"
                                                 className = "w-100"
                                                 placeholder="Prototype Width"
                                                 onChange={(e) => setPrototypeY(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
-                                                size='large'                       
+                                                size='large'
                                             />
                                         </Form.Item>
 
@@ -479,13 +581,13 @@ function StudentManageRequirements(){
                                             },
                                             ]}
                                         >
-                                            <InputNumber                                               
+                                            <InputNumber
                                                 name="pedestalSmallCount"
                                                 className = "w-100"
                                                 placeholder="Number of Small Pedestals"
                                                 onChange={(e) => setPedestalSmallCount(e)}
-                                                onKeyUp={(e) => handleKeyUp(e)}   
-                                                size='large'                       
+                                                onKeyUp={(e) => handleKeyUp(e)}
+                                                size='large'
                                             />
                                         </Form.Item>
 
@@ -514,13 +616,13 @@ function StudentManageRequirements(){
                                             },
                                             ]}
                                         >
-                                            <InputNumber                                               
+                                            <InputNumber
                                                 name="monitorCount"
                                                 className = "w-100"
                                                 placeholder="Number of Monitors"
                                                 onChange={(e) => setMonitorCount(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
-                                                size='large'                       
+                                                size='large'
                                             />
                                         </Form.Item>
 
@@ -535,13 +637,13 @@ function StudentManageRequirements(){
                                             },
                                             ]}
                                         >
-                                            <InputNumber                                               
+                                            <InputNumber
                                                 name="tvCount"
                                                 className = "w-100"
                                                 placeholder="Number of TVs"
                                                 onChange={(e) => setTvCount(e)}
-                                                onKeyUp={(e) => handleKeyUp(e)}   
-                                                size='large'                       
+                                                onKeyUp={(e) => handleKeyUp(e)}
+                                                size='large'
                                             />
                                         </Form.Item>
 
@@ -556,13 +658,13 @@ function StudentManageRequirements(){
                                             },
                                             ]}
                                         >
-                                            <InputNumber                                               
+                                            <InputNumber
                                                 name="tableCount"
                                                 className = "w-100"
                                                 placeholder="Number of Tables"
                                                 onChange={(e) => setTableCount(e)}
-                                                onKeyUp={(e) => handleKeyUp(e)} 
-                                                size='large'                       
+                                                onKeyUp={(e) => handleKeyUp(e)}
+                                                size='large'
                                             />
                                         </Form.Item>
 
@@ -577,19 +679,19 @@ function StudentManageRequirements(){
                                             },
                                             ]}
                                         >
-                                            <InputNumber                                               
+                                            <InputNumber
                                                 name="chairCount"
                                                 className = "w-100"
                                                 placeholder="Number of Chairs"
                                                 onChange={(e) => setChairCount(e)}
-                                                onKeyUp={(e) => handleKeyUp(e)}  
-                                                size='large'                       
+                                                onKeyUp={(e) => handleKeyUp(e)}
+                                                size='large'
                                             />
                                         </Form.Item>
 
                                         <Form.Item
                                             label = "Number of HDMI to VGA Adapters:"
-                                            name = "hdmiToVgaAdapaterCount"
+                                            name = "hdmiToVgaAdapterCount"
                                             className="d-flex justify-content-center"
                                             rules ={
                                                 [
@@ -618,13 +720,13 @@ function StudentManageRequirements(){
                                             },
                                             ]}
                                         >
-                                            <InputNumber                                                                                      
+                                            <InputNumber
                                                 name="hdmiCableCount"
                                                 className = "w-100"
                                                 placeholder="Number of HDMI cable"
                                                 onChange={(e) => setHdmiCableCount(e)}
                                                 onKeyUp={(e) => handleKeyUp(e)}
-                                                size='large'                       
+                                                size='large'
                                             />
                                         </Form.Item>
                                     </div>
@@ -650,23 +752,23 @@ function StudentManageRequirements(){
                                         className="d-flex justify-content-center"
                                     >
                                         <div className="d-flex justify-content-center">
-                                            {                           
-                                                !clicked ? 
+                                            {
+                                                !clicked ?
                                                     <Button
                                                         htmlType="submit"
                                                         className="submit-requirements-button"
                                                         shape="round"
                                                         size="large"
-                                                        onClick={() => handleUpload()}
-                                                        style={groupName && type  ? {
-                                                            width: "50%", 
+                                                        onClick={ buttonUpdate ? () => handleUpdate() : () => handleUpload()}
+                                                        style={groupName && typePrototype  ? {
+                                                            width: "50%",
                                                             height: "50px",
                                                             borderColor: "#2552c2",
                                                             backgroundColor: "#2552c2"
                                                         } : {width: "50%", height: "50px", borderColor: "#2552c2", color: "#2552c2"}}
                                                         type={groupName ? 'primary' : 'ghost'}
                                                     >
-                                                        SUBMIT
+                                                        { buttonUpdate ? "UPDATE" : "SUBMIT"}
                                                     </Button>
                                                     :
                                                     <Button
@@ -678,7 +780,7 @@ function StudentManageRequirements(){
                                                         style={{width: "50%", backgroundColor: '#4673e3', borderColor: '#4673e3', height: '50px', color: "white"}}
                                                         disabled
                                                     >
-                                                    SUBMITTING
+                                                        { buttonUpdate ? "UPDATING" : "SUBMITTING" }
                                                     </Button>
                                             }
                                         </div>
@@ -692,6 +794,4 @@ function StudentManageRequirements(){
 }
 
 export default StudentManageRequirements;
-
-
 // type under content dont touch header and footer

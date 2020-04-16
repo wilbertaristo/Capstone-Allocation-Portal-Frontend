@@ -1,11 +1,10 @@
 import React  from "react";
 import { Layout } from 'antd';
 import MenuHeader from "./MenuHeader"
-import Iframe from 'react-iframe'
 import {ROOT_URL} from "../utils";
 import AuthIFrame from "react-auth-iframe";
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 
 function HomePage(){

@@ -107,6 +107,7 @@ function SignupPage(){
                         name='normal_signup'
                         className='signup-form'
                         initialValues={{remember: true}}
+                        onFinish={handleSignup}
                     >
                         <div>
                             <div className="d-flex justify-content-center mt-3 mb-2 ml-5 mr-5">

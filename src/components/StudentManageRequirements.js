@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import {Form, Input, Typography, Button, Divider, Alert, Modal, Layout, InputNumber, Spin } from 'antd';
 import MenuHeader from "./MenuHeader"
 import {getAllRequirementsUser, uploadRequirementsStudent, getSpecificProjectAdmin, updateRequirementsStudent } from "../actions/requirementsActions";
-import { TABLE_UPDATED } from "../actions/types";
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -203,14 +202,13 @@ function StudentManageRequirements(){
         }
     };
 
-    const handleUpload = (values) => {
+    const handleUpload = () => {
         if (groupName && typePrototype && spaceX && spaceY && spaceZ && prototypeX && prototypeY && prototypeZ &&
             prototypeWeight && powerPointsCount && pedestalBigCount && pedestalSmallCount && monitorCount &&
             tvCount && tableCount && chairCount && hdmiToVgaAdapterCount && hdmiCableCount){
             setInvalidUpload(false);
             setClicked(true);
             setRunEffect(true);
-            dispatch({ type: TABLE_UPDATED  });
             uploadRequirementsStudent(
                 groupName,
                 typePrototype,
@@ -291,17 +289,6 @@ function StudentManageRequirements(){
         });
         setTimeout(() => {modal.destroy();}, 2800);
     };
-
-    const handleModal = () => {
-        const modal = Modal.success({
-            title: "Upload success!",
-            content: "Redirecting you to our home page shortly...",
-            centered: true,
-            closable: false,
-            icon: null
-        });
-        setTimeout(() => {modal.destroy();}, 4000);
-    }
 
     return(
         !stopSpin ?

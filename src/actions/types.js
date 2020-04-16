@@ -16,5 +16,4 @@ export const CSV_UPLOAD_ERROR = 'csv_upload_error';
 export const USER_GET_REQUIREMENTS = "admin_get_requirements";
 export const USER_GET_REQUIREMENTS_ERROR = "admin_get_requirements_error";
 export const TABLE_LOADING = "table_loading";
-export const TABLE_UPDATED = "table_updated";
 export const DESTROY_DATA_SOURCE = "destroy_data_source";

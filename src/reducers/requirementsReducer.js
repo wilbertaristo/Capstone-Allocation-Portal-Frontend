@@ -6,7 +6,6 @@ import {
     USER_GET_REQUIREMENTS,
     USER_GET_REQUIREMENTS_ERROR,
     TABLE_LOADING,
-    TABLE_UPDATED,
     DESTROY_DATA_SOURCE
 } from "../actions/types";
 
@@ -53,12 +52,6 @@ export default function(state={}, action){
             return{
                 ...state,
                 loading: true
-            }
-
-        case TABLE_UPDATED:
-            return{
-                ...state,
-                tableUpdated: true
             }
 
         case DESTROY_DATA_SOURCE:

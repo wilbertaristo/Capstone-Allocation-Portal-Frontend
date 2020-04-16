@@ -292,6 +292,17 @@ function StudentManageRequirements(){
         setTimeout(() => {modal.destroy();}, 2800);
     };
 
+    const handleModal = () => {
+        const modal = Modal.success({
+            title: "Upload success!",
+            content: "Redirecting you to our home page shortly...",
+            centered: true,
+            closable: false,
+            icon: null
+        });
+        setTimeout(() => {modal.destroy();}, 4000);
+    }
+
     return(
         !stopSpin ?
             <div className="d-flex justify-content-center mt-5">
@@ -335,7 +346,6 @@ function StudentManageRequirements(){
                                             handleModal()
                                             :
                                             <div></div>
-
                                     }
 
                                     <div className="d-flex flex-column justify-content-center mt-3">
@@ -378,7 +388,7 @@ function StudentManageRequirements(){
                                             />
                                         </Form.Item>
 
-                                        <Title level={4} className="d-flex justify-content-center mb-3">Showcase space needed (in metres):</Title>
+                                        <Title level={4} className="d-flex justify-content-center mb-3">Showcase space needed (in metres):</Title>                             
 
                                         <Form.Item
                                             label = "Length:"

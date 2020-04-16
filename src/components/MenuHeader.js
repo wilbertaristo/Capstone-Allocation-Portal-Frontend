@@ -47,7 +47,7 @@ function MenuHeader(){
                 </div>
             </LinkContainer>
         } else {
-            return <LinkContainer to="/manage-requirements/student" className="pointer">
+            return <LinkContainer className="student-manage-requirements" to="/manage-requirements/student">
                 <div className="d-flex flex-row align-items-center">
                     <UploadOutlined className="mr-2"/>
                     Manage Requirements
@@ -127,8 +127,9 @@ function MenuHeader(){
                             </Menu.Item>
                             <SubMenu
                                 key="account"
+                                
                                 title={
-                                    <div className="d-flex flex-row align-items-center">
+                                    <div name='account' className="d-flex flex-row align-items-center">
                                         <UserOutlined className="mr-2"/>
                                         Account
                                     </div>
@@ -143,6 +144,7 @@ function MenuHeader(){
                                 </Menu.Item>
                                 <Menu.Item
                                     key="signout"
+                                    name = "signout"
                                     onClick={() => handleLogout()}
                                 >
                                     Sign Out

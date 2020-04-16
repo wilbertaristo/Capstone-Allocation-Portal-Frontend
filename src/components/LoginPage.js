@@ -50,7 +50,7 @@ function LoginPage(){
     };
 
     const handleLogin = (values) => {
-        if (email && password){
+        if (values){
             setInvalidLogin(false);
             setClicked(true);
             setRunEffect(true);
@@ -89,6 +89,7 @@ function LoginPage(){
                         name='normal_login'
                         className='login-form'
                         initialValues={{remember: true}}
+                        onFinish={handleLogin}
                     >
                         <div>
                             <div className="d-flex justify-content-center mt-3 mb-2 ml-5 mr-5">

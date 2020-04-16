@@ -46,7 +46,6 @@ function SignupPage(){
     const handleOnChange = (e) => {
         setInvalidSignup(false);
         const {name, value} = e.target;
-        console.log(value);
         if (name === "email") {
             setEmail(value);
         } else if (name === "fullName"){
@@ -59,11 +58,13 @@ function SignupPage(){
     };
 
     const handleSignup = (values) => {
-        setInvalidSignup(false);
-        setClicked(true);
-        setRunEffect(true);
-        dispatch({type: CLEAR_AUTH_ERROR});
-        signupUser( email, password, fullName, dispatch);
+        if (fullName && email && password && confirmPassword){
+            setInvalidSignup(false);
+            setClicked(true);
+            setRunEffect(true);
+            dispatch({type: CLEAR_AUTH_ERROR});
+            signupUser( email, password, fullName, dispatch);
+        }
     };
 
     const handleKeyUp = e => {
@@ -106,6 +107,7 @@ function SignupPage(){
                         name='normal_signup'
                         className='signup-form'
                         initialValues={{remember: true}}
+                        onFinish={handleSignup}
                     >
                         <div>
                             <div className="d-flex justify-content-center mt-3 mb-2 ml-5 mr-5">
@@ -146,11 +148,12 @@ function SignupPage(){
                                     }
                                 >
                                     <Input
-                                        prefix={<LockOutlined className="site-form-item-icon"/>}
+                                        prefix={<UserOutlined className="site-form-item-icon" />}
                                         onChange={(e) => handleOnChange(e)}
                                         onKeyUp={(e) => handleKeyUp(e)}
                                         placeholder="Full Name"
                                         name='fullName'
+                                        type = 'fullName'
                                         size='large'
                                     />
                                 </Form.Item>
@@ -202,9 +205,20 @@ function SignupPage(){
                         <div className="mt-3">
                             <Form.Item
                                 name = "confirmPassword"
+                                dependencies = {['password']}
+                                hasFeedback
                                 rules ={
                                     [
-                                    {required: true, message: "Please input your password"}
+                                    {required: true, message: "Please input your password"},
+                                    ({ getFieldValue }) => ({
+                                        validator(rule, value) {
+                                          if (!value || getFieldValue('password') === value) {
+                                            return Promise.resolve();
+                                          }
+                            
+                                          return Promise.reject('The two passwords that you entered do not match!');
+                                        },
+                                      }),
                                     ]
                                 }
                             >
@@ -231,13 +245,13 @@ function SignupPage(){
                                             shape="round"
                                             size="large"
                                             onClick={() => handleSignup()}
-                                            style={email && password && confirmPassword ? {
+                                            style={fullName && email && password && confirmPassword ? {
                                                 width: "50%", 
                                                 height: "50px",
                                                 borderColor: "#2552c2",
                                                 backgroundColor: "#2552c2"
                                             } : {width: "50%", height: "50px", borderColor: "#2552c2", color: "#2552c2"}}
-                                            type={email && password ? 'primary' : 'ghost'}
+                                            type={fullName && email && password && confirmPassword ? 'primary' : 'ghost'}
                                         >
                                             SIGNUP
                                         </Button>
@@ -257,11 +271,11 @@ function SignupPage(){
                             </div>
                         </Form.Item> 
 
-                        <div className="mt-1 mb-4 d-flex justify-content-center">
+                        <div className="mt-1 mb-2 d-flex justify-content-center">
                             {
                                 !clicked ?
                                 <LinkContainer to="/login" className="pointer">
-                                    <div><h6 style={{color: "gray"}}>Have an existing account? Sign in</h6></div>
+                                    <div><h6 style={{cursor: "context-menu"}}>Have an existing account? <a href="/signup">Sign in</a></h6></div>
                                 </LinkContainer> :
                                     <div><h6 className="pointer" style={{color: "gray"}}>Login</h6></div>
                             }

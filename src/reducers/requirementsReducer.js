@@ -6,7 +6,9 @@ import {
     USER_GET_REQUIREMENTS,
     USER_GET_REQUIREMENTS_ERROR,
     TABLE_LOADING,
-    DESTROY_DATA_SOURCE
+    DESTROY_DATA_SOURCE,
+    SKIPPED_PROJECTS,
+    CLEAR_SKIPPED_PROJECTS
 } from "../actions/types";
 
 export default function(state={}, action){
@@ -59,7 +61,21 @@ export default function(state={}, action){
                 ...state,
                 dataSource: null
             }
-        
+
+        case SKIPPED_PROJECTS:
+            return{
+                ...state,
+                skippedProjects: action.payload,
+                skippedProjectsCount: action.payloadCount
+            }
+
+        case CLEAR_SKIPPED_PROJECTS:
+            return{
+                ...state,
+                skippedProjects: null,
+                skippedProjectsCount: null
+            }
+
         default:
             return state;
     }

@@ -6,7 +6,7 @@ import {
     CSV_UPLOAD_REQUIREMENTS,
     CSV_UPLOAD_ERROR,
     USER_GET_REQUIREMENTS,
-    USER_GET_REQUIREMENTS_ERROR
+    USER_GET_REQUIREMENTS_ERROR, SKIPPED_PROJECTS
 } from "./types";
 
 const defaultToken = localStorage.getItem('token');
@@ -251,11 +251,25 @@ export function deleteRequirementAdmin(projectId){
         })
 }
 
+export function bulkDeleteRequirementsAdmin(projectIds){
+    axios.delete(`${ROOT_URL}/projects`, {data: {ids: projectIds}})
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+}
 
-export function runAllocation() {
+
+export function runAllocation(dispatch) {
     axios.post(`${ROOT_URL}/admin/run_allocation`)
         .then(result => {
-            console.log(result);
+            dispatch({
+                type: SKIPPED_PROJECTS,
+                payload: result.data.skipped,
+                payloadCount: result.data.skipped_count
+            })
         })
         .catch(error => {
             console.log(error);

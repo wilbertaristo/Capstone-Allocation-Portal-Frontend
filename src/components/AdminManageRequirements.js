@@ -11,6 +11,7 @@ import { useDropzone } from "react-dropzone";
 import MenuHeader from "./MenuHeader"
 import {
     deleteRequirementAdmin,
+    bulkDeleteRequirementsAdmin,
     getAllRequirementsUser,
     getRequirementByFilterAdmin,
     uploadRequirementsStudentByCsv
@@ -113,8 +114,7 @@ function AdminManageRequirements(){
     const [csvResult, setCsvResult] = useState(null);
     const [uploadingCSV, setUploadingCSV] = useState(false);
     const [filename, setFilename] = useState('');
-
-    const [totalRecord, setTotalRecord] = useState(0);
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
     if (!fetchedRequirements){
         getAllRequirementsUser(dispatch);
@@ -167,14 +167,11 @@ function AdminManageRequirements(){
     const debouncedFetch = debounce(() => fetchRequirements(), 1000);
 
     useEffect( () => {
-        console.log(groupName);
         if (runEffect) {
-            console.log("trying to get CSV Upload status");
             if (serverCsvUploadError){
                 setUploadingCSV(false);
                 setRunEffect(false);
             } else if (serverCsvUploadSuccess){
-                console.log("CSV upload success");
                 setUploadingCSV(false);
                 setCsvUploadSuccess(true);
                 setRunEffect(false);
@@ -217,6 +214,24 @@ function AdminManageRequirements(){
 
     const resetFilters = () => {
         form.resetFields();
+        setGroupName("");
+        setType("");
+        setSpaceX("");
+        setSpaceY("");
+        setSpaceZ("");
+        setPrototypeX("");
+        setPrototypeY("");
+        setPrototypeZ("");
+        setPrototypeWeight("");
+        setPowerPointsCount("");
+        setPedestalBigCount("");
+        setPedestalSmallCount("");
+        setMonitorCount("");
+        setTvCount("");
+        setChairCount("");
+        setHdmiToVgaAdapterCount("");
+        setHdmiCableCount("");
+        setRemark("");
         getAllRequirementsUser(dispatch);
         dispatch({type: TABLE_LOADING});
     }
@@ -235,13 +250,13 @@ function AdminManageRequirements(){
     };
 
     const handleDownloadCSVTemplate = () => {
-        window.open('https://google.com');
+        window.open('https://static.sutd-capstone.xyz/SpaceRequirementsTemplate.csv');
     };
 
     const handleCSVUpload = () => {
         setCsvUploadSuccess(false);
         setUploadingCSV(true);
-        const data = new FormData();
+        let data = new FormData();
         data.append('file', csvResult[0]);
         uploadRequirementsStudentByCsv(data, dispatch);
         setRunEffect(true);
@@ -268,6 +283,27 @@ function AdminManageRequirements(){
         setFilename('');
         serverCsvUploadError = false;
         serverCsvUploadSuccess = false;
+    };
+
+    const handleBulkEdit = () => {
+        selectedRowKeys.map(id => handleEditRequirement(id))
+    }
+
+    const handleBulkDelete = () => {
+        bulkDeleteRequirementsAdmin(selectedRowKeys);
+        setSelectedRowKeys([]);
+        debouncedFetch();
+    };
+
+    const handleCheckBoxChange = selectedRowKeys => {
+        setSelectedRowKeys(selectedRowKeys);
+    };
+
+    const hasSelected = selectedRowKeys ? selectedRowKeys.length > 0 : false;
+
+    const rowSelection = {
+        selectedRowKeys,
+        onChange: handleCheckBoxChange
     };
 
     const columns = [
@@ -446,7 +482,7 @@ function AdminManageRequirements(){
                                                     description="Your project's requirement has been successfully uploaded"
                                                     type="success"
                                                 />:
-                                                <div></div>
+                                                null
                                         }
                                         {
                                             csvUploadError || serverCsvUploadError ?
@@ -456,7 +492,7 @@ function AdminManageRequirements(){
                                                     description="Please upload a valid CSV file"
                                                     type="error"
                                                 /> :
-                                                <div></div>
+                                                null
                                         }
                                         <Dropzone accept=".csv" onDropAccepted={acceptedFiles => handleFiles(acceptedFiles)} onDropRejected={() => setCsvUploadError(true)} >
                                             {({getRootProps, getInputProps}) => (
@@ -793,9 +829,25 @@ function AdminManageRequirements(){
                             </div>
 
                             <div className="d-flex justify-content-between mr-4 mb-2">
-                                <Text className="ml-2">
-                                    {dataSource ? `Showing ${dataSource.length} results` : ""}
-                                </Text>
+                                <div className="ml-2">
+                                    <Text className="mr-3">
+                                        {hasSelected ? `Selected ${selectedRowKeys.length} out of ${dataSource.length} results` : dataSource ? `Showing ${dataSource.length} results` : ""}
+                                    </Text>
+                                    {
+                                        hasSelected ?
+                                            <Button className="mb-2 mr-2" shape="round" type="default" onClick={() => handleBulkEdit()}>Bulk Edit</Button>
+                                            :
+                                            null
+                                    }
+                                    {
+                                        hasSelected ?
+                                            <Popconfirm title="Sure to bulk delete?" onConfirm={() => handleBulkDelete()}>
+                                                <Button className="mb-2" shape="round" type="default">Bulk Delete</Button>
+                                            </Popconfirm>
+                                            :
+                                            null
+                                    }
+                                </div>
                                 <Button
                                     onClick={() => debouncedFetch()}
                                     type="default"
@@ -805,7 +857,7 @@ function AdminManageRequirements(){
                                 </Button>
                             </div>
 
-                            <Table columns={columns} dataSource={dataSource} size="middle" loading={loading} scroll={{ x: 3500, y: 1000 }} bordered/>
+                            <Table rowSelection={rowSelection} columns={columns} dataSource={dataSource} size="middle" loading={loading} scroll={{ x: 3500, y: 1000 }} bordered/>
                         </div>
                 </Content>
             </Layout>

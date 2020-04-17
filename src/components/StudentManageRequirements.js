@@ -292,7 +292,7 @@ function StudentManageRequirements(){
 
     return(
         !stopSpin ?
-            <div className="d-flex justify-content-center mt-5">
+            <div className="d-flex justify-content-center align-items-center mt-5 w-100 vh-100">
                 <Spin size="large"/>
             </div>
             :
@@ -324,7 +324,7 @@ function StudentManageRequirements(){
                                                 type = "error"
                                             />
                                             :
-                                            <div></div>
+                                            null
 
                                     }
 
@@ -332,7 +332,7 @@ function StudentManageRequirements(){
                                         validUpload?
                                             handleModal()
                                             :
-                                            <div></div>
+                                            null
                                     }
 
                                     <div className="d-flex flex-column justify-content-center mt-3">
@@ -343,7 +343,7 @@ function StudentManageRequirements(){
                                                 className="d-flex justify-content-center"
                                                 rules ={
                                                     [
-                                                    {required: true, message: "Please input your group name"}
+                                                        {required: true, message: "Please input your group name"}
                                                     ]
                                                 }
                                             >
@@ -405,8 +405,7 @@ function StudentManageRequirements(){
                                             {
                                                 required: true,
                                                 message: 'Please input your width of showcase space needed!',
-                                            },
-                                            {type: 'number', message: "Please input a valid number!"}
+                                            }
                                             ]}
                                         >
                                             <InputNumber

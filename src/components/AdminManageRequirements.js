@@ -114,8 +114,6 @@ function AdminManageRequirements(){
     const [uploadingCSV, setUploadingCSV] = useState(false);
     const [filename, setFilename] = useState('');
 
-    const [totalRecord, setTotalRecord] = useState(0);
-
     if (!fetchedRequirements){
         getAllRequirementsUser(dispatch);
         setFetchedRequirements(true);
@@ -217,6 +215,24 @@ function AdminManageRequirements(){
 
     const resetFilters = () => {
         form.resetFields();
+        setGroupName("");
+        setType("");
+        setSpaceX("");
+        setSpaceY("");
+        setSpaceZ("");
+        setPrototypeX("");
+        setPrototypeY("");
+        setPrototypeZ("");
+        setPrototypeWeight("");
+        setPowerPointsCount("");
+        setPedestalBigCount("");
+        setPedestalSmallCount("");
+        setMonitorCount("");
+        setTvCount("");
+        setChairCount("");
+        setHdmiToVgaAdapterCount("");
+        setHdmiCableCount("");
+        setRemark("");
         getAllRequirementsUser(dispatch);
         dispatch({type: TABLE_LOADING});
     }

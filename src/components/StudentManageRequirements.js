@@ -343,7 +343,7 @@ function StudentManageRequirements(){
                                                 className="d-flex justify-content-center"
                                                 rules ={
                                                     [
-                                                    {required: true, message: "Please input your group name"}
+                                                        {required: true, message: "Please input your group name"}
                                                     ]
                                                 }
                                             >

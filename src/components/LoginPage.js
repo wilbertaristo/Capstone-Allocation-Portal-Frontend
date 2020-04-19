@@ -131,7 +131,7 @@ function LoginPage(){
                                         type = "error"
                                     />
                                     :
-                                    <div></div>
+                                    null
 
                             }
 

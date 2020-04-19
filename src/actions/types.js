@@ -21,3 +21,5 @@ export const USER_GET_REQUIREMENTS = "admin_get_requirements";
 export const USER_GET_REQUIREMENTS_ERROR = "admin_get_requirements_error";
 export const TABLE_LOADING = "table_loading";
 export const DESTROY_DATA_SOURCE = "destroy_data_source";
+export const SKIPPED_PROJECTS = "skipped_projects";
+export const CLEAR_SKIPPED_PROJECTS = "clear_skipped_projects";

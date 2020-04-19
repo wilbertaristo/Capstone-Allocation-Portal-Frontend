@@ -89,7 +89,7 @@ function ResetPassword(){
                                         type = "error"
                                     />
                                     :
-                                    <div></div>
+                                    null
 
                             }
 
@@ -97,7 +97,7 @@ function ResetPassword(){
                                 validEmail ?
                                     handleModal()
                                     :
-                                    <div></div>
+                                    null
 
                             }
 

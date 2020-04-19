@@ -125,7 +125,7 @@ function SignupPage(){
                                         type = "error"
                                     />
                                     :
-                                    <div></div>
+                                    null
 
                             }
 
@@ -133,7 +133,7 @@ function SignupPage(){
                                 validSignup ?
                                     handleModal()
                                     :
-                                    <div></div>
+                                    null
 
                             }   
 

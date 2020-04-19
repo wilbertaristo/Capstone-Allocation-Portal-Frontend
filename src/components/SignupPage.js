@@ -143,7 +143,8 @@ function SignupPage(){
                                     name = "fullName"
                                     rules ={
                                         [
-                                        {required: true, message: "Please input your full name"}
+                                        {required: true, message: "Please input your full name"},
+                                        {max: 255, message: "Input exceeded maximum allowable length"}
                                         ]
                                     }
                                 >
@@ -164,7 +165,8 @@ function SignupPage(){
                                 rules ={
                                     [
                                     {required: true, message: "Please input your email address"},
-                                    {type: 'email', message: "Please enter a valid email address"}
+                                    {type: 'email', message: "Please enter a valid email address"},
+                                    {max: 255, message: "Input exceeded maximum allowable length"}
                                     ]
                                 }
                             >

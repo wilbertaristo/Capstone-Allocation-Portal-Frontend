@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
-import {Form, Input, Typography, Button, Divider, Alert} from 'antd';
+import {Form, Input, Typography, Button, Divider, Alert, Modal} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { LinkContainer } from 'react-router-bootstrap';
 import sutdLogo from '../images/sutdLogo.png';
@@ -25,18 +25,40 @@ function LoginPage(){
     const messageError = useSelector(state => state.auth.message);
     const dispatch = useDispatch();
 
+    const [loginAttempts, setLoginAttempts] = useState();
+
     useEffect(() => {
         if(runEffect){
             if(loginError){
                 setInvalidLogin(true);
                 setClicked(false);
                 setRunEffect(false);
+                if (typeof loginAttempts == 'undefined') {
+                    setLoginAttempts(1);
+                } else {
+                    setLoginAttempts(loginAttempts+1);
+                }
+                console.log(loginAttempts);
+                if (loginAttempts >= 5){
+                    bruteForceAttack();
+                }
             }
         }
         if (storeAuthenticated){
             history.push('/home');
         }
     })
+
+    const bruteForceAttack = () => {
+        const modal = Modal.success({
+            title: "Too many login attempts!",
+            content: "Please reset password by clicking 'Forget Password'",
+            centered: true,
+            closable: false,
+            icon: null
+        });
+        setTimeout(() => {modal.destroy();}, 4000);
+    }
 
 
     const handleOnChange = (e) => {
@@ -50,12 +72,14 @@ function LoginPage(){
     };
 
     const handleLogin = (values) => {
-        if (values){
+        if (values && (loginAttempts<5 || typeof loginAttempts=='undefined')){
             setInvalidLogin(false);
             setClicked(true);
             setRunEffect(true);
             dispatch({type: CLEAR_AUTH_ERROR});
             signinUser(email, password, history, dispatch);
+        } else if (loginAttempts >= 5) {
+            bruteForceAttack();
         }
     };
 

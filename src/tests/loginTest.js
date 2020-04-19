@@ -16,12 +16,34 @@ const chrome = require('selenium-webdriver/chrome');
     let resetButton = driver.findElement(By.className('login-form-button'));
 
 
-    // test 1: invalid email
+    // test 1: invalid email - not in email format, has other special characters, spacing, email too long
     await email.sendKeys('invalid');
     await password.sendKeys('test');
     await loginButton.click(); // error message pops up
     await driver.sleep(3000);
     await driver.navigate().refresh();
+
+    let email7 = driver.findElement(By.name('email'));
+    let password7 = driver.findElement(By.name('password'));
+    await email7.sendKeys('inva;;lid@example.com');
+    await password7.sendKeys('test'); // error message pops up
+    await driver.sleep(3000);
+    await driver.navigate().refresh();
+
+    let email8 = driver.findElement(By.name('email'));
+    let password8 = driver.findElement(By.name('password'));
+    await email8.sendKeys('inval id@example.com');
+    await password8.sendKeys('test'); // error message pops up
+    await driver.sleep(3000);
+    await driver.navigate().refresh();
+
+    let email9 = driver.findElement(By.name('email'));
+    let password9 = driver.findElement(By.name('password'));
+    await email9.sendKeys('testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest@example.com');
+    await password9.sendKeys('test');  // error message pops up
+    await driver.sleep(3000);
+    await driver.navigate().refresh();
+
 
     // test 2: empty password/ email
     let loginButton2 = driver.findElement(By.className('login-form-button'));
@@ -39,6 +61,34 @@ const chrome = require('selenium-webdriver/chrome');
     await driver.sleep(3000);
     await driver.navigate().refresh();
 
+    // test 5: too many login attempts
+    let email6 = driver.findElement(By.name('email'));
+    let password6 = driver.findElement(By.name('password'));
+    let loginButton6 = driver.findElement(By.className('login-form-button'));
+    await email6.sendKeys('student@example.com');
+    await password6.sendKeys('st');
+    await loginButton6.click();
+    await driver.sleep(3000);
+    await password6.sendKeys('u');
+    await loginButton6.click();
+    await driver.sleep(3000);
+    await password6.sendKeys('d');
+    await loginButton6.click();
+    await driver.sleep(3000);
+    await password6.sendKeys('e');
+    await loginButton6.click();
+    await driver.sleep(3000);
+    await password6.sendKeys('n');
+    await loginButton6.click();
+    await driver.sleep(3000);
+    await password6.sendKeys('t');
+    await loginButton6.click();
+    await driver.sleep(5000); // this is the correct password, but error message will pop up
+    await loginButton6.click();
+    await driver.sleep(3000);
+    await driver.navigate().refresh();
+
+
     // test 4: correct email and password
     let email4 = driver.findElement(By.name('email'));
     let password4 = driver.findElement(By.name('password'));
@@ -47,6 +97,7 @@ const chrome = require('selenium-webdriver/chrome');
     await password4.sendKeys('admin');
     await loginButton4.click(); // this will enter the home page 
     await driver.sleep(3000);
+
     // ends tests for login page
 
     // test 5: click reset password

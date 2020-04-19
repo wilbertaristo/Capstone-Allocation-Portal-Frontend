@@ -404,9 +404,9 @@ function StudentManageRequirements(){
                                             rules={[
                                             {
                                                 required: true,
-                                                message: 'Please input your width of showcase space needed!',
+                                                message: 'Please input your width of showcase space needed!',                                   
                                             },
-                                            {type: 'number', message: "Please input a valid number!"}
+                                            {type: 'number', message: "Please input a valid number!"}                                      
                                             ]}
                                         >
                                             <InputNumber
@@ -537,6 +537,7 @@ function StudentManageRequirements(){
                                             rules ={
                                                 [
                                                 {required: true, message: "Please input number of powerpoints needed!"},
+                                                {min: 0, max: 5, message: 'Please input a number from 1-5'}
                                                 ]
                                             }
                                         >
@@ -557,6 +558,7 @@ function StudentManageRequirements(){
                                             rules ={
                                                 [
                                                 {required: true, message: "Please input number of big pedestals needed!"},
+                                                {min: 0, max: 5, message: 'Please input a number from 1-5'}
                                                 ]
                                             }
                                         >
@@ -579,6 +581,7 @@ function StudentManageRequirements(){
                                                 required: true,
                                                 message: 'Please input number of small pedestals needed!',
                                             },
+                                            {min: 0, max: 5, message: 'Please input a number from 1-5'}
                                             ]}
                                         >
                                             <InputNumber
@@ -614,6 +617,7 @@ function StudentManageRequirements(){
                                                 required: true,
                                                 message: 'Please input number of monitors needed!',
                                             },
+                                            {min: 0, max: 5, message: 'Please input a number from 1-5'}
                                             ]}
                                         >
                                             <InputNumber
@@ -635,6 +639,7 @@ function StudentManageRequirements(){
                                                 required: true,
                                                 message: 'Please input number of TVs needed!',
                                             },
+                                            {min: 0, max: 5, message: 'Please input a number from 1-5'}
                                             ]}
                                         >
                                             <InputNumber
@@ -656,6 +661,7 @@ function StudentManageRequirements(){
                                                 required: true,
                                                 message: 'Please input number of tables needed!',
                                             },
+                                            {min: 0, max: 5, message: 'Please input a number from 1-5'}
                                             ]}
                                         >
                                             <InputNumber
@@ -677,6 +683,7 @@ function StudentManageRequirements(){
                                                 required: true,
                                                 message: 'Please input number of chairs needed!',
                                             },
+                                            {min: 0, max: 5, message: 'Please input a number from 1-5'}
                                             ]}
                                         >
                                             <InputNumber
@@ -696,6 +703,7 @@ function StudentManageRequirements(){
                                             rules ={
                                                 [
                                                 {required: true, message: "Please input number of HDMI to VGA adapter needed!"},
+                                                {min: 0, max: 5, message: 'Please input a number from 1-5'}
                                                 ]
                                             }
                                         >
@@ -718,6 +726,7 @@ function StudentManageRequirements(){
                                                 required: true,
                                                 message: 'Please input number of HDMI cables needed!',
                                             },
+                                            {min: 0, max: 5, message: 'Please input a number from 1-5'}
                                             ]}
                                         >
                                             <InputNumber

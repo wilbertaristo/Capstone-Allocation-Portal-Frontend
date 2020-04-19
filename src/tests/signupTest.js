@@ -14,15 +14,16 @@ const chrome = require('selenium-webdriver/chrome');
     let confirmPassword = driver.findElement(By.name('confirmPassword'));
     let submitButton = driver.findElement(By.className('signup-form-button'));
 
-    // test 1: invalid email and different password
+    // test 1: invalid email and different password - special character, spacing, too long (full name and email)
     await fullName.sendKeys('test');      
     await email.sendKeys('invalidemails'); // see warning pops up 
     await password.sendKeys('test');
     await confirmPassword.sendKeys('test12'); // see warning pop up
     await driver.sleep(3000);
     await driver.navigate().refresh();
+
     
-    
+
     // test 2: empty field
     await driver.sleep(5000);
     let submitButton2 = driver.findElement(By.className('signup-form-button'));
@@ -30,6 +31,18 @@ const chrome = require('selenium-webdriver/chrome');
     // try to click but cannot
     await driver.sleep(3000);
     await driver.navigate().refresh();
+
+    // test: sign up with an account that already exists
+    let fullName4 = driver.findElement(By.name('fullName'));
+    let email4 = driver.findElement(By.name('email'));
+    let password4 = driver.findElement(By.name('password'));
+    let confirmPassword4 = driver.findElement(By.name('confirmPassword'));
+    let submitButton4 = driver.findElement(By.className('signup-form-button'));
+    await fullName4.sendKeys('test');
+    await email4.sendKeys('student@example.com');
+    await password4.sendKeys('test');
+    await confirmPassword4.sendKeys('test');    
+    await submitButton4.click();
 
     // test 3: repeatedly click signup button
     let fullName3 = driver.findElement(By.name('fullName'));

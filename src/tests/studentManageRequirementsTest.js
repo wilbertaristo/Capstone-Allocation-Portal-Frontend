@@ -64,6 +64,51 @@ const chrome = require('selenium-webdriver/chrome');
     submitButton.click();
     await driver.get('http://127.0.0.1:3000/manage-requirements/student');
 
+    // test: input invalid numbers
+    let groupName4 = driver.findElement(By.name('groupName'));
+    let typePrototype4 = driver.findElement(By.name('typePrototype'));
+    let typeDescription4 = driver.findElement(By.name('typeDescription'));
+    let spaceX4 = driver.findElement(By.name('spaceX'));
+    let spaceY4 = driver.findElement(By.name('spaceY'));
+    let spaceZ4 = driver.findElement(By.name('spaceZ'));
+    let prototypeX4 = driver.findElement(By.name('prototypeX'));
+    let prototypeY4 = driver.findElement(By.name('prototypeY'));
+    let prototypeZ4 = driver.findElement(By.name('prototypeZ'));
+    let prototypeWeight4 = driver.findElement(By.name('prototypeWeight'));
+    let powerPointsCount4 = driver.findElement(By.name('powerPointsCount'));
+    let pedestalBigCount4 = driver.findElement(By.name('pedestalBigCount'));
+    let pedestalSmallCount4 = driver.findElement(By.name('pedestalSmallCount'));
+    let pedestalDescription4 = driver.findElement(By.name('pedestalDescription'));
+    let monitorCount4 = driver.findElement(By.name('monitorCount'));
+    let tvCount4 = driver.findElement(By.name('tvCount'));
+    let tableCount4 = driver.findElement(By.name('tableCount'));
+    let chairCount4 = driver.findElement(By.name('chairCount'));
+    let hdmiToVgaAdapterCount4 = driver.findElement(By.name('hdmiToVgaAdapterCount'));
+    let hdmiCableCount4 = driver.findElement(By.name('hdmiCableCount'));
+    await groupName4.sendKeys('test');
+    await typePrototype4.sendKeys('test');
+    await typeDescription4.sendKeys('test');
+    await spaceX4.sendKeys('1');
+    await spaceY4.sendKeys('1');
+    await spaceZ4.sendKeys('1');
+    await prototypeX4.sendKeys('1');
+    await prototypeY4.sendKeys('1');
+    await prototypeZ4.sendKeys('1');
+    await prototypeWeight4.sendKeys('1');
+    await powerPointsCount4.sendKeys('56');
+    await pedestalBigCount4.sendKeys('10');
+    await pedestalSmallCount4.sendKeys('13');
+    await pedestalDescription4.sendKeys('test');
+    await monitorCount4.sendKeys('41');
+    await tvCount4.sendKeys('12');
+    await tableCount4.sendKeys('11');
+    await chairCount4.sendKeys('17');
+    await hdmiToVgaAdapterCount4.sendKeys('13');
+    await hdmiCableCount4.sendKeys('14');
+    let submitButton4 = driver.findElement(By.className('submit-requirements-button'));
+    submitButton4.click();
+
+
     // test 2: click submit with empty fields
     await driver.sleep(5000);
     let submitButton2 = driver.findElement(By.className('submit-requirements-button'));

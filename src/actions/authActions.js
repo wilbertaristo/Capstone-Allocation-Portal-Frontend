@@ -9,7 +9,11 @@ import {
     RESET_PASSWORD,
     PASSWORD_SENT,
     SIGNUP_USER,
-    SIGNUP_ERROR
+    SIGNUP_ERROR,
+    GET_USER_DETAILS,
+    GET_USER_DETAILS_ERROR,
+    UPDATE_USER_DETAILS,
+    UPDATE_USER_DETAILS_ERROR
 } from "./types";
 
 const defaultToken = localStorage.getItem('token');
@@ -61,6 +65,46 @@ export function signupUser(email, password, fullName, dispatch) {
             console.log(loginError.message)
             dispatch ({
                 type: SIGNUP_ERROR
+            })
+        })
+}
+
+export function getUserDetails(dispatch) {
+    axios.get(`${ROOT_URL}/users/current`)
+        .then(response => {
+            console.log(response.data);
+            dispatch({
+                type: GET_USER_DETAILS,                               
+                payload: response.data
+            })
+        })
+        .catch(error => {
+            console.log(error.message)
+            dispatch({
+                type: GET_USER_DETAILS_ERROR
+            })
+        })
+}
+
+export function updateUserDetails(email, password, fullName, history, dispatch) {
+    axios.put(`${ROOT_URL}/users/current`, null,
+        {
+            params: {
+                "email": email,
+                "password": password,
+                "full_name": fullName        
+            }
+        })
+        .then(loginResponse => {
+            console.log("check")
+            dispatch({
+                type: UPDATE_USER_DETAILS
+            })
+        })
+        .catch((loginError) => {
+            console.log(loginError.message)
+            dispatch ({
+                type: UPDATE_USER_DETAILS_ERROR
             })
         })
 }

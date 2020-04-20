@@ -49,14 +49,12 @@ function LoginPage(){
         }
     };
 
-    const handleLogin = (values) => {
-        if (values){
-            setInvalidLogin(false);
-            setClicked(true);
-            setRunEffect(true);
-            dispatch({type: CLEAR_AUTH_ERROR});
-            signinUser(email, password, history, dispatch);
-        }
+    const handleLogin = () => {
+        setInvalidLogin(false);
+        setClicked(true);
+        setRunEffect(true);
+        dispatch({type: CLEAR_AUTH_ERROR});
+        signinUser(email, password, history, dispatch);
     };
 
     const handleKeyUp = e => {

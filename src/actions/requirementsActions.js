@@ -6,7 +6,10 @@ import {
     CSV_UPLOAD_REQUIREMENTS,
     CSV_UPLOAD_ERROR,
     USER_GET_REQUIREMENTS,
-    USER_GET_REQUIREMENTS_ERROR, SKIPPED_PROJECTS
+    USER_GET_REQUIREMENTS_ERROR,
+    SKIPPED_PROJECTS,
+    MASS_EMAIL_SENT,
+    MASS_EMAIL_ERROR
 } from "./types";
 
 const defaultToken = localStorage.getItem('token');
@@ -273,5 +276,25 @@ export function runAllocation(dispatch) {
         })
         .catch(error => {
             console.log(error);
+        })
+}
+
+export function sendMassEmailAdmin(dispatch){
+    axios.post(`${ROOT_URL}/admin/send_notifications`, null, {
+        params: {
+            "map_url": "http://localhost:3000/allocation-map/student"
+        }
+    })
+        .then(result => {
+            dispatch({
+                type: MASS_EMAIL_SENT,
+                message: result.data.message
+            })
+        })
+        .catch(error => {
+            dispatch({
+                type: MASS_EMAIL_ERROR,
+                message: error.message
+            })
         })
 }

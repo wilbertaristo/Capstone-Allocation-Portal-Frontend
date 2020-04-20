@@ -4,8 +4,8 @@ import {Layout, Button, Modal, Spin} from 'antd';
 import MenuHeader from "./MenuHeader"
 import { ROOT_URL } from "../utils";
 import AuthIFrame from "react-auth-iframe";
-import { runAllocation } from '../actions/requirementsActions'
-import {CLEAR_SKIPPED_PROJECTS} from "../actions/types";
+import { runAllocation, sendMassEmailAdmin } from '../actions/requirementsActions'
+import {CLEAR_MASS_EMAIL, CLEAR_SKIPPED_PROJECTS} from "../actions/types";
 
 const { Content  } = Layout;
 
@@ -14,23 +14,41 @@ function HomePage(){
     const token = localStorage.getItem("token");
     const [index, setIndex] = useState(0);
     const [openSkippedProjects, setOpenSkippedProject] = useState(false);
+    const [openEmailMessageModal, setOpenEmailMessageModal] = useState(false);
+    const [sendEmailLoading, setSendEmailLoading] = useState(false);
 
     const [stopSpin, setStopSpin] = useState(false);
     const [skip, setSkip] = useState(0);
 
     const skippedProjects = useSelector(state => state.upload.skippedProjects);
     const skippedProjectsCount = useSelector(state => state.upload.skippedProjectsCount);
+    const sendEmailMessage = useSelector(state => state.upload.sendEmailMessage);
 
     useEffect(() => {
         if (skippedProjects){
             setOpenSkippedProject(true);
         }
-    }, [skippedProjects])
+
+        if (sendEmailMessage){
+            setOpenEmailMessageModal(true);
+            setSendEmailLoading(false);
+        }
+    }, [skippedProjects, sendEmailMessage])
 
     const handleAllocation = () => {
         runAllocation(dispatch);
         setIndex(index +1);
         setStopSpin(false);
+    }
+
+    const handleSendEmail = () => {
+        setSendEmailLoading(true);
+        sendMassEmailAdmin(dispatch);
+    }
+
+    const handleCloseEmailMessage = () => {
+        setOpenEmailMessageModal(false);
+        dispatch({type: CLEAR_MASS_EMAIL})
     }
 
     const handleCloseSkippedProjects = () => {
@@ -68,6 +86,19 @@ function HomePage(){
             <Layout>
                 <Content>
                     <Modal
+                        title="Mass Email Notification Sent!"
+                        visible={openEmailMessageModal}
+                        onCancel={() => handleCloseEmailMessage()}
+                        footer={[
+                            <Button key="submit" type="primary" onClick={() => handleCloseEmailMessage()}>
+                                OK
+                            </Button>,
+                        ]}
+                    >
+                        Space allocation confirmation email has been sent to all groups!
+                    </Modal>
+
+                    <Modal
                         title="Run Allocation Complete!"
                         visible={openSkippedProjects}
                         onCancel={() => handleCloseSkippedProjects()}
@@ -103,8 +134,9 @@ function HomePage(){
                             className="login-form-button mt-1"
                             shape="round"
                             size="large"
-                            onClick={() => handleAllocation()}
+                            onClick={() => handleSendEmail()}
                             type = "primary"
+                            loading={sendEmailLoading}
                         >
                             SEND EMAIL
                         </Button>

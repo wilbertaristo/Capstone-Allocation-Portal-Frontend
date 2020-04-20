@@ -8,7 +8,10 @@ import {
     TABLE_LOADING,
     DESTROY_DATA_SOURCE,
     SKIPPED_PROJECTS,
-    CLEAR_SKIPPED_PROJECTS
+    CLEAR_SKIPPED_PROJECTS,
+    MASS_EMAIL_SENT,
+    MASS_EMAIL_ERROR,
+    CLEAR_MASS_EMAIL
 } from "../actions/types";
 
 export default function(state={}, action){
@@ -74,6 +77,24 @@ export default function(state={}, action){
                 ...state,
                 skippedProjects: null,
                 skippedProjectsCount: null
+            }
+
+        case MASS_EMAIL_SENT:
+            return{
+                ...state,
+                sendEmailMessage: action.message
+            }
+
+        case MASS_EMAIL_ERROR:
+            return{
+                ...state,
+                sendEmailMessage: action.message
+            }
+
+        case CLEAR_MASS_EMAIL:
+            return{
+                ...state,
+                sendEmailMessage: null
             }
 
         default:

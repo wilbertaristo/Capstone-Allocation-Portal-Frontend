@@ -23,3 +23,6 @@ export const TABLE_LOADING = "table_loading";
 export const DESTROY_DATA_SOURCE = "destroy_data_source";
 export const SKIPPED_PROJECTS = "skipped_projects";
 export const CLEAR_SKIPPED_PROJECTS = "clear_skipped_projects";
+export const MASS_EMAIL_SENT = "mass_email_sent";
+export const MASS_EMAIL_ERROR = "mass_email_error";
+export const CLEAR_MASS_EMAIL = "clear_mass_email";

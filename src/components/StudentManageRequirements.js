@@ -402,10 +402,10 @@ function StudentManageRequirements(){
                                             name="spaceY"
                                             className="d-flex justify-content-center"
                                             rules={[
-                                            {
-                                                required: true,
-                                                message: 'Please input your width of showcase space needed!',
-                                            }
+                                                {
+                                                    required: true,
+                                                    message: 'Please input your width of showcase space needed!',
+                                                }
                                             ]}
                                         >
                                             <InputNumber

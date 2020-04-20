@@ -814,7 +814,7 @@ function AdminManageRequirements(){
                                                 className = "inline-filter d-flex justify-content-center"
                                             >
                                                 <Button
-                                                    className="login-form-button"
+                                                    className="reset-filter-button"
                                                     shape="round"
                                                     size="large"
                                                     type = "primary"

@@ -404,14 +404,8 @@ function StudentManageRequirements(){
                                             rules={[
                                             {
                                                 required: true,
-<<<<<<< HEAD
-                                                message: 'Please input your width of showcase space needed!',                                   
-                                            },
-                                            {type: 'number', message: "Please input a valid number!"}                                      
-=======
                                                 message: 'Please input your width of showcase space needed!',
                                             }
->>>>>>> f045e1de579e51397aa0576461f95e8c704382ad
                                             ]}
                                         >
                                             <InputNumber

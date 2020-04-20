@@ -53,3 +53,8 @@
     display: flex;
     align-content: space-evenly;
 }
+
+.site-card-wrapper {
+    background: #ececec;
+    padding: 30px;
+  }

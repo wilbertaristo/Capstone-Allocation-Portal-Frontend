@@ -226,15 +226,6 @@ function LoginPage(){
                             </div>
                         </Form.Item>
 
-                        <div className="m-0 d-flex justify-content-center">
-                            {
-                                !clicked ?
-                                    <div><h6 style={{cursor: "context-menu"}}>New user? <a className="signup-page" href="/signup">Sign up</a></h6></div>
-                                    :
-                                    <div><h6 style={{cursor: "context-menu"}}>New user? <a className="signup-page" >Sign up</a></h6></div>
-                            }
-                        </div>
-
                     </Form>
                 </div>
             </div>

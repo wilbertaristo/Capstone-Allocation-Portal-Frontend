@@ -45,8 +45,11 @@ export default function(state={}, action){
             }
 
         case SIGNUP_USER:
-            return{    
-                signupSuccess: true
+            return{   
+                
+                signupSuccess: true,
+                authenticated: true
+                
             }
 
         case SIGNUP_ERROR:

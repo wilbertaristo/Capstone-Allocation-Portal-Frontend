@@ -142,7 +142,7 @@ function HomePage(){
                             onFinish={handleUpdateDetails}
                         >
                         <div className="d-flex justify-content-center mt-3 mb-2 ">
-                                <Title level={3} style={{color: "dimgray", letterSpacing: "2px"}}>CHANGE USER DETAILS</Title>                               
+                                <Title level={3} style={{color: "dimgray", letterSpacing: "2px"}}>USER SETTINGS</Title>                               
                             </div>
 
                             <Divider className="bg-secondary" style={{marginTop: "1px", marginBottom: "20px"}}/>

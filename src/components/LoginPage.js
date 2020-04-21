@@ -71,25 +71,14 @@ function LoginPage(){
         }
     };
 
-<<<<<<< HEAD
     const handleLogin = (values) => {
-        if (values && (loginAttempts<5 || typeof loginAttempts=='undefined')){
+        if (values ){
             setInvalidLogin(false);
             setClicked(true);
-            setRunEffect(true);
             dispatch({type: CLEAR_AUTH_ERROR});
+            setRunEffect(true);
             signinUser(email, password, history, dispatch);
-        } else if (loginAttempts >= 5) {
-            bruteForceAttack();
-        }
-=======
-    const handleLogin = () => {
-        setInvalidLogin(false);
-        setClicked(true);
-        setRunEffect(true);
-        dispatch({type: CLEAR_AUTH_ERROR});
-        signinUser(email, password, history, dispatch);
->>>>>>> ab7f7d420723d8e2dc241048b0b11b27c62b27f5
+        } 
     };
 
     const handleKeyUp = e => {

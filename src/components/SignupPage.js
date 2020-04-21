@@ -37,7 +37,7 @@ function SignupPage(){
             } else if(signupSuccess){
                 setValidSignup(true);
                 setRunEffect(false);
-                setTimeout(() => history.push('/login'), 4000);
+                setTimeout(() => history.push('/home'), 4000);
             }
         }
     })
@@ -78,7 +78,7 @@ function SignupPage(){
     const handleModal = () => {
         const modal = Modal.success({
             title: "Signup success!",
-            content: "Redirecting you to our login page shortly...",
+            content: "Redirecting you to our home page shortly...",
             centered: true,
             closable: false,
             icon: null
@@ -143,7 +143,8 @@ function SignupPage(){
                                     name = "fullName"
                                     rules ={
                                         [
-                                        {required: true, message: "Please input your full name"}
+                                        {required: true, message: "Please input your full name"},
+                                        {max: 255, message: "Input exceeded maximum allowable length"}
                                         ]
                                     }
                                 >
@@ -164,7 +165,8 @@ function SignupPage(){
                                 rules ={
                                     [
                                     {required: true, message: "Please input your email address"},
-                                    {type: 'email', message: "Please enter a valid email address"}
+                                    {type: 'email', message: "Please enter a valid email address"},
+                                    {max: 255, message: "Input exceeded maximum allowable length"}
                                     ]
                                 }
                             >
@@ -274,10 +276,10 @@ function SignupPage(){
                         <div className="mt-1 mb-2 d-flex justify-content-center">
                             {
                                 !clicked ?
-                                <LinkContainer to="/login" className="pointer">
-                                    <div><h6 style={{cursor: "context-menu"}}>Have an existing account? <a href="/signup">Sign in</a></h6></div>
+                                <LinkContainer to="/home" className="pointer">
+                                    <div><h6 style={{cursor: "context-menu"}}><a href="/signup">Back to home</a></h6></div>
                                 </LinkContainer> :
-                                    <div><h6 className="pointer" style={{color: "gray"}}>Login</h6></div>
+                                    <div><h6 className="pointer" style={{color: "gray"}}>Home</h6></div>
                             }
 
                         </div>

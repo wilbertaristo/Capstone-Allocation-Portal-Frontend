@@ -23,7 +23,7 @@ function App(){
           <Route path="/login" component={LoginPage}/>
           <ProtectedRoute path="/home" component={HomePage}/>
           <Route path="/reset-password" component={ResetPassword}/>
-          <Route path="/signup" component={SignupPage}/>
+          <AdminProtectedRoute path="/signup" component={SignupPage}/>
           <ProtectedRoute exact path="/manage-requirements/student" component={StudentManageRequirements}/>
           <AdminProtectedRoute exact path="/manage-requirements/admin" component={AdminManageRequirements}/>
           <ProtectedRoute exact path="/allocation-map/student" component={StudentAllocationMap}/>

@@ -157,6 +157,7 @@ export function uploadRequirementsStudentByCsv(csvFile, dispatch){
 export function getAllRequirementsUser(dispatch){
     axios.get(`${ROOT_URL}/projects`)
         .then(response => {
+            console.log(response.data)
             dispatch({
                 type: USER_GET_REQUIREMENTS,
                 payload: response.data
@@ -217,7 +218,7 @@ export function getRequirementByFilterAdmin(
                 'remark': remark
             }
         })
-        .then(response => {
+        .then(response => {         
             dispatch({
                 type: USER_GET_REQUIREMENTS,
                 payload: response.data

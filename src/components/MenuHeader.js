@@ -40,7 +40,7 @@ function MenuHeader(){
 
     const renderManageRequirementsMenu = () => {
         if (admin === "true"){
-            return <LinkContainer to="/manage-requirements/admin" className="pointer">
+            return <LinkContainer to="/manage-requirements/admin" className="admin-manage-requirements">
                 <div className="d-flex flex-row align-items-center">
                     <UploadOutlined className="mr-2"/>
                     Manage Requirements
@@ -53,6 +53,56 @@ function MenuHeader(){
                     Manage Requirements
                 </div>
             </LinkContainer>
+        }
+    }
+
+    const renderAccountsMenu = () => {
+        if (admin === "true"){
+            return <SubMenu
+                key="account"
+                className = "account"
+                title={
+                    <div className="d-flex flex-row align-items-center">
+                        <UserOutlined className="mr-2"/>
+                        Account
+                    </div>
+                }
+            >
+                <Menu.Item key="settings">
+                    <LinkContainer to="/user-settings" className="pointer">
+                        <div>
+                            Settings
+                        </div>
+                    </LinkContainer>
+                </Menu.Item>
+                <Menu.Item key="signup">
+                    <LinkContainer to="/signup" className="pointer">
+                        <div>
+                            Signup
+                        </div>
+                    </LinkContainer>
+                </Menu.Item>
+                <Menu.Item key="signout" name = "signout-button" onClick={() => handleLogout()}>Sign Out</Menu.Item>
+            </SubMenu>
+        } else {
+            return <SubMenu
+                key="account"
+                title={
+                    <div className="d-flex flex-row align-items-center">
+                        <UserOutlined className="mr-2"/>
+                        Account
+                    </div>
+                }
+            >
+                <Menu.Item key="settings">
+                    <LinkContainer to="/user-settings" className="pointer">
+                        <div>
+                            Settings
+                        </div>
+                    </LinkContainer>
+                </Menu.Item>
+                <Menu.Item key="signout" className = "signout-button" onClick={() => handleLogout()}>Sign Out</Menu.Item>
+            </SubMenu>
         }
     }
 
@@ -84,24 +134,7 @@ function MenuHeader(){
                             <Menu.Item key="map">
                                 {renderAllocationMapMenu()}
                             </Menu.Item>
-                            <SubMenu
-                                key="account"
-                                title={
-                                    <div className="d-flex flex-row align-items-center">
-                                        <UserOutlined className="mr-2"/>
-                                        Account
-                                    </div>
-                                }
-                            >
-                                <Menu.Item key="settings">
-                                    <LinkContainer to="/user-settings" className="pointer">
-                                        <div>
-                                            Settings
-                                        </div>
-                                    </LinkContainer>
-                                </Menu.Item>
-                                <Menu.Item key="signout" onClick={() => handleLogout()}>Sign Out</Menu.Item>
-                            </SubMenu>
+                            
                         </Menu>
                     </Sider>
                     :
@@ -125,31 +158,7 @@ function MenuHeader(){
                             <Menu.Item key="map">
                                 {renderAllocationMapMenu()}
                             </Menu.Item>
-                            <SubMenu
-                                key="account"
-                                
-                                title={
-                                    <div name='account' className="d-flex flex-row align-items-center">
-                                        <UserOutlined className="mr-2"/>
-                                        Account
-                                    </div>
-                                }
-                            >
-                                <Menu.Item key="settings">
-                                    <LinkContainer to="/user-settings" className="pointer">
-                                        <div>
-                                            Settings
-                                        </div>
-                                    </LinkContainer>
-                                </Menu.Item>
-                                <Menu.Item
-                                    key="signout"
-                                    name = "signout"
-                                    onClick={() => handleLogout()}
-                                >
-                                    Sign Out
-                                </Menu.Item>
-                            </SubMenu>
+                            {renderAccountsMenu()}
                         </Menu>
                     </Header>
             }

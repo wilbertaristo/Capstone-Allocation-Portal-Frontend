@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
-import {Form, Input, Typography, Button, Divider, Alert} from 'antd';
+import {Form, Input, Typography, Button, Divider, Alert, Modal} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { LinkContainer } from 'react-router-bootstrap';
 import sutdLogo from '../images/sutdLogo.png';
@@ -25,18 +25,40 @@ function LoginPage(){
     const messageError = useSelector(state => state.auth.message);
     const dispatch = useDispatch();
 
+    const [loginAttempts, setLoginAttempts] = useState();
+
     useEffect(() => {
         if(runEffect){
             if(loginError){
                 setInvalidLogin(true);
                 setClicked(false);
                 setRunEffect(false);
+                if (typeof loginAttempts == 'undefined') {
+                    setLoginAttempts(1);
+                } else {
+                    setLoginAttempts(loginAttempts+1);
+                }
+                console.log(loginAttempts);
+                if (loginAttempts >= 5){
+                    bruteForceAttack();
+                }
             }
         }
         if (storeAuthenticated){
             history.push('/home');
         }
     })
+
+    const bruteForceAttack = () => {
+        const modal = Modal.success({
+            title: "Too many login attempts!",
+            content: "Please reset password by clicking 'Forget Password'",
+            centered: true,
+            closable: false,
+            icon: null
+        });
+        setTimeout(() => {modal.destroy();}, 4000);
+    }
 
 
     const handleOnChange = (e) => {
@@ -49,12 +71,14 @@ function LoginPage(){
         }
     };
 
-    const handleLogin = () => {
-        setInvalidLogin(false);
-        setClicked(true);
-        setRunEffect(true);
-        dispatch({type: CLEAR_AUTH_ERROR});
-        signinUser(email, password, history, dispatch);
+    const handleLogin = (values) => {
+        if (values ){
+            setInvalidLogin(false);
+            setClicked(true);
+            dispatch({type: CLEAR_AUTH_ERROR});
+            setRunEffect(true);
+            signinUser(email, password, history, dispatch);
+        } 
     };
 
     const handleKeyUp = e => {
@@ -199,15 +223,6 @@ function LoginPage(){
                                 }
                             </div>
                         </Form.Item>
-
-                        <div className="m-0 d-flex justify-content-center">
-                            {
-                                !clicked ?
-                                    <div><h6 style={{cursor: "context-menu"}}>New user? <a className="signup-page" href="/signup">Sign up</a></h6></div>
-                                    :
-                                    <div><h6 style={{cursor: "context-menu"}}>New user? <a className="signup-page" >Sign up</a></h6></div>
-                            }
-                        </div>
 
                     </Form>
                 </div>

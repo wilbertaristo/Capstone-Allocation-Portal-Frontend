@@ -9,7 +9,11 @@ import {
     AUTH_SUCCESS,
     CLEAR_AUTH_ERROR,
     SIGNUP_USER,
-    SIGNUP_ERROR
+    SIGNUP_ERROR,
+    GET_USER_DETAILS,
+    GET_USER_DETAILS_ERROR,
+    UPDATE_USER_DETAILS,
+    UPDATE_USER_DETAILS_ERROR
 } from "../actions/types";
 
 export default function(state={}, action){
@@ -27,6 +31,7 @@ export default function(state={}, action){
                 loginError: null,
                 authenticated: true
             }
+        
 
         case UNAUTH_USER:
             return{
@@ -40,13 +45,41 @@ export default function(state={}, action){
             }
 
         case SIGNUP_USER:
-            return{
-                signupSuccess: true
+            return{   
+                
+                signupSuccess: true,
+                authenticated: true
+                
             }
 
         case SIGNUP_ERROR:
             return{
                 signupError: true
+            }
+
+        case UPDATE_USER_DETAILS:
+            return{
+                updateDetailsSuccess: true,
+                authenticated: true
+            }
+
+        case UPDATE_USER_DETAILS_ERROR:
+            return{
+                updateDetailsError: true
+            }   
+
+
+        case GET_USER_DETAILS:
+            return{
+                ...state,
+                userDetails: action.payload,
+                loading: false
+            }
+
+        case GET_USER_DETAILS_ERROR:
+            return{
+                ...state,
+                userDetails: null
             }
 
         default:

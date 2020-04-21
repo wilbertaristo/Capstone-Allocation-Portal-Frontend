@@ -1,11 +1,14 @@
 import React  from "react";
 import ReactDOM from 'react-dom'
-import { Layout, Card, Col, Row, Descriptions } from 'antd';
+import { Layout, Card, Col, Row, Descriptions, Carousel } from 'antd';
 import MenuHeader from "./MenuHeader"
 import { DESTROY_DATA_SOURCE } from "../actions/types";
 import { useDispatch } from "react-redux";
 import { LinkContainer } from 'react-router-bootstrap';
-import bgImage from '../images/backgroundImage.jpg';
+import img1 from '../images/IMG_2350.JPG';
+import img2 from '../images/IMG_2351.JPG';
+import img3 from '../images/IMG_2352.JPG';
+import img4 from '../images/IMG_2353.JPG';
 
 
 
@@ -94,6 +97,38 @@ function HomePage(){
                 </Descriptions>                                    
                     {renderCards()}
                  </div>   
+                 <div>
+                 <Carousel autoplay>
+                    <div>
+                    <img
+                    src={img2}
+                    className="img-fluid"
+                    alt=""
+                    />
+                    </div>
+                    <div>
+                    <img
+                    src={img1}
+                    className="img-fluid"
+                    alt=""
+                    />
+                    </div>
+                    <div>
+                    <img
+                    src={img3}
+                    className="img-fluid"
+                    alt=""
+                    />
+                    </div>
+                    <div>
+                    <img
+                    src={img4}
+                    className="img-fluid"
+                    alt=""
+                    />
+                    </div>
+                </Carousel>
+                 </div>
                 </Content>
             </Layout>
         </Layout>

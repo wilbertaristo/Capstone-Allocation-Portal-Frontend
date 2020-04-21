@@ -91,7 +91,7 @@ const chrome = require('selenium-webdriver/chrome');
     await password18.sendKeys('n');
     await loginButton18.click();
     await driver.sleep(3000);
-    await password18.sendKeys('t');
+    await password18.sendKeys('ttt');
     await loginButton18.click();
     await driver.sleep(5000); // this is the correct password, but error message will pop up
     await driver.get('http://127.0.0.1:3000/login');
@@ -263,119 +263,9 @@ const chrome = require('selenium-webdriver/chrome');
     await driver.sleep(3000);
     await driver.get('http://127.0.0.1:3000/home');
 
-    // let account = driver.findElement(By.className('account'));
-    // await (await account).click();
-    // let signoutButton = driver.findElement(By.name('signout-button'));
-    // await signoutButton.click();
-
-    // console.log("try to sign up an account that already exists")
-    // let fullName37 = driver.findElement(By.name('fullName'));
-    // let email37 = driver.findElement(By.name('email'));
-    // let password37 = driver.findElement(By.name('password'));
-    // let confirmPassword37 = driver.findElement(By.name('confirmPassword'));
-    // let submitButton37 = driver.findElement(By.className('signup-form-button'));
-    // await fullName37.sendKeys('test');
-    // await email37.sendKeys('student@example.com');
-    // await password37.sendKeys('test');
-    // await confirmPassword37.sendKeys('test');    
-    // await submitButton37.click();
-    // await driver.sleep(3000);
-    // await driver.get('http://127.0.0.1:3000/signup');
-
-
-    // console.log("XSS: edit a project")
-    // await driver.get("http://127.0.0.1:3000/manage-requirements/student?id=338");
-    // let groupName23 = driver.findElement(By.name('groupName'));
-    // let type23 = driver.findElement(By.name('typePrototype'));
-    // let spaceX23 = driver.findElement(By.name('spaceX'));
-    // let spaceY23 = driver.findElement(By.name('spaceY'));
-    // let spaceZ23 = driver.findElement(By.name('spaceZ'));
-    // let prototypeX23 = driver.findElement(By.name('prototypeX'));
-    // let prototypeY23 = driver.findElement(By.name('prototypeY'));
-    // let prototypeZ23 = driver.findElement(By.name('prototypeZ'));
-    // let prototypeWeight23 = driver.findElement(By.name('prototypeWeight'));
-    // let powerPointsCount23 = driver.findElement(By.name('powerPointsCount'));
-    // let pedestalBigCount23 = driver.findElement(By.name('pedestalBigCount'));
-    // let pedestalSmallCount23 = driver.findElement(By.name('pedestalSmallCount'));
-    // let pedestalDescription23 = driver.findElement(By.name('pedstalDescription'));
-    // let monitorCount23 = driver.findElement(By.name('monitorCount'));
-    // let tvCount23 = driver.findElement(By.name('tvCount'));
-    // let tableCount23 = driver.findElement(By.name('tableCount'));
-    // let chairCount23 = driver.findElement(By.name('chairCount'));
-    // let hdmiToVgaAdapterCount23 = driver.findElement(By.name('hdmiToVgaAdapterCount'));
-    // let hdmiCableCount23 = driver.findElement(By.name('hdmiCableCount'));
-    // let remark23 = driver.findElement(By.name('remark'));
-    // await groupName23.sendKeys('<script> alert("HACKED") </script>');
-    // await type23.sendKeys('<script> alert("HACKED") </script>');
-    // await spaceX23.sendKeys('1');
-    // await spaceY23.sendKeys('1');
-    // await spaceZ23.sendKeys('1');
-    // await prototypeX23.sendKeys('1');
-    // await prototypeY23.sendKeys('1');
-    // await prototypeZ23.sendKeys('1');
-    // await prototypeWeight23.sendKeys('1');
-    // await powerPointsCount23.sendKeys('1');
-    // await pedestalBigCount23.sendKeys('1');
-    // await pedestalSmallCount23.sendKeys('1');
-    // await pedestalDescription23.sendKeys('<script> alert("HACKED") </script>')
-    // await monitorCount23.sendKeys('1');
-    // await tvCount23.sendKeys('1');
-    // await tableCount23.sendKeys('1');
-    // await chairCount23.sendKeys('1');
-    // await hdmiToVgaAdapterCount23.sendKeys('1');
-    // await hdmiCableCount23.sendKeys('1');
-    // await remark23.sendKeys('<script> alert("HACKED") </script>');
-    // let submitButton23 = findElement(By.className('submit-requirements-button'));
-    // await submitButton23.click();
-    // await driver.sleep(4000);
-
-    // console.log("Test edit requirements with invalid inputs")
-    // await driver.get("http://127.0.0.1:3000/manage-requirements/student?id=338");
-    // let groupName24 = driver.findElement(By.name('groupName'));
-    // let type24 = driver.findElement(By.name('typePrototype'));
-    // let spaceX24 = driver.findElement(By.name('spaceX'));
-    // let spaceY24 = driver.findElement(By.name('spaceY'));
-    // let spaceZ24 = driver.findElement(By.name('spaceZ'));
-    // let prototypeX24 = driver.findElement(By.name('prototypeX'));
-    // let prototypeY24 = driver.findElement(By.name('prototypeY'));
-    // let prototypeZ24 = driver.findElement(By.name('prototypeZ'));
-    // let prototypeWeight24 = driver.findElement(By.name('prototypeWeight'));
-    // let powerPointsCount24 = driver.findElement(By.name('powerPointsCount'));
-    // let pedestalBigCount24 = driver.findElement(By.name('pedestalBigCount'));
-    // let pedestalSmallCount24 = driver.findElement(By.name('pedestalSmallCount'));
-    // let pedestalDescription24 = driver.findElement(By.name('pedstalDescription'));
-    // let monitorCount24 = driver.findElement(By.name('monitorCount'));
-    // let tvCount24 = driver.findElement(By.name('tvCount'));
-    // let tableCount24 = driver.findElement(By.name('tableCount'));
-    // let chairCount24 = driver.findElement(By.name('chairCount'));
-    // let hdmiToVgaAdapterCount24 = driver.findElement(By.name('hdmiToVgaAdapterCount'));
-    // let hdmiCableCount24 = driver.findElement(By.name('hdmiCableCount'));
-    // let remark24 = driver.findElement(By.name('remark'));
-    // await groupName24.sendKeys('project');
-    // await type24.sendKeys('test');
-    // await spaceX24.sendKeys('test');
-    // await spaceY24.sendKeys('test');
-    // await spaceZ24.sendKeys('test');
-    // await prototypeX24.sendKeys('test');
-    // await prototypeY24.sendKeys('test');
-    // await prototypeZ24.sendKeys('test');
-    // await prototypeWeight24.sendKeys('test');
-    // await powerPointsCount24.sendKeys('test');
-    // await pedestalBigCount24.sendKeys('test');
-    // await pedestalSmallCount24.sendKeys('test');
-    // await pedestalDescription24.sendkeys('test');
-    // await monitorCount24.sendKeys('test');
-    // await tvCount24.sendKeys('test');
-    // await tableCount24.sendKeys('test');
-    // await chairCount24.sendKeys('test');
-    // await hdmiToVgaAdapterCount24.sendKeys('test');
-    // await hdmiCableCount24.sendKeys('test');
-    // await remark24.sendKeys('test');
     
-    // SQL injection
-    // XSS 
-    // Edit a project: SQL and XSS, test input fields
 
+    
     
 
 

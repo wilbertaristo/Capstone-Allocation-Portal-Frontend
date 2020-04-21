@@ -101,7 +101,7 @@ function MenuHeader(){
                         </div>
                     </LinkContainer>
                 </Menu.Item>
-                <Menu.Item key="signout" className = "signout-button" onClick={() => handleLogout()}>Sign Out</Menu.Item>
+                <Menu.Item key="signout" name = "signout-button" onClick={() => handleLogout()}>Sign Out</Menu.Item>
             </SubMenu>
         }
     }

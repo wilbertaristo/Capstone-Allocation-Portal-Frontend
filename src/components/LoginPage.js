@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
+import RCG from 'react-captcha-generator';
 import { useHistory } from 'react-router-dom';
 import {Form, Input, Typography, Button, Divider, Alert, Modal} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
@@ -19,6 +20,9 @@ function LoginPage(){
     const [clicked, setClicked] = useState();
     const [invalidLogin, setInvalidLogin] = useState();
     const [runEffect, setRunEffect] = useState();
+    const [captcha, setCaptcha] = useState();
+    const [captchaAnswer, setCaptchaAnswer] = useState("");
+    const [showCaptcha, setShowCaptcha] = useState(false);
 
     const loginError = useSelector(state => state.auth.loginError);
     const storeAuthenticated = useSelector(state => state.auth.authenticated);
@@ -39,7 +43,7 @@ function LoginPage(){
                     setLoginAttempts(loginAttempts+1);
                 }
                 console.log(loginAttempts);
-                if (loginAttempts >= 5){
+                if (loginAttempts >= 4){
                     bruteForceAttack();
                 }
             }
@@ -50,9 +54,10 @@ function LoginPage(){
     })
 
     const bruteForceAttack = () => {
+        setShowCaptcha(true);
         const modal = Modal.success({
             title: "Too many login attempts!",
-            content: "Please reset password by clicking 'Forget Password'",
+            content: "Please complete the Captcha below & try again",
             centered: true,
             closable: false,
             icon: null
@@ -68,11 +73,13 @@ function LoginPage(){
             setEmail(value);
         } else if (name === "password") {
             setPassword(value);
+        } else if (name === "captcha"){
+            setCaptcha(value);
         }
     };
 
     const handleLogin = (values) => {
-        if (values ){
+        if (values){
             setInvalidLogin(false);
             setClicked(true);
             dispatch({type: CLEAR_AUTH_ERROR});
@@ -87,6 +94,10 @@ function LoginPage(){
                 handleLogin();
             }
         }
+    }
+
+    const handleCaptcha = e => {
+        setCaptchaAnswer(e);
     }
 
     return(
@@ -186,6 +197,33 @@ function LoginPage(){
                                     <div><h6 className="forgot-password pointer" style={{color: "gray"}}>Forgot password?</h6></div>
                             }
                         </div>
+
+                        {
+                            showCaptcha?
+                                <div className="d-flex justify-content-center align-items-center">
+                                    <RCG result={handleCaptcha}/>
+                                    <div className= "d-flex align-items-center ml-3 pt-3">
+                                        <Form.Item
+                                            name = "captcha"
+                                            rules ={
+                                                [
+                                                    {required: true, message: "Please input captcha"},
+                                                ]
+                                            }
+                                        >
+                                            <Input
+                                                onChange={(e) => handleOnChange(e)}
+                                                onKeyUp={(e) => handleKeyUp(e)}
+                                                placeholder="Captcha"
+                                                name='captcha'
+                                                size='large'
+                                            />
+                                        </Form.Item>
+                                    </div>
+                                </div>
+                                :
+                                null
+                        }
 
                         <Form.Item>
                             <div className="d-flex justify-content-center">

@@ -756,6 +756,7 @@ function StudentManageRequirements(){
                                                 !clicked ?
                                                     <Button
                                                         htmlType="submit"
+                                                        id="submit-requirements-button"
                                                         className="submit-requirements-button"
                                                         shape="round"
                                                         size="large"
@@ -773,6 +774,7 @@ function StudentManageRequirements(){
                                                     :
                                                     <Button
                                                         htmlType="submit"
+                                                        id="submit-requirements-button"
                                                         className="submit-requirements-button"
                                                         shape="round"
                                                         size="large"

@@ -16,14 +16,14 @@ const chrome = require('selenium-webdriver/chrome');
 
 
     // test 1: LOGIN TESTS
-    console.log("testing for invalid email format in login page");
+    console.log("Testing for invalid email format in login page");
     await email.sendKeys('invalid');
     await password.sendKeys('test');
     await loginButton.click(); // error message pops up
     await driver.sleep(3000);
     await driver.get('http://127.0.0.1:3000/login');
 
-    console.log("testing for special characters in email in login page");
+    console.log("Testing for special characters in email in login page");
     let email12 = driver.findElement(By.name('email'));
     let password12 = driver.findElement(By.name('password'));
     await email12.sendKeys('inva;;lid@example.com');
@@ -31,7 +31,7 @@ const chrome = require('selenium-webdriver/chrome');
     await driver.sleep(3000);
     await driver.get('http://127.0.0.1:3000/login');
 
-    console.log("testing for spaces in email in login page");
+    console.log("Testing for spaces in email in login page");
     let email13 = driver.findElement(By.name('email'));
     let password13 = driver.findElement(By.name('password'));
     await email13.sendKeys('inval id@example.com');
@@ -39,7 +39,7 @@ const chrome = require('selenium-webdriver/chrome');
     await driver.sleep(3000);
     await driver.get('http://127.0.0.1:3000/login');
 
-    console.log("testing for too long input in login page");
+    console.log("Testing for very long input in login page");
     let email14 = driver.findElement(By.name('email'));
     let password14 = driver.findElement(By.name('password'));
     await email14.sendKeys('testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest@example.com');
@@ -57,44 +57,43 @@ const chrome = require('selenium-webdriver/chrome');
     await driver.sleep(3000);
     await driver.get('http://127.0.0.1:3000/login');
 
-    console.log("test clicking the login button without any input");
+    console.log("Test clicking the login button without any input");
     let loginButton16 = driver.findElement(By.className('login-form-button'));
     await loginButton16.click(); // prompts to fill in inputs pop up
     await driver.sleep(3000);
     await driver.get('http://127.0.0.1:3000/login');
 
-    console.log("input an incorrect email and password");
+    console.log("Input an incorrect email and password");
     let email17 = driver.findElement(By.name('email'));
     let password17 = driver.findElement(By.name('password'));
     let loginButton17 = driver.findElement(By.className('login-form-button'));
     await email17.sendKeys('thisdoesnotexsit@example.com');
     await password17.sendKeys('test');
     await loginButton17.click(); // error message pops up
-    await driver.sleep(3000);
+    await driver.sleep(4000);
     await driver.get('http://127.0.0.1:3000/login');
 
-    console.log("brute force attack: force user to reset password after 5 login attempts")
+    console.log("Brute force attack: force user to enter captcha after 5 login attempts")
     let email18 = driver.findElement(By.name('email'));
     let password18 = driver.findElement(By.name('password'));
     let loginButton18 = driver.findElement(By.className('login-form-button'));
     await email18.sendKeys('student@example.com');
     await password18.sendKeys('st');
     await loginButton18.click();
-    await driver.sleep(3000);
+    await driver.sleep(2000);
     await password18.sendKeys('u');
     await loginButton18.click();
-    await driver.sleep(3000);
+    await driver.sleep(2000);
     await password18.sendKeys('d');
     await loginButton18.click();
-    await driver.sleep(3000);
+    await driver.sleep(2000);
     await password18.sendKeys('e');
     await loginButton18.click();
-    await driver.sleep(3000);
+    await driver.sleep(2000);
     await password18.sendKeys('n');
     await loginButton18.click();
-    await driver.sleep(3000);
+    await driver.sleep(2000);
     await password18.sendKeys('ttt');
-    await loginButton18.click();
     await driver.sleep(5000); // this is the correct password, but error message will pop up
     await driver.get('http://127.0.0.1:3000/login');
 
@@ -108,7 +107,7 @@ const chrome = require('selenium-webdriver/chrome');
     await driver.sleep(3000);
     await driver.get('http://127.0.0.1:3000/login');
 
-    console.log("login to admin account")
+    console.log("Login to admin account")
     let email19 = driver.findElement(By.name('email'));
     let password19 = driver.findElement(By.name('password'));
     let loginButton19 = driver.findElement(By.className('login-form-button'));
@@ -118,7 +117,7 @@ const chrome = require('selenium-webdriver/chrome');
     await driver.sleep(3000);
 
     // TEST2: ADMIN MANAGE REQUIREMENTS PAGE
-    console.log("XSS: try to enter a script into input fields, nothing should popup");
+    console.log("XSS: Enter scripts into input fields, nothing will popup");
     let adminManageRequirementsButton21 = driver.findElement(By.className('admin-manage-requirements'));
     await adminManageRequirementsButton21.click();
     let groupName21 = driver.findElement(By.name('groupName'));
@@ -163,7 +162,7 @@ const chrome = require('selenium-webdriver/chrome');
     submitButton21.click();
     await driver.sleep(3000);
     
-    console.log("test invalid inputs (inputs that are not numbers)")
+    console.log("Test invalid inputs (inputs that are not numbers)")
     let groupName22 = driver.findElement(By.name('groupName'));
     let type22 = driver.findElement(By.name('typePrototype'));
     let spaceX22 = driver.findElement(By.name('spaceX'));
@@ -207,6 +206,8 @@ const chrome = require('selenium-webdriver/chrome');
     await driver.sleep(3000);
 
     // TEST3: SIGNUP PAGE
+    console.log("Testing signup page")
+    await driver.get('http://127.0.0.1:3000/signup');
     console.log("XSS: input <script> alert('HACKED') </script> into full name and password field, nothing should pop up");
     let fullName35 = driver.findElement(By.name('fullName'));
     let email35 = driver.findElement(By.name('email'));
@@ -221,13 +222,14 @@ const chrome = require('selenium-webdriver/chrome');
     await driver.sleep(3000);
     await driver.get('http://127.0.0.1:3000/signup');
 
-    console.log("test empty fields in signup form")
-    await driver.sleep(5000);
+    console.log("Test submitting empty fields in signup form")
+    await driver.sleep(2000);
     let submitButton36 = driver.findElement(By.className('signup-form-button'));
     await submitButton36.click(); // try to click but cannot
     await driver.sleep(3000);
     await driver.get('http://127.0.0.1:3000/home');
 
+    await driver.sleep(3000);
     driver.quit();
 })();
   

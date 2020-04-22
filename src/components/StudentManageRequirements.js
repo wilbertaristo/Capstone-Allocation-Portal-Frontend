@@ -536,7 +536,7 @@ function StudentManageRequirements(){
                                             rules ={
                                                 [
                                                 {required: true, message: "Please input number of powerpoints needed!"},
-                                                {min: 0, max: 5, message: 'Please input a number from 1-5'}
+                                                
                                                 ]
                                             }
                                         >

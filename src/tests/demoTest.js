@@ -3,10 +3,12 @@ const chrome = require('selenium-webdriver/chrome');
 
 (async function loginTest() {
     
-    chrome.setDefaultService(new chrome.ServiceBuilder('/Users/nicole/Downloads/chromedriver').build());
+    chrome.setDefaultService(new chrome.ServiceBuilder('../chromedriver.exe').build());
     let driver = await new Builder().forBrowser('chrome').build();
     //your code inside this block
     await driver.get('http://127.0.0.1:3000/login');
+
+    driver.manage().window().maximize();
 
     let email = driver.findElement(By.name('email'));
     let password = driver.findElement(By.name('password'));
@@ -205,43 +207,6 @@ const chrome = require('selenium-webdriver/chrome');
     await driver.sleep(3000);
 
     // TEST3: SIGNUP PAGE
-    console.log("invalid email in signup, password and confirm password do not match")
-    await driver.get('http://127.0.0.1:3000/signup');
-    let fullName31 = driver.findElement(By.name('fullName'));
-    let email31 = driver.findElement(By.name('email'));
-    let password31 = driver.findElement(By.name('password'));
-    let confirmPassword31 = driver.findElement(By.name('confirmPassword'));
-    await fullName31.sendKeys('test');      
-    await email31.sendKeys('invalidemails'); // see warning pops up 
-    await password31.sendKeys('test');
-    await confirmPassword31.sendKeys('test12'); // see warning pop up
-    await driver.sleep(3000);
-    await driver.get('http://127.0.0.1:3000/signup');
-
-    console.log("testing for special characters in email in sign page");
-    let email32 = driver.findElement(By.name('email'));
-    let password32 = driver.findElement(By.name('password'));
-    await email32.sendKeys('inva;;lid@example.com');
-    await password32.sendKeys('test'); // error message pops up
-    await driver.sleep(3000);
-    await driver.get('http://127.0.0.1:3000/signup');
-
-    console.log("testing for spaces in email in signup page");
-    let email33 = driver.findElement(By.name('email'));
-    let password33 = driver.findElement(By.name('password'));
-    await email33.sendKeys('inval id@example.com');
-    await password33.sendKeys('test'); // error message pops up
-    await driver.sleep(3000);
-    await driver.get('http://127.0.0.1:3000/signup');
-
-    console.log("testing for too long input in signup page");
-    let email34 = driver.findElement(By.name('email'));
-    let password34 = driver.findElement(By.name('password'));
-    await email34.sendKeys('testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest@example.com');
-    await password34.sendKeys('test');  // error message pops up
-    await driver.sleep(3000);
-    await driver.get('http://127.0.0.1:3000/signup');
-
     console.log("XSS: input <script> alert('HACKED') </script> into full name and password field, nothing should pop up");
     let fullName35 = driver.findElement(By.name('fullName'));
     let email35 = driver.findElement(By.name('email'));
@@ -263,11 +228,6 @@ const chrome = require('selenium-webdriver/chrome');
     await driver.sleep(3000);
     await driver.get('http://127.0.0.1:3000/home');
 
-    
-
-    
-    
-
-
+    driver.quit();
 })();
   

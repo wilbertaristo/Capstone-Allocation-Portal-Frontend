@@ -2,9 +2,8 @@ import React, {useEffect, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import {Form, Input, Typography, Button, Divider, Alert, Modal, Layout, Spin } from 'antd';
+import {Form, Input, Typography, Button, Divider, Modal, Layout, Spin } from 'antd';
 import {getUserDetails, updateUserDetails} from "../actions/authActions";
-import { CLEAR_AUTH_ERROR } from "../actions/types";
 import MenuHeader from "./MenuHeader"
 
 const { Content, Footer } = Layout;
@@ -123,14 +122,14 @@ function HomePage(){
 
     return(
         !stopSpin ?
-            <div className="d-flex justify-content-center mt-5">
+            <div className="d-flex justify-content-center align-items-center mt-5 w-100 vh-100">
                 <Spin size="large"/>
             </div>
             :
         <Layout className="vh-100">
             <MenuHeader/>
             <Layout>
-                <Content>
+                <Content style={{backgroundColor:"#FFFFFF"}}>
                     <div className="d-flex site-layout-content flex-column container-fluid align-items-center justify-content-center">
                         <Form
                             {...layout}
@@ -237,7 +236,7 @@ function HomePage(){
                             </Form.Item>
 
                             <Form.Item>
-                            <div className="d-flex justify-content-center">
+                            <div className="d-flex justify-content-center mt-4">
                                 {                           
                                     !clicked ? 
                                         <Button
@@ -275,7 +274,7 @@ function HomePage(){
                     </Form>
                     </div>
                 </Content>
-                
+                <Footer style={{ textAlign: 'center' }}>Capston Allocation Project ©2020 Created by Mad Dev C3G13</Footer>
             </Layout>
         </Layout>
     );

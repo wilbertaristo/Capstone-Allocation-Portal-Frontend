@@ -87,48 +87,51 @@ function HomePage(){
         <Layout className="vh-100">
             <MenuHeader/>
             <Layout>
-                <Content>
-                <div className=""> 
-                <Descriptions title="Capstone Showcase" className="mt-5 ml-5">
-                    <Descriptions.Item label="Date">04 August, 2020</Descriptions.Item>
-                    <Descriptions.Item label="Time">10.00am - 5.00pm</Descriptions.Item>
-                    <Descriptions.Item label="Location">SUTD, Campus Center Levels 1 and 2</Descriptions.Item>
-                    <Descriptions.Item >All groups to set up their booth by 03 August 2020.</Descriptions.Item>
-                </Descriptions>                                    
-                    {renderCards()}
-                 </div>   
-                 <div>
-                 <Carousel autoplay>
-                    <div>
-                    <img
-                    src={img2}
-                    className="img-fluid"
-                    alt=""
-                    />
+                <Content style={{overflow: "auto"}}>
+                    <div className="">
+                        <Descriptions title="Capstone Showcase" className="mt-5 ml-5">
+                            <Descriptions.Item label="Date">04 August, 2020</Descriptions.Item>
+                            <Descriptions.Item label="Time">10.00am - 5.00pm</Descriptions.Item>
+                            <Descriptions.Item label="Location">SUTD, Campus Center Levels 1 and 2</Descriptions.Item>
+                            <Descriptions.Item >All groups to set up their booth by 03 August 2020.</Descriptions.Item>
+                        </Descriptions>
+                        {renderCards()}
                     </div>
-                    <div>
-                    <img
-                    src={img1}
-                    className="img-fluid"
-                    alt=""
-                    />
+                    <div style={{backgroundColor: "F0F2F5"}} className="d-flex flex-column mt-4">
+                         <Descriptions title="Gallery" className="ml-5"/>
+                         <div className="mb-4">
+                             <Carousel autoplay className="container">
+                                 <div>
+                                     <img
+                                         src={img2}
+                                         className="img-fluid"
+                                         alt=""
+                                     />
+                                 </div>
+                                 <div>
+                                     <img
+                                         src={img1}
+                                         className="img-fluid"
+                                         alt=""
+                                     />
+                                 </div>
+                                 <div>
+                                     <img
+                                         src={img3}
+                                         className="img-fluid"
+                                         alt=""
+                                     />
+                                 </div>
+                                 <div>
+                                     <img
+                                         src={img4}
+                                         className="img-fluid"
+                                         alt=""
+                                     />
+                                 </div>
+                             </Carousel>
+                         </div>
                     </div>
-                    <div>
-                    <img
-                    src={img3}
-                    className="img-fluid"
-                    alt=""
-                    />
-                    </div>
-                    <div>
-                    <img
-                    src={img4}
-                    className="img-fluid"
-                    alt=""
-                    />
-                    </div>
-                </Carousel>
-                 </div>
                 </Content>
             </Layout>
         </Layout>

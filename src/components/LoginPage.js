@@ -180,10 +180,10 @@ function LoginPage(){
                         <div className="mb-2 d-flex justify-content-end">
                             {
                                 !clicked ?
-                                <LinkContainer to="/reset-password" className="forgot-password">
+                                <LinkContainer to="/reset-password" className="forgot-password pointer">
                                     <div><h6 style={{color: "gray"}}>Forgot password?</h6></div>
                                 </LinkContainer> :
-                                    <div><h6 className="forgot-password" style={{color: "gray"}}>Forgot password?</h6></div>
+                                    <div><h6 className="forgot-password pointer" style={{color: "gray"}}>Forgot password?</h6></div>
                             }
                         </div>
 

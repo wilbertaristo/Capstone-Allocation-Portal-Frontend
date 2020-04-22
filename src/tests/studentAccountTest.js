@@ -62,12 +62,20 @@ const chrome = require('selenium-webdriver/chrome');
     assert.equal(currentURL5, 'http://127.0.0.1:3000/home' );
     console.log("PASSED")
 
-    console.log("TESTING: Invalid inputs into student manage requirements fields")
     let studentManageRequirementsButton = driver.findElement(By.className('student-manage-requirements'));
     await studentManageRequirementsButton.click();
     await driver.sleep(3000);
 
-    // test 1: inputs things that are not numbers 
+    // test 2: click submit with empty fields
+    console.log("TESTING: Submit empty requirements form")
+    await driver.sleep(3000);
+    let submitButton2 = driver.findElement(By.className("submit-requirements-button"));
+    submitButton2.click();
+    console.log("PASSED")
+    await driver.sleep(3000);
+
+    // test 1: inputs things that are not numbers
+    console.log("TESTING: Invalid inputs into student manage requirements fields")
     let groupName = driver.findElement(By.name('groupName'));
     let typePrototype = driver.findElement(By.name('typePrototype'));
     let spaceX = driver.findElement(By.name('spaceX'));
@@ -106,16 +114,7 @@ const chrome = require('selenium-webdriver/chrome');
     await chairCount.sendKeys('test');
     await hdmiToVgaAdapterCount.sendKeys('test');
     await hdmiCableCount.sendKeys('test');
-    let submitButton = driver.findElement(By.className("submit-requirements-button"));
-    submitButton.click();
-    console.log("PASSED")
-    await driver.get('http://127.0.0.1:3000/manage-requirements/student');
 
-
-    // test 2: click submit with empty fields
-    console.log("test submit empty form")
-    await driver.sleep(5000);
-    let submitButton2 = driver.findElement(By.className("submit-requirements-button"));
     await driver.sleep(3000);
-    submitButton2.click();
+    driver.quit();
 })();
